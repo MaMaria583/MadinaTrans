@@ -1,7 +1,8 @@
 # Guide de déploiement — GitHub + Vercel
 
-> ⚠️ **Rien n'a été publié.** Ce guide décrit les étapes à suivre **après autorisation explicite**.
-> Le dépôt est prêt à être créé sous le nom **`madina-trans-demo`**.
+> Dépôt GitHub : **https://github.com/MaMaria583/MadinaTrans** (branche `main`).
+> ⚠️ Le dépôt est **public** : le code et la documentation sont visibles par tous.
+> Aucun déploiement Vercel n'a encore été effectué.
 
 ## Prérequis
 
@@ -19,37 +20,24 @@ npm install
 npm run check        # lint + typecheck + build — doit se terminer sans erreur
 ```
 
-## Étape 2 — Initialiser le dépôt Git
+## Étapes 2 et 3 — Dépôt Git et GitHub ✅ (déjà fait)
+
+Le dépôt local est relié à `https://github.com/MaMaria583/MadinaTrans.git`.
+Pour publier une modification :
 
 ```bash
-git init -b main
 git add .
-git commit -m "Site de démonstration Madina Trans"
+git commit -m "Description de la modification"
+git push
 ```
 
-Le fichier `.gitignore` exclut déjà `node_modules`, `.next`, les fichiers `.env*` (sauf `.env.example`) et `.vercel`.
-
-## Étape 3 — Créer le dépôt GitHub
-
-**Option A — interface web**
-1. github.com → **New repository**
-2. Nom : `madina-trans-demo` · Visibilité : **Private** (recommandé pour une proposition commerciale)
-3. Ne cochez **pas** « Add README / .gitignore » (déjà présents)
-4. Puis :
-   ```bash
-   git remote add origin https://github.com/<votre-compte>/madina-trans-demo.git
-   git push -u origin main
-   ```
-
-**Option B — GitHub CLI**
-```bash
-gh repo create madina-trans-demo --private --source=. --remote=origin --push
-```
+Le fichier `.gitignore` exclut `node_modules`, `.next`, les fichiers `.env*` (sauf `.env.example`) et `.vercel`.
+Pour rendre le dépôt privé : GitHub → Settings → General → *Danger Zone* → **Change visibility**.
 
 ## Étape 4 — Importer dans Vercel
 
 1. vercel.com → **Add New… → Project**
-2. **Import Git Repository** → autoriser l'accès GitHub → choisir `madina-trans-demo`
+2. **Import Git Repository** → autoriser l'accès GitHub → choisir `MadinaTrans`
 3. Vercel détecte **Next.js** automatiquement :
    - Build Command : `next build` (par défaut)
    - Output : automatique
@@ -63,7 +51,7 @@ gh repo create madina-trans-demo --private --source=. --remote=origin --push
    | `NEXT_PUBLIC_SITE_URL` | *(laisser vide : l'URL Vercel est utilisée)* |
    | `FORM_WEBHOOK_URL` | *(laisser vide tant qu'aucun service n'est choisi)* |
 
-5. **Deploy**. Le lien de démonstration `https://madina-trans-demo-xxxx.vercel.app` est prêt en ~1 minute.
+5. **Deploy**. Le lien de démonstration `https://<nom-du-projet>.vercel.app` est prêt en ~1 minute.
 
 **Alternative CLI**
 ```bash
