@@ -1,9 +1,8 @@
 import { ClipboardList, MessagesSquare, FileSignature, Phone, ShieldCheck } from "lucide-react";
-import { contact, isConfirmed, isDisplayable } from "@/config/site";
+import { contact, isConfirmed } from "@/config/site";
 import { ContactValue } from "@/components/ui/ContactValue";
 import { Container, Highlight, SectionHeading } from "@/components/ui/Section";
 import { QuoteForm } from "@/components/forms/QuoteForm";
-import { DemoBadge } from "@/components/ui/DemoBadge";
 
 const steps = [
   {
@@ -81,11 +80,10 @@ export function QuoteSection({
               <ShieldCheck className="size-4 text-gold-400" aria-hidden="true" />
               Vos données servent uniquement à traiter votre demande.
             </li>
-            {isDisplayable(contact.phone) && (
+            {isConfirmed(contact.phone) && (
               <li className="flex flex-wrap items-center gap-2.5">
                 <Phone className="size-4 text-gold-400" aria-hidden="true" />
                 Une question ? <ContactValue kind="phone" className="font-semibold text-white" />
-                {!isConfirmed(contact.phone) && <DemoBadge tone="dark" />}
               </li>
             )}
           </ul>

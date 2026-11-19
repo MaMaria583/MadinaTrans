@@ -1,3 +1,4 @@
+import { DEMO_MODE, isConfirmed, type InfoStatus } from "@/config/site";
 import { images, type SiteImage } from "./images";
 
 export type ServiceIcon = "truck" | "fileCheck" | "ship" | "warehouse";
@@ -16,6 +17,18 @@ export interface Service {
   image: SiteImage;
   secondaryImage: SiteImage;
   seo: { title: string; description: string };
+  /**
+   * Vérification auprès de Madina Trans :
+   * - domain  : le domaine d'activité lui-même (issu du brief → "provided")
+   * - details : le détail de la prestation (descriptions, avantages,
+   *             applications, méthode) — rédaction de démonstration → "demo"
+   * - toConfirm : points précis à faire valider par l'entreprise
+   */
+  verification: {
+    domain: InfoStatus;
+    details: InfoStatus;
+    toConfirm: string[];
+  };
 }
 
 /**
@@ -57,6 +70,17 @@ export const services: Service[] = [
     ],
     image: images.truckSunset,
     secondaryImage: images.truckCab,
+    verification: {
+      domain: "provided",
+      details: "demo",
+      toConfirm: [
+        "Liaisons réellement assurées : national uniquement ou aussi transfrontalier (quels pays / corridors) ?",
+        "Flotte propre ou affrétée ? Types de véhicules (porteurs, semi-remorques, plateaux, citernes…)",
+        "Marchandises acceptées / exclues (dangereuses, réfrigérées, hors gabarit…)",
+        "Modalités de suivi et d'information du client",
+        "Assurance marchandises proposée ou non",
+      ],
+    },
     seo: {
       title: "Transport routier de marchandises à Bamako et au Mali",
       description:
@@ -95,6 +119,16 @@ export const services: Service[] = [
     ],
     image: images.containersAerial,
     secondaryImage: images.portTerminal,
+    verification: {
+      domain: "provided",
+      details: "demo",
+      toConfirm: [
+        "Madina Trans dispose-t-elle d'un agrément de commissionnaire en douane / transitaire ?",
+        "Formalités prises en charge directement ou via un partenaire agréé",
+        "Bureaux de douane et frontières habituellement traités",
+        "Affrètement : moyens propres ou sous-traités",
+      ],
+    },
     seo: {
       title: "Transit au Mali : formalités et affrètement",
       description:
@@ -133,6 +167,16 @@ export const services: Service[] = [
     ],
     image: images.portCranes,
     secondaryImage: images.containerShipAerial,
+    verification: {
+      domain: "provided",
+      details: "demo",
+      toConfirm: [
+        "Activité réellement exercée (organisation de fret maritime) ou simple coordination avec des transitaires ?",
+        "Ports de la sous-région utilisés (Dakar, Abidjan, Lomé, Cotonou, Conakry…)",
+        "Conteneur complet (FCL) et/ou groupage (LCL)",
+        "Prise en charge du post-acheminement port → Mali",
+      ],
+    },
     seo: {
       title: "Affrètement maritime vers le Mali",
       description:
@@ -171,6 +215,16 @@ export const services: Service[] = [
     ],
     image: images.warehouseWorker,
     secondaryImage: images.warehouseAerial,
+    verification: {
+      domain: "provided",
+      details: "demo",
+      toConfirm: [
+        "Entrepôts disponibles ? (propres ou partenaires, localisation, surface) — à ne pas annoncer sans confirmation",
+        "Préparation de commandes et gestion de stocks réellement proposées ?",
+        "Zones de distribution couvertes",
+        "Outils de suivi des stocks proposés au client",
+      ],
+    },
     seo: {
       title: "Logistique et distribution au Mali",
       description:
@@ -180,3 +234,13 @@ export const services: Service[] = [
 ];
 
 export const getService = (slug: string) => services.find((s) => s.slug === slug);
+
+/** Le détail de la prestation a-t-il été validé par Madina Trans ? */
+export const serviceDetailsConfirmed = (s: Service) => isConfirmed({ status: s.verification.details });
+
+/**
+ * Affichage du détail (avantages, applications, méthode) :
+ * toujours en démonstration (avec mention « à confirmer »),
+ * uniquement s'il est confirmé en production.
+ */
+export const showServiceDetails = (s: Service) => DEMO_MODE || serviceDetailsConfirmed(s);

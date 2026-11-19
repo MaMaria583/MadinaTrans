@@ -78,3 +78,30 @@ Build avec `NEXT_PUBLIC_DEMO_MODE=false` : 0 coordonnée fictive, 0 badge « À 
 - La limitation de débit est propre à chaque instance serveur (mémoire) : protection « au mieux » sur Vercel.
 - Scores Lighthouse / Core Web Vitals à mesurer sur l'URL Vercel ; tests effectués sur moteur Chromium uniquement.
 - Une adresse inexistante sous `/services/…` ou `/actualites/…` affiche la page 404 (`noindex`) avec un statut HTTP 200 (pré-rendu partiel de Next 16).
+
+## Phase 3 — finalisation (19/11/2026)
+
+| Contrôle | Résultat |
+| --- | --- |
+| `npm run lint` | ✅ 0 erreur, 0 avertissement |
+| `npm run typecheck` | ✅ 0 erreur |
+| `npm run build` (démo) | ✅ 26 routes générées |
+| `NEXT_PUBLIC_DEMO_MODE=false npm run build` | ✅ 26 routes générées |
+| Recherche de « XX », « Partenaire 1… », « Références à fournir » sur l'accueil | ✅ aucune occurrence |
+| Liens internes (24 URL) | ✅ 24/24 en HTTP 200 |
+| Métadonnées des 8 pages principales | ✅ titre, description (145–163 caractères), canonique, `og:image`, un seul `h1` |
+| API sans configuration | ✅ `demo` (rien n'est transmis) |
+| API avec Resend simulé | ✅ `sent` + référence ; envoi trop rapide filtré |
+| `npm run test:resend` sans clés | ✅ refuse avec la liste des variables manquantes |
+| `npm run test:resend` vers le serveur simulé | ✅ e-mail accepté (HTTP 200) |
+| Mode production : coordonnées fictives, badges, « Périmètre à confirmer », avantages/méthode non validés | ✅ 0 occurrence (6 pages vérifiées) |
+| Débordement horizontal à 360 / 390 / 430 px (7 pages) | ✅ aucun |
+| Menu mobile : ouverture, mention « Fictif », fermeture par Échap | ✅ |
+
+**Point d'attention :** pendant les tests, la connexion de ce poste vers Unsplash était très lente
+(≈ 87 s pour une image de 550 Ko), ce qui a provoqué deux images non chargées en développement (504 de
+l'optimiseur). Correctif : images sources allégées (1600 px, qualité 75) et cache des images optimisées
+porté à 31 jours. Recommandation : héberger les photos dans `/public/images` avant la présentation, ou
+vérifier l'affichage sur l'URL Vercel.
+
+**Non testé :** envoi Resend avec un vrai compte (aucune clé disponible) — à valider avec `npm run test:resend`.

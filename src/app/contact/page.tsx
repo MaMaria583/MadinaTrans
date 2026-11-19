@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArrowRight, Clock, Mail, MapPin, MapPinned, Phone } from "lucide-react";
+import { ArrowRight, Clock, Info, Mail, MapPin, MapPinned, Phone } from "lucide-react";
 import {
   DEMO_MODE,
   contact,
@@ -17,6 +17,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { Container } from "@/components/ui/Section";
 import { DemoBadge } from "@/components/ui/DemoBadge";
+import { FICTIVE_LABEL, FICTIVE_TITLE } from "@/components/ui/ContactValue";
 import { WhatsappIcon } from "@/components/ui/Icons";
 import { cn } from "@/lib/cn";
 
@@ -36,6 +37,7 @@ function ContactCard({
   action,
   confirmed,
   external,
+  badge = "À confirmer",
 }: {
   icon: ReactNode;
   label: string;
@@ -44,6 +46,8 @@ function ContactCard({
   action?: string;
   confirmed: boolean;
   external?: boolean;
+  /** Libellé du badge affiché quand l'information n'est pas confirmée. */
+  badge?: string;
 }) {
   const body = (
     <>
@@ -52,16 +56,28 @@ function ContactCard({
       </span>
       <span className="min-w-0 flex-1">
         <span className="flex flex-wrap items-center gap-2 text-[0.8rem] font-semibold tracking-wide text-muted uppercase">
-          {label} {!confirmed && <DemoBadge />}
+          {label} {!confirmed && <DemoBadge label={badge} />}
         </span>
-        <span className="mt-0.5 block text-[1.05rem] font-bold [overflow-wrap:anywhere] text-navy-900 sm:text-lg">
+        <span
+          className={cn(
+            "mt-0.5 block text-[1.05rem] font-bold [overflow-wrap:anywhere] sm:text-lg",
+            confirmed ? "text-navy-900" : "text-navy-400",
+          )}
+          title={confirmed ? undefined : FICTIVE_TITLE}
+        >
           {value}
+          {!confirmed && <span className="sr-only"> (information non opérationnelle)</span>}
         </span>
         {href && action && <span className="mt-1 block text-sm font-semibold text-gold-700">{action} →</span>}
       </span>
     </>
   );
-  const cls = cn("group flex min-w-0 items-start gap-4 p-5 sm:p-6", "card", href && "card-hover");
+  const cls = cn(
+    "group flex min-w-0 items-start gap-4 p-5 sm:p-6",
+    "card",
+    href && "card-hover",
+    !confirmed && "border-dashed bg-white/95",
+  );
   if (!href) return <div className={cls}>{body}</div>;
   return (
     <a href={href} className={cls} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
@@ -102,6 +118,7 @@ export default function ContactPage() {
                 href={tel}
                 action="Appeler"
                 confirmed={isConfirmed(contact.phone)}
+                badge={FICTIVE_LABEL}
               />
             )}
             {isDisplayable(contact.email) && (
@@ -112,16 +129,18 @@ export default function ContactPage() {
                 href={mail}
                 action="Écrire un e-mail"
                 confirmed={isConfirmed(contact.email)}
+                badge={FICTIVE_LABEL}
               />
             )}
             {(wa || DEMO_MODE) && (
               <ContactCard
                 icon={<WhatsappIcon className="size-5" />}
                 label="WhatsApp"
-                value={wa ? "Discuter avec nous" : "Numéro à confirmer"}
+                value={wa ? "Discuter avec nous" : "Non configuré"}
                 href={wa}
                 action="Ouvrir WhatsApp"
                 confirmed={!!wa}
+                badge="À configurer"
                 external
               />
             )}
@@ -133,6 +152,19 @@ export default function ContactPage() {
               confirmed={isConfirmed(contact.address)}
             />
           </div>
+          {DEMO_MODE && !(isConfirmed(contact.phone) && isConfirmed(contact.email)) && (
+            <p
+              role="note"
+              className="mt-4 flex items-start gap-2.5 rounded-2xl border border-dashed border-gold-400/70 bg-gold-50/70 px-4 py-3 text-sm leading-relaxed text-navy-800"
+            >
+              <Info className="mt-0.5 size-4 shrink-0 text-gold-700" aria-hidden="true" />
+              <span>
+                <strong>Coordonnées de démonstration.</strong> Le téléphone et l&apos;e-mail affichés sont fictifs : ils
+                ne permettent pas de joindre Madina Trans. Les coordonnées officielles seront intégrées après
+                confirmation par l&apos;entreprise.
+              </span>
+            </p>
+          )}
         </Container>
       </section>
 

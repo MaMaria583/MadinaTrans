@@ -14,8 +14,8 @@
  *   par exemple src: "/images/flotte-01.jpg").
  */
 
-/** Source Unsplash limitée à 1920 px : l'optimiseur Next.js produit ensuite AVIF/WebP aux bonnes tailles. */
-const unsplash = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1920&q=80`;
+/** Source Unsplash limitée à 1600 px : l'optimiseur Next.js produit ensuite AVIF/WebP aux bonnes tailles. */
+const unsplash = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1600&q=75`;
 
 export interface SiteImage {
   src: string;

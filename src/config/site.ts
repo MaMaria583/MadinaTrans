@@ -113,7 +113,23 @@ export const institutional = {
       text: "Des propositions claires et détaillées, construites à partir de votre besoin réel.",
     },
   ] as const,
-  /** Secteurs pour lesquels les solutions sont conçues (capacités, pas des références clients). */
+  /** Démarche qualité (pratiques de travail, sans certification revendiquée). */
+  qualityApproach: [
+    {
+      title: "Analyse préalable",
+      text: "Chaque demande est étudiée : marchandise, trajet, délais et contraintes d'accès.",
+    },
+    {
+      title: "Chargement maîtrisé",
+      text: "Des procédures de chargement et de sécurisation adaptées à chaque cargaison.",
+    },
+    { title: "Suivi et information", text: "Le client est tenu informé de l'avancement de son opération." },
+    {
+      title: "Contrôle à la livraison",
+      text: "Une vérification à la remise et un retour d'expérience pour progresser.",
+    },
+  ],
+  /** Secteurs pour lesquels les solutions sont conçues (capacités, pas des références clients). Non affichés : à confirmer. */
   sectors: [
     "Commerce et distribution",
     "Construction et matériaux",

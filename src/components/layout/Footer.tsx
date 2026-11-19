@@ -140,15 +140,13 @@ export function Footer() {
             {isDisplayable(contact.phone) && (
               <li className="flex flex-wrap items-center gap-x-3 gap-y-1">
                 <Phone className="size-5 shrink-0 text-gold-400" aria-hidden="true" />
-                <ContactValue kind="phone" className="hover:text-white" />
-                {!isConfirmed(contact.phone) && <DemoBadge tone="dark" label="Démo" />}
+                <ContactValue kind="phone" tone="dark" className="hover:text-white" />
               </li>
             )}
             {isDisplayable(contact.email) && (
               <li className="flex flex-wrap items-center gap-x-3 gap-y-1">
                 <Mail className="size-5 shrink-0 text-gold-400" aria-hidden="true" />
-                <ContactValue kind="email" className="break-all hover:text-white" />
-                {!isConfirmed(contact.email) && <DemoBadge tone="dark" label="Démo" />}
+                <ContactValue kind="email" tone="dark" className="break-all hover:text-white" />
               </li>
             )}
           </ul>

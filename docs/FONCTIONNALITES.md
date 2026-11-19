@@ -6,15 +6,16 @@
 | --- | --- |
 | Site multipage | 8 pages, 4 fiches services, 4 articles d'exemple, page 404 |
 | Identité visuelle | Bleu marine / blanc / or, motif « plan de route », sections numérotées, soulignement doré signature |
-| Accueil | Hero avec « devis express », métiers en grille éditoriale, chaîne multimodale + atouts (sans chiffres inventés), à propos avec mission, engagements, devis, secteurs, actualités, appel à l'action |
+| Accueil | Hero avec « devis express », métiers en grille éditoriale, chaîne multimodale + atouts (sans chiffres inventés), à propos avec mission, engagements, devis, qualité de service, actualités, appel à l'action |
 | Formulaire de devis | 3 étapes, validation par étape et côté serveur, messages explicites, confirmation avec référence |
-| Envoi des demandes | **Resend prêt** (e-mail HTML à l'administrateur, réponse directe au client) — testé avec un serveur Resend simulé |
+| Envoi des demandes | Intégration Resend complète côté serveur — **non testée avec un vrai compte** (seulement avec un serveur simulé) ; script `npm run test:resend` prêt |
 | Anti-spam | Champ piège, délai minimal, limitation de débit, contrôle d'origine, taille limitée, échappement HTML |
 | Formulaire de contact | Même validation, même acheminement (destinataire `CONTACT_EMAIL` possible) |
 | Page Contact | Cartes d'accès direct (téléphone, e-mail, WhatsApp, adresse), carte affichée seulement après vérification de l'adresse |
 | Mobile | Barre d'actions fixe (Devis + Appel/WhatsApp si confirmés), menu plein écran, cibles tactiles ≥ 44 px, aucun débordement de 360 à 430 px |
 | Animations | Apparitions au défilement, zoom lent des visuels, fondu entre les pages, désactivées si « mouvement réduit » |
-| Mode démonstration / production | Données non confirmées signalées (démo) ou masquées automatiquement (production) |
+| Mode démonstration / production | Données non confirmées signalées (démo : « Fictif », « À confirmer », « Périmètre à confirmer ») ou masquées automatiquement (production) |
+| Section « Qualité de service » | Remplace l'ancien espace références : démarche qualité en 4 étapes, aucun logo |
 | SEO | Titres et descriptions par page, Open Graph complet avec image, sitemap, robots, manifeste, fil d'Ariane structuré, schémas `Service` et `WebSite`, référencement local Bamako |
 | Images | 24 visuels distincts, optimisés AVIF/WebP, chargement différé, fond d'attente marine |
 

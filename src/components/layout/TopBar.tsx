@@ -1,7 +1,6 @@
 import { Mail, MapPin, Phone } from "lucide-react";
-import { company, contact, isConfirmed, isDisplayable } from "@/config/site";
+import { company, contact, isDisplayable } from "@/config/site";
 import { Container } from "@/components/ui/Section";
-import { DemoBadge } from "@/components/ui/DemoBadge";
 import { ContactValue } from "@/components/ui/ContactValue";
 
 export function TopBar() {
@@ -12,15 +11,13 @@ export function TopBar() {
           {isDisplayable(contact.phone) && (
             <li className="flex items-center gap-2">
               <Phone className="size-3.5 text-gold-400" aria-hidden="true" />
-              <ContactValue kind="phone" className="hover:text-white" />
-              {!isConfirmed(contact.phone) && <DemoBadge tone="dark" label="Démo" />}
+              <ContactValue kind="phone" tone="dark" className="hover:text-white" />
             </li>
           )}
           {isDisplayable(contact.email) && (
             <li className="flex items-center gap-2">
               <Mail className="size-3.5 text-gold-400" aria-hidden="true" />
-              <ContactValue kind="email" className="hover:text-white" />
-              {!isConfirmed(contact.email) && <DemoBadge tone="dark" label="Démo" />}
+              <ContactValue kind="email" tone="dark" className="hover:text-white" />
             </li>
           )}
           <li className="hidden items-center gap-2 lg:flex">

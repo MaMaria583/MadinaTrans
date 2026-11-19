@@ -14,6 +14,8 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
     qualities: [75, 85],
+    // Images optimisées conservées 31 jours : limite les appels vers Unsplash
+    minimumCacheTTL: 2678400,
     remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com", pathname: "/**" }],
   },
   async headers() {

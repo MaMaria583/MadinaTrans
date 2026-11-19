@@ -112,7 +112,7 @@ Tout se modifie **sans toucher aux composants** :
 | Présentation, vision, mission, valeurs, atouts, secteurs | `src/config/site.ts` → `institutional` |
 | Chiffres clés (années, véhicules, pays, clients) | `src/config/site.ts` → `keyFigures` |
 | Partenaires / références (logos dans `public/partners/`) | `src/config/site.ts` → `partners` |
-| Textes des services | `src/content/services.ts` |
+| Textes des services + points à confirmer (`verification`) | `src/content/services.ts` |
 | Engagements | `src/content/commitments.ts` |
 | Articles | `src/content/articles.ts` |
 | Photos | `src/content/images.ts` (déposer les fichiers dans `public/images/`) |
@@ -128,14 +128,16 @@ Activé par défaut (`NEXT_PUBLIC_DEMO_MODE` absent ou `true`) :
 
 - bandeau « Site de démonstration » en haut de page ;
 - badges **« À confirmer »** sur chaque donnée non confirmée ;
-- coordonnées fictives affichées en texte simple (**jamais** de lien `tel:` / `mailto:` cliquable) ;
+- coordonnées fictives affichées en texte simple avec le badge **« Fictif »** (**jamais** de lien `tel:` / `mailto:`),
+  et un avertissement sur la page Contact ;
+- détail des prestations non validé signalé « Périmètre à confirmer » ;
 - bouton WhatsApp marqué « DÉMO » qui explique qu'il n'est pas opérationnel ;
-- chiffres clés en « XX », emplacements partenaires neutres ;
+- aucun chiffre ni partenaire affiché tant qu'ils ne sont pas confirmés (section « Qualité de service » à la place) ;
 - **site non indexé** (`robots.txt` → `Disallow: /`, balise `noindex`) ;
 - aucune donnée structurée schema.org publiée.
 
 En production (`NEXT_PUBLIC_DEMO_MODE=false`) : tout élément non confirmé est **masqué automatiquement**
-(chiffres, partenaires, coordonnées, WhatsApp, carte…). Le site reste cohérent même s'il manque des informations.
+(chiffres, partenaires, coordonnées, WhatsApp, carte, détail des prestations…). Le site reste cohérent même s'il manque des informations.
 
 ## Formulaires : envoi par e-mail avec Resend
 
@@ -189,7 +191,16 @@ Aucune clé n'est dans le code. En cas d'échec d'envoi, l'utilisateur voit un m
    CONTACT_EMAIL=contact@domaine.ml
    ```
 
-5. Redéployer, puis envoyer une demande de test : l'e-mail arrive avec la référence dans l'objet.
+5. **Test réel avant toute présentation de la fonctionnalité** :
+
+   ```bash
+   npm run test:resend   # lit .env.local et envoie un e-mail de test à ADMIN_EMAIL
+   ```
+
+   Puis, après déploiement, envoyer une demande depuis `/devis` : l'e-mail doit arriver avec la référence dans l'objet.
+
+> ⚠️ À ce jour, l'envoi n'a été testé qu'avec un **serveur Resend simulé** : il ne doit pas être présenté comme
+> opérationnel tant que `npm run test:resend` n'a pas réussi avec les vraies clés.
 
 ## Variables d'environnement
 
@@ -232,6 +243,7 @@ Voir `.env.example`. Aucune valeur sensible n'est présente dans le code source.
 | `npm run typecheck` | Génération des types de routes + `tsc --noEmit` |
 | `npm run build` | Build de production |
 | `npm run check` | Lint + typecheck + build |
+| `npm run test:resend` | Envoi d'un e-mail de test réel via Resend (nécessite `.env.local`) |
 
 ## Documentation complémentaire
 

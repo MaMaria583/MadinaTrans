@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
-import { services } from "@/content/services";
+import { services, showServiceDetails } from "@/content/services";
 import { Container, Highlight, SectionHeading } from "@/components/ui/Section";
 import { ServiceIcon } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
@@ -84,7 +84,7 @@ export function ServicesGrid() {
                   <p className={cn("mt-2 leading-relaxed text-navy-100", !featured && i > 1 && "lg:line-clamp-3")}>
                     {s.excerpt}
                   </p>
-                  {featured && (
+                  {featured && showServiceDetails(s) && (
                     <ul className="mt-5 hidden gap-2 text-[0.95rem] text-navy-50 sm:grid sm:grid-cols-2">
                       {s.advantages.slice(0, 4).map((a) => (
                         <li key={a} className="flex items-start gap-2">

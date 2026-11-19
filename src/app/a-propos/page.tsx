@@ -21,13 +21,6 @@ export const metadata = pageMetadata({
 
 const valueIcons = [ShieldCheck, Target, HeartHandshake, Gem];
 
-const quality = [
-  "Analyse préalable de chaque demande",
-  "Procédures de chargement et de sécurisation",
-  "Suivi des opérations et information du client",
-  "Contrôle à la livraison et retour d'expérience",
-];
-
 const gallery = [
   images.deliveryVan,
   images.containerShip,
@@ -217,12 +210,12 @@ export default function AboutPage() {
               intro="Notre démarche qualité repose sur des pratiques simples, appliquées avec constance."
             />
             <ol className="mt-8 space-y-4">
-              {quality.map((q, i) => (
-                <li key={q} className="flex items-center gap-4">
+              {institutional.qualityApproach.map((q, i) => (
+                <li key={q.title} className="flex items-center gap-4">
                   <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-gold-400 font-display font-bold text-navy-950">
                     {i + 1}
                   </span>
-                  <span className="text-[1.05rem] font-medium text-navy-900 sm:text-lg">{q}</span>
+                  <span className="text-[1.05rem] font-medium text-navy-900 sm:text-lg">{q.title}</span>
                 </li>
               ))}
             </ol>

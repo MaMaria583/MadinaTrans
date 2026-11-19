@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { ArrowRight, Mail, Menu, Phone, X } from "lucide-react";
 import { mainNav, quoteHref } from "@/config/navigation";
-import { company, contact, isConfirmed, isDisplayable } from "@/config/site";
+import { company, contact, isDisplayable } from "@/config/site";
 import { Logo } from "@/components/ui/Logo";
 import { ContactValue } from "@/components/ui/ContactValue";
 import { cn } from "@/lib/cn";
@@ -163,17 +163,15 @@ export function Header() {
           </Link>
           <div className="mt-8 space-y-3 rounded-2xl bg-mist p-5 text-[0.95rem] text-navy-800">
             {isDisplayable(contact.phone) && (
-              <p className="flex items-center gap-3">
+              <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
                 <Phone className="size-4 text-gold-600" aria-hidden="true" />
                 <ContactValue kind="phone" />
-                {!isConfirmed(contact.phone) && <span className="text-xs text-muted">(démo)</span>}
               </p>
             )}
             {isDisplayable(contact.email) && (
-              <p className="flex items-center gap-3 break-all">
+              <p className="flex flex-wrap items-center gap-x-3 gap-y-1 break-all">
                 <Mail className="size-4 shrink-0 text-gold-600" aria-hidden="true" />
                 <ContactValue kind="email" />
-                {!isConfirmed(contact.email) && <span className="text-xs text-muted">(démo)</span>}
               </p>
             )}
             <p className="pt-2 text-sm font-medium text-gold-700 italic">{company.tagline}</p>

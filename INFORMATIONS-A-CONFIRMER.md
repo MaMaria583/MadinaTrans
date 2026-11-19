@@ -38,8 +38,8 @@ presse, registre). **Aucune information n'a donc le statut « vérifiée ».**
 
 | Élément | Valeur fictive | Comportement |
 | --- | --- | --- |
-| Téléphone | `+223 00 00 00 00` | Texte non cliquable + badge « Démo » |
-| E-mail | `contact@madinatrans.example` | Domaine `.example` réservé, non fonctionnel |
+| Téléphone | `+223 00 00 00 00` | Texte non cliquable + badge « Fictif » + mention lue par les lecteurs d'écran |
+| E-mail | `contact@madinatrans.example` | Domaine `.example` réservé, non fonctionnel, badge « Fictif » |
 | WhatsApp | `22300000000` | Bouton « DÉMO » expliquant qu'il n'est pas opérationnel |
 | Logo | Concept graphique temporaire (SVG) | Ce n'est **pas** le logo officiel |
 | Photographies | Unsplash (illustrations) | Ne représentent ni la flotte, ni les locaux, ni le personnel |
@@ -103,3 +103,44 @@ presse, registre). **Aucune information n'a donc le statut « vérifiée ».**
 3. Pour un chiffre clé : `figure: { value: "15+", status: "provided" }`.
 4. Pour un partenaire : déposer le logo dans `public/partners/` puis l'ajouter au tableau `partners`.
 5. Une fois tout validé : `NEXT_PUBLIC_DEMO_MODE=false` dans Vercel, puis redéployer.
+
+## 6. Prestations à faire confirmer
+
+Les **domaines d'activité** (transport routier, transit et affrètement, affrètement maritime, logistique et
+distribution) proviennent du brief. Le **détail** de chaque prestation (descriptions, avantages, applications,
+méthode) est une proposition de rédaction : il est signalé « Périmètre à confirmer » en démonstration et
+**masqué automatiquement en production** tant qu'il n'est pas validé.
+
+Fichier : `src/content/services.ts` → champ `verification` de chaque service
+(`details: "demo"` → passer à `"provided"` une fois validé).
+
+### Transport routier
+- [ ] Liaisons réellement assurées : national uniquement ou aussi transfrontalier (quels pays / corridors) ?
+- [ ] Flotte propre ou affrétée ? Types de véhicules (porteurs, semi-remorques, plateaux, citernes…)
+- [ ] Marchandises acceptées / exclues (dangereuses, réfrigérées, hors gabarit…)
+- [ ] Modalités de suivi et d'information du client
+- [ ] Assurance marchandises proposée ou non
+
+### Transit et affrètement
+- [ ] Madina Trans dispose-t-elle d'un agrément de commissionnaire en douane / transitaire ?
+- [ ] Formalités prises en charge directement ou via un partenaire agréé
+- [ ] Bureaux de douane et frontières habituellement traités
+- [ ] Affrètement : moyens propres ou sous-traités
+
+### Affrètement maritime
+- [ ] Activité réellement exercée (organisation de fret maritime) ou simple coordination avec des transitaires ?
+- [ ] Ports de la sous-région utilisés (Dakar, Abidjan, Lomé, Cotonou, Conakry…)
+- [ ] Conteneur complet (FCL) et/ou groupage (LCL)
+- [ ] Prise en charge du post-acheminement port → Mali
+
+### Logistique et distribution
+- [ ] Entrepôts disponibles ? (propres ou partenaires, localisation, surface) — à ne pas annoncer sans confirmation
+- [ ] Préparation de commandes et gestion de stocks réellement proposées ?
+- [ ] Zones de distribution couvertes
+- [ ] Outils de suivi des stocks proposés au client
+
+### Contenus institutionnels
+- [ ] Présentation, vision, mission, valeurs (`institutional` dans `src/config/site.ts`)
+- [ ] Atouts mis en avant sur l'accueil (« chaîne multimodale », « interlocuteur unique », « ancrage à Bamako », « devis détaillés »)
+- [ ] Démarche qualité (4 étapes) et engagements (sécurité, délais, qualité, transparence…)
+- [ ] Secteurs d'activité ciblés (liste conservée dans la configuration, non affichée)

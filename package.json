@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
-    "check": "npm run lint && npm run typecheck && npm run build"
+    "check": "npm run lint && npm run typecheck && npm run build",
+    "test:resend": "node --env-file-if-exists=.env.local scripts/test-resend.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.75.0",

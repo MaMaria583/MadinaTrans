@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Check, CircleDot } from "lucide-react";
-import { getService, services } from "@/content/services";
+import { getService, services, showServiceDetails } from "@/content/services";
+import { ServiceScopeNotice } from "@/components/ui/ServiceScopeNotice";
 import { ogFromUnsplash, pageMetadata } from "@/lib/seo";
 import { ServiceJsonLd } from "@/components/seo/OrganizationJsonLd";
 import { PageHero } from "@/components/sections/PageHero";
@@ -75,35 +76,42 @@ async function ServiceContent({ params }: { params: PageProps<"/services/[slug]"
         <Container className="grid gap-14 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <SectionHeading eyebrow="Le service" title={<span id="desc-title">{service.tagline}</span>} />
-            <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
-              {service.description.map((p) => (
-                <p key={p.slice(0, 24)}>{p}</p>
-              ))}
-            </div>
-            <div className="mt-10 grid gap-6 sm:grid-cols-2">
-              <div className="rounded-2xl bg-mist p-6">
-                <h3 className="text-lg font-bold text-navy-900">Les avantages</h3>
-                <ul className="mt-4 space-y-3">
-                  {service.advantages.map((a) => (
-                    <li key={a} className="flex items-start gap-2.5 text-navy-800">
-                      <Check className="mt-0.5 size-5 shrink-0 text-gold-500" strokeWidth={3} aria-hidden="true" />
-                      {a}
-                    </li>
-                  ))}
-                </ul>
+            {showServiceDetails(service) ? (
+              <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
+                {service.description.map((p) => (
+                  <p key={p.slice(0, 24)}>{p}</p>
+                ))}
               </div>
-              <div className="rounded-2xl bg-mist p-6">
-                <h3 className="text-lg font-bold text-navy-900">Applications</h3>
-                <ul className="mt-4 space-y-3">
-                  {service.applications.map((a) => (
-                    <li key={a} className="flex items-start gap-2.5 text-navy-800">
-                      <CircleDot className="mt-0.5 size-5 shrink-0 text-navy-400" aria-hidden="true" />
-                      {a}
-                    </li>
-                  ))}
-                </ul>
+            ) : (
+              <p className="mt-6 text-lg leading-relaxed text-muted">{service.excerpt}</p>
+            )}
+            <ServiceScopeNotice service={service} className="mt-6" />
+            {showServiceDetails(service) && (
+              <div className="mt-10 grid gap-6 sm:grid-cols-2">
+                <div className="rounded-2xl bg-mist p-6">
+                  <h3 className="text-lg font-bold text-navy-900">Les avantages</h3>
+                  <ul className="mt-4 space-y-3">
+                    {service.advantages.map((a) => (
+                      <li key={a} className="flex items-start gap-2.5 text-navy-800">
+                        <Check className="mt-0.5 size-5 shrink-0 text-gold-500" strokeWidth={3} aria-hidden="true" />
+                        {a}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-2xl bg-mist p-6">
+                  <h3 className="text-lg font-bold text-navy-900">Applications</h3>
+                  <ul className="mt-4 space-y-3">
+                    {service.applications.map((a) => (
+                      <li key={a} className="flex items-start gap-2.5 text-navy-800">
+                        <CircleDot className="mt-0.5 size-5 shrink-0 text-navy-400" aria-hidden="true" />
+                        {a}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <Reveal className="lg:col-span-5">
             <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-lift">
@@ -119,26 +127,33 @@ async function ServiceContent({ params }: { params: PageProps<"/services/[slug]"
         </Container>
       </section>
 
-      <section aria-labelledby="steps-title" className="bg-mist section-y-sm">
-        <Container>
-          <SectionHeading
-            align="center"
-            eyebrow="Notre méthode"
-            title={<span id="steps-title">Comment nous procédons</span>}
-          />
-          <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {service.steps.map((step, i) => (
-              <Reveal as="li" key={step.title} delay={i * 80} className="relative rounded-2xl bg-white p-7 shadow-card">
-                <span className="font-display text-5xl font-extrabold text-gold-300">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="mt-3 text-lg font-bold text-navy-900">{step.title}</h3>
-                <p className="mt-2 text-muted">{step.text}</p>
-              </Reveal>
-            ))}
-          </ol>
-        </Container>
-      </section>
+      {showServiceDetails(service) && (
+        <section aria-labelledby="steps-title" className="bg-mist section-y-sm">
+          <Container>
+            <SectionHeading
+              align="center"
+              eyebrow="Notre méthode"
+              title={<span id="steps-title">Comment nous procédons</span>}
+            />
+            <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {service.steps.map((step, i) => (
+                <Reveal
+                  as="li"
+                  key={step.title}
+                  delay={i * 80}
+                  className="relative rounded-2xl bg-white p-7 shadow-card"
+                >
+                  <span className="font-display text-5xl font-extrabold text-gold-300">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="mt-3 text-lg font-bold text-navy-900">{step.title}</h3>
+                  <p className="mt-2 text-muted">{step.text}</p>
+                </Reveal>
+              ))}
+            </ol>
+          </Container>
+        </section>
+      )}
 
       <QuoteSection defaultService={service.slug} />
 

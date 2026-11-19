@@ -6,7 +6,7 @@ import { ChainStrengths } from "@/components/sections/ChainStrengths";
 import { AboutPreview } from "@/components/sections/AboutPreview";
 import { CommitmentsStrip } from "@/components/sections/CommitmentsStrip";
 import { QuoteSection } from "@/components/sections/QuoteSection";
-import { Sectors } from "@/components/sections/Sectors";
+import { QualityService } from "@/components/sections/QualityService";
 import { LatestArticles } from "@/components/sections/LatestArticles";
 import { FinalCta } from "@/components/sections/FinalCta";
 
@@ -25,7 +25,7 @@ export default function HomePage() {
       <AboutPreview />
       <CommitmentsStrip />
       <QuoteSection index={5} />
-      <Sectors />
+      <QualityService />
       <LatestArticles />
       <FinalCta />
     </>

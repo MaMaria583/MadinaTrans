@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowRight, Check, CircleDot } from "lucide-react";
-import type { Service } from "@/content/services";
+import { showServiceDetails, type Service } from "@/content/services";
+import { ServiceScopeNotice } from "@/components/ui/ServiceScopeNotice";
 import { ButtonLink } from "@/components/ui/Button";
 import { ServiceIcon } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
@@ -33,36 +34,43 @@ export function ServiceDetail({ service, reverse = false }: { service: Service; 
         <h2 id={`${service.slug}-title`} className="mt-2 text-3xl font-extrabold text-navy-900 sm:text-4xl">
           {service.title}
         </h2>
-        <div className="mt-5 space-y-4 leading-relaxed text-muted">
-          {service.description.map((p) => (
-            <p key={p.slice(0, 24)}>{p}</p>
-          ))}
-        </div>
+        {showServiceDetails(service) ? (
+          <div className="mt-5 space-y-4 leading-relaxed text-muted">
+            {service.description.map((p) => (
+              <p key={p.slice(0, 24)}>{p}</p>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-5 leading-relaxed text-muted">{service.excerpt}</p>
+        )}
+        <ServiceScopeNotice service={service} className="mt-5" />
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2">
-          <div>
-            <h3 className="font-bold text-navy-900">Les avantages</h3>
-            <ul className="mt-3 space-y-2.5">
-              {service.advantages.map((a) => (
-                <li key={a} className="flex items-start gap-2.5 text-[0.95rem] text-navy-800">
-                  <Check className="mt-0.5 size-4.5 shrink-0 text-gold-500" strokeWidth={3} aria-hidden="true" />
-                  {a}
-                </li>
-              ))}
-            </ul>
+        {showServiceDetails(service) && (
+          <div className="mt-8 grid gap-6 sm:grid-cols-2">
+            <div>
+              <h3 className="font-bold text-navy-900">Les avantages</h3>
+              <ul className="mt-3 space-y-2.5">
+                {service.advantages.map((a) => (
+                  <li key={a} className="flex items-start gap-2.5 text-[0.95rem] text-navy-800">
+                    <Check className="mt-0.5 size-4.5 shrink-0 text-gold-500" strokeWidth={3} aria-hidden="true" />
+                    {a}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold text-navy-900">Applications</h3>
+              <ul className="mt-3 space-y-2.5">
+                {service.applications.map((a) => (
+                  <li key={a} className="flex items-start gap-2.5 text-[0.95rem] text-navy-800">
+                    <CircleDot className="mt-0.5 size-4.5 shrink-0 text-navy-400" aria-hidden="true" />
+                    {a}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div>
-            <h3 className="font-bold text-navy-900">Applications</h3>
-            <ul className="mt-3 space-y-2.5">
-              {service.applications.map((a) => (
-                <li key={a} className="flex items-start gap-2.5 text-[0.95rem] text-navy-800">
-                  <CircleDot className="mt-0.5 size-4.5 shrink-0 text-navy-400" aria-hidden="true" />
-                  {a}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        )}
 
         <div className="mt-9 flex flex-col gap-3 sm:flex-row">
           <ButtonLink href={`/devis?service=${service.slug}`}>
