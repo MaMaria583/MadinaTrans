@@ -175,7 +175,7 @@ export default function ContactPage() {
               <p className="text-[0.78rem] font-bold tracking-[0.16em] text-gold-600 uppercase">
                 Formulaire de contact
               </p>
-              <h2 className="mt-2 text-2xl font-extrabold text-navy-900 sm:text-3xl">Envoyez-nous un message</h2>
+              <h2 className="mt-2 text-2xl font-medium text-navy-900 sm:text-3xl">Envoyez-nous un message</h2>
               <p className="mt-2 mb-7 text-muted">
                 Pour une demande de prix, utilisez plutôt notre{" "}
                 <Link
@@ -233,7 +233,7 @@ export default function ContactPage() {
               className="group flex items-center justify-between gap-4 rounded-[1.25rem] bg-gold-400 p-6 text-navy-950 transition-transform hover:-translate-y-0.5"
             >
               <span>
-                <span className="block text-lg font-extrabold">Besoin d&apos;un devis ?</span>
+                <span className="block text-lg font-medium">Besoin d&apos;un devis ?</span>
                 <span className="text-navy-900/80">Formulaire en 3 étapes, environ 2 minutes.</span>
               </span>
               <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-navy-950 text-gold-300 transition-transform group-hover:translate-x-1">

@@ -31,7 +31,7 @@ export function ServiceDetail({ service, reverse = false }: { service: Service; 
 
       <Reveal delay={100}>
         <p className="text-sm font-bold tracking-[0.12em] text-gold-600 uppercase">{service.tagline}</p>
-        <h2 id={`${service.slug}-title`} className="mt-2 text-3xl font-extrabold text-navy-900 sm:text-4xl">
+        <h2 id={`${service.slug}-title`} className="mt-2 text-3xl font-medium text-navy-900 sm:text-4xl">
           {service.title}
         </h2>
         {showServiceDetails(service) ? (

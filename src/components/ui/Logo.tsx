@@ -8,9 +8,9 @@ import { cn } from "@/lib/cn";
 export function LogoMark({ className, inverted = false }: { className?: string; inverted?: boolean }) {
   return (
     <svg viewBox="0 0 48 48" aria-hidden="true" className={cn("shrink-0", className)}>
-      <path d="M3 42C10 24 23 10 45 6v7C28 16 17 28 12 42H3Z" fill="#E8B42A" />
-      <path d="M16 42c5-11 14-19 29-22v7c-11 2-18 8-21 15h-8Z" fill={inverted ? "#FFFFFF" : "#102247"} />
-      <path d="M28 42c3-5 9-9 17-10v6c-4 1-7 2-9 4h-8Z" fill="#E8B42A" opacity="0.85" />
+      <path d="M3 42C10 24 23 10 45 6v7C28 16 17 28 12 42H3Z" fill="#C6A66A" />
+      <path d="M16 42c5-11 14-19 29-22v7c-11 2-18 8-21 15h-8Z" fill={inverted ? "#FFFFFF" : "#101D32"} />
+      <path d="M28 42c3-5 9-9 17-10v6c-4 1-7 2-9 4h-8Z" fill="#C6A66A" opacity="0.85" />
     </svg>
   );
 }
@@ -34,7 +34,7 @@ export function Logo({
       <span className="flex flex-col leading-none">
         <span
           className={cn(
-            "font-display text-[1.12rem] font-extrabold tracking-[-0.01em] whitespace-nowrap min-[380px]:text-[1.32rem] sm:text-[1.45rem]",
+            "font-sans text-[1.12rem] font-extrabold tracking-[-0.01em] whitespace-nowrap min-[380px]:text-[1.32rem] sm:text-[1.45rem]",
             inverted ? "text-white" : "text-navy-800",
           )}
         >

@@ -105,3 +105,25 @@ porté à 31 jours. Recommandation : héberger les photos dans `/public/images` 
 vérifier l'affichage sur l'URL Vercel.
 
 **Non testé :** envoi Resend avec un vrai compte (aucune clé disponible) — à valider avec `npm run test:resend`.
+
+## Phase 4 — refonte premium (19/11/2026)
+
+| Contrôle | Résultat |
+| --- | --- |
+| `npm run lint` | ✅ 0 erreur, 0 avertissement |
+| `npm run typecheck` | ✅ 0 erreur |
+| `npm run build` (démo) | ✅ 26 routes générées |
+| `NEXT_PUBLIC_DEMO_MODE=false npm run build` | ✅ 26 routes ; 0 coordonnée fictive, 0 badge, 0 mention « Périmètre à confirmer » sur 7 pages |
+| Liens internes (24 URL) | ✅ 24/24 en HTTP 200 |
+| Un seul `h1` par page, titres et `og:image` | ✅ 8 pages vérifiées |
+| Images locales optimisées (AVIF) | ✅ 40 à 90 Ko par visuel plein écran, servies en ~0,3 s |
+| Aucune requête vers Unsplash depuis les pages | ✅ |
+| Débordement horizontal à 360 / 390 / 430 px (7 pages) | ✅ aucun (titre « L'accompagnement personnalisé » corrigé à 360 px) |
+| Header intelligent : masqué en descendant, réaffiché en remontant, visible menu ouvert | ✅ |
+| Menu mobile plein écran : 7 liens, fermeture par Échap | ✅ |
+| Explorateur d'expertises : survol / focus clavier change le visuel et la description | ✅ |
+| API devis sans configuration | ✅ `demo` (rien n'est transmis) |
+
+**Problème rencontré :** depuis ce réseau, Unsplash répondait en 30 à 120 s par image ; l'optimiseur
+d'images expirait (504) et plusieurs visuels ne s'affichaient pas. **Correctif (autorisé) :** les 24 photos
+ont été téléchargées dans `public/images` (8,4 Mo de fichiers sources) ; le site ne dépend plus d'Unsplash.

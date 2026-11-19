@@ -1,41 +1,50 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------
-   Madina Trans — design tokens (identité de démonstration)
-   Bleu marine (principal) · Blanc · Or (accents) · Gris clair (fonds)
+   Madina Trans — identité premium (démonstration MD Digital Solutions)
+   Bleu nuit #101D32 · Bleu acier #233B59 · Or champagne #C6A66A
+   Ivoire #F4F1E9 · Blanc
+   Les échelles navy / gold conservent leurs noms pour que tous les
+   composants existants adoptent la nouvelle palette.
 ------------------------------------------------------------------- */
 @theme {
-  --color-navy-50: #eef2f9;
-  --color-navy-100: #d9e1f0;
-  --color-navy-200: #b3c2df;
-  --color-navy-300: #7f97c4;
-  --color-navy-400: #4d6aa3;
-  --color-navy-500: #2f4d86;
-  --color-navy-600: #1f3a6e;
-  --color-navy-700: #172d58;
-  --color-navy-800: #102247;
-  --color-navy-900: #0b1a38;
-  --color-navy-950: #07112a;
+  --color-navy-50: #f1f3f6;
+  --color-navy-100: #dde2ea;
+  --color-navy-200: #bac4d3;
+  --color-navy-300: #8c9ab0;
+  --color-navy-400: #5e6f89;
+  --color-navy-500: #3e5272;
+  --color-navy-600: #2d4565;
+  --color-navy-700: #233b59; /* bleu acier */
+  --color-navy-800: #182a44;
+  --color-navy-900: #101d32; /* bleu nuit */
+  --color-navy-950: #0a1322;
 
-  --color-gold-50: #fdf8e9;
-  --color-gold-100: #faefc8;
-  --color-gold-200: #f5de8d;
-  --color-gold-300: #efc851;
-  --color-gold-400: #e8b42a;
-  --color-gold-500: #d99a0b;
-  --color-gold-600: #b97b07;
-  --color-gold-700: #935a0a;
+  --color-gold-50: #faf6ee;
+  --color-gold-100: #f2e9d6;
+  --color-gold-200: #e6d5b1;
+  --color-gold-300: #d8c08f;
+  --color-gold-400: #c6a66a; /* or champagne */
+  --color-gold-500: #b39054;
+  --color-gold-600: #8f7240;
+  --color-gold-700: #765c31;
 
-  --color-mist: #f4f6fa;
-  --color-line: #e3e8f0;
-  --color-ink: #0f1b33;
-  --color-muted: #55627a;
+  --color-ivory: #f4f1e9;
+  --color-mist: #f4f1e9;
+  --color-line: #e4ded1;
+  --color-ink: #101d32;
+  --color-muted: #5b6577;
+
+  --radius-xl: 0.5rem;
+  --radius-2xl: 0.625rem;
+  --radius-3xl: 0.875rem;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-label: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  --shadow-card: 0 1px 2px rgb(11 26 56 / 0.04), 0 8px 24px -8px rgb(11 26 56 / 0.12);
-  --shadow-lift: 0 2px 4px rgb(11 26 56 / 0.05), 0 22px 44px -16px rgb(11 26 56 / 0.28);
+  --shadow-card: 0 1px 2px rgb(16 29 50 / 0.04), 0 10px 30px -14px rgb(16 29 50 / 0.16);
+  --shadow-lift: 0 2px 6px rgb(16 29 50 / 0.06), 0 30px 60px -24px rgb(16 29 50 / 0.35);
 
   --animate-fade-up: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-fade-in: fade-in 0.5s ease-out both;
@@ -92,11 +101,15 @@
   }
 
   h1,
-  h2,
+  h2 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
   h3,
   h4 {
-    font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     text-wrap: balance;
   }
 
@@ -105,12 +118,12 @@
   }
 
   ::selection {
-    background: var(--color-gold-300);
+    background: var(--color-gold-200);
     color: var(--color-navy-950);
   }
 
   :focus-visible {
-    outline: 3px solid var(--color-gold-400);
+    outline: 2px solid var(--color-gold-400);
     outline-offset: 3px;
     border-radius: 6px;
   }
@@ -208,7 +221,7 @@
 
 /* Carte standard : bordure fine, ombre douce, levée au survol */
 @utility card {
-  border-radius: 1.25rem;
+  border-radius: 0.75rem;
   border: 1px solid var(--color-line);
   background: #fff;
   box-shadow: var(--shadow-card);
@@ -242,4 +255,47 @@
 /* Les images se chargent sur un fond marine (pas de flash blanc) */
 img[data-nimg="fill"] {
   background-color: var(--color-navy-800);
+}
+
+/* ------------------------------------------------------------------
+   Signature éditoriale
+------------------------------------------------------------------- */
+/* Petite capitale espacée (sur-titres, libellés) */
+@utility label-caps {
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Filet doré fin */
+@utility rule-gold {
+  height: 1px;
+  background: linear-gradient(to right, var(--color-gold-400), transparent);
+}
+
+/* Lien éditorial souligné qui se déploie au survol */
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s var(--ease-premium);
+  &:hover {
+    background-size: 100% 1px;
+  }
+}
+
+/* Grain photographique très léger sur les grandes images */
+@utility grain {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.08;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
 }

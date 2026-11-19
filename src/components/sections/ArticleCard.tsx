@@ -8,7 +8,7 @@ export function ArticleCard({ article, featured = false }: { article: Article; f
   return (
     <article
       className={
-        "group relative flex h-full overflow-hidden rounded-2xl border border-line bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift " +
+        "group relative flex h-full overflow-hidden rounded-sm border border-line bg-white transition-shadow duration-500 hover:shadow-lift " +
         (featured ? "flex-col lg:flex-row" : "flex-col")
       }
     >
@@ -26,7 +26,7 @@ export function ArticleCard({ article, featured = false }: { article: Article; f
           }
           className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <span className="absolute top-4 left-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-navy-800 shadow-sm">
+        <span className="absolute top-4 left-4 rounded-[2px] bg-navy-950/85 px-3 py-1.5 label-caps text-gold-200">
           {article.category}
         </span>
       </div>
@@ -42,7 +42,12 @@ export function ArticleCard({ article, featured = false }: { article: Article; f
           </span>
           {article.isSample && <DemoBadge label="Article d'exemple" />}
         </div>
-        <h3 className={"mt-3 font-bold text-navy-900 " + (featured ? "text-2xl lg:text-3xl" : "text-xl")}>
+        <h3
+          className={
+            "mt-3 font-display font-normal text-navy-900 " +
+            (featured ? "text-[1.9rem] leading-tight lg:text-[2.6rem]" : "text-[1.5rem] leading-tight")
+          }
+        >
           <Link href={`/actualites/${article.slug}`} className="after:absolute after:inset-0 group-hover:text-navy-700">
             {article.title}
           </Link>

@@ -40,6 +40,25 @@ Dépôt : https://github.com/MaMaria583/MadinaTrans
 | Devis | `/devis` | Formulaire de devis complet (`?service=` pour pré-sélectionner) |
 | Mentions légales | `/mentions-legales` | Éditeur, données personnelles, crédits, avertissement démo |
 
+## Identité visuelle (phase 4)
+
+| Élément | Choix |
+| --- | --- |
+| Palette | Bleu nuit `#101D32` · Bleu acier `#233B59` · Or champagne `#C6A66A` · Ivoire `#F4F1E9` · Blanc |
+| Typographies | **Fraunces** (titres, serif contemporaine à axe optique) · **Inter** (texte, interface) |
+| Signature | Mots-clés en italique champagne, petites capitales espacées, filets dorés, numérotation éditoriale, quadrillage « plan de route », grain photographique léger |
+| Composants | Boutons à angles nets, header intelligent (se retire au défilement, revient en remontant), menu mobile plein écran |
+| Images | 24 photographies Unsplash hébergées dans `public/images` (visuels d'illustration, jamais présentés comme la flotte ou les équipes de Madina Trans) |
+
+Les tokens sont définis dans `src/app/globals.css` (`@theme`). Les échelles `navy-*` et `gold-*` portent la nouvelle palette :
+tous les composants l'adoptent sans modification.
+
+### Page d'accueil
+
+Hero cinématographique → bandeau de positionnement → présentation éditoriale → expertises interactives
+(la liste pilote le visuel) → chaîne logistique intégrée → axes d'engagement → composition immersive →
+méthode en 4 étapes → demande de devis → pied de page avec invitation.
+
 ## Stack technique
 
 | Outil | Rôle |
@@ -48,7 +67,7 @@ Dépôt : https://github.com/MaMaria583/MadinaTrans
 | **React 19** + **TypeScript** | Interface typée |
 | **Tailwind CSS 4** | Design system (tokens dans `src/app/globals.css`) |
 | **lucide-react** | Icônes homogènes |
-| `next/font` (Inter + Plus Jakarta Sans) | Typographies auto-hébergées, sans requête externe |
+| `next/font` (Fraunces + Inter) | Typographies auto-hébergées, sans requête externe |
 | `next/image` | Images optimisées (AVIF/WebP, lazy-loading, tailles adaptatives) |
 
 Trois dépendances d'exécution seulement (`next`, `react`, `react-dom`) + `lucide-react`. Aucun service tiers obligatoire.
@@ -115,7 +134,7 @@ Tout se modifie **sans toucher aux composants** :
 | Textes des services + points à confirmer (`verification`) | `src/content/services.ts` |
 | Engagements | `src/content/commitments.ts` |
 | Articles | `src/content/articles.ts` |
-| Photos | `src/content/images.ts` (déposer les fichiers dans `public/images/`) |
+| Photos | `public/images/*.jpg` + `src/content/images.ts` (remplacer un fichier en gardant son nom suffit) |
 | Menu | `src/config/navigation.ts` |
 | Couleurs / typographies | `src/app/globals.css` (`@theme`) |
 

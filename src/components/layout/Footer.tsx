@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import { mainNav } from "@/config/navigation";
 import { DEMO_MODE, agency, company, contact, isConfirmed, isDisplayable, siteMeta, socialLinks } from "@/config/site";
 import { services } from "@/content/services";
@@ -18,30 +18,51 @@ const socialIcon = {
 };
 
 function FooterTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <h2 className="mb-5 text-[0.95rem] font-bold tracking-wide text-white">
-      {children}
-      <span aria-hidden="true" className="mt-2 block h-0.5 w-8 rounded-full bg-gold-400" />
-    </h2>
-  );
+  return <h2 className="mb-6 label-caps text-gold-300">{children}</h2>;
 }
+
+const linkCls = "text-navy-100 transition-colors hover:text-white link-underline";
 
 export function Footer() {
   const configuredSocials = socialLinks.filter((s) => isConfirmed(s.url) && s.url.value);
 
   return (
-    <footer className="relative overflow-clip bg-navy-950 text-navy-100">
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-gold-500 via-gold-300 to-gold-500"
-      />
-      <Container className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+    <footer className="relative isolate overflow-clip bg-navy-950 text-navy-100">
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-routes opacity-60" />
+
+      {/* Bandeau d'invitation */}
+      <Container className="border-b border-white/10 py-16 lg:py-20">
+        <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
+          <div>
+            <p className="label-caps text-gold-300">Madina Trans · Bamako, Mali</p>
+            <p className="mt-5 max-w-3xl font-display text-[clamp(2rem,5vw,3.6rem)] leading-[1.05] font-normal tracking-[-0.02em] text-white">
+              Parlons de votre <em className="text-gold-300 italic">prochaine expédition</em>.
+            </p>
+          </div>
+          <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row [&>a]:whitespace-nowrap">
+            <Link
+              href="/devis"
+              className="inline-flex min-h-13 items-center justify-center gap-2.5 rounded-[3px] bg-gold-400 px-7 font-semibold text-navy-950 transition-colors hover:bg-gold-300"
+            >
+              Demander un devis <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex min-h-13 items-center justify-center gap-2.5 rounded-[3px] border border-white/30 px-7 font-semibold text-white transition-colors hover:border-white hover:bg-white hover:text-navy-950"
+            >
+              Nous contacter
+            </Link>
+          </div>
+        </div>
+      </Container>
+
+      <Container className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-4">
           <Logo inverted />
           <p className="mt-6 max-w-sm leading-relaxed text-navy-200">{company.shortDescription}</p>
-          <p className="mt-4 font-medium text-gold-300 italic">{company.tagline}</p>
+          <p className="mt-5 font-display text-lg text-gold-300 italic">{company.tagline}</p>
 
-          <div className="mt-6">
+          <div className="mt-7">
             {configuredSocials.length > 0 ? (
               <ul className="flex gap-3" aria-label="Réseaux sociaux">
                 {configuredSocials.map((s) => {
@@ -53,7 +74,7 @@ export function Footer() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={s.label}
-                        className="inline-flex size-10 items-center justify-center rounded-full bg-white/8 transition-colors hover:bg-gold-400 hover:text-navy-950"
+                        className="inline-flex size-10 items-center justify-center rounded-[3px] border border-white/15 transition-colors hover:border-gold-400 hover:bg-gold-400 hover:text-navy-950"
                       >
                         <Icon className="size-5" />
                       </a>
@@ -70,7 +91,7 @@ export function Footer() {
                       return (
                         <span
                           key={s.network}
-                          className="inline-flex size-10 items-center justify-center rounded-full bg-white/8"
+                          className="inline-flex size-10 items-center justify-center rounded-[3px] border border-white/15"
                         >
                           <Icon className="size-5" />
                         </span>
@@ -84,16 +105,12 @@ export function Footer() {
           </div>
         </div>
 
-        <nav aria-label="Liens utiles" className="lg:col-span-2">
-          <FooterTitle>Liens utiles</FooterTitle>
-          <ul className="space-y-2.5">
+        <nav aria-label="Navigation du pied de page" className="lg:col-span-2">
+          <FooterTitle>Navigation</FooterTitle>
+          <ul className="space-y-3">
             {mainNav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="group inline-flex items-center gap-1.5 hover:text-white">
-                  <ChevronRight
-                    className="size-3.5 text-gold-400 transition-transform group-hover:translate-x-0.5"
-                    aria-hidden="true"
-                  />
+                <Link href={item.href} className={linkCls}>
                   {item.label === "Notre groupe" ? "À propos" : item.label}
                 </Link>
               </li>
@@ -101,16 +118,12 @@ export function Footer() {
           </ul>
         </nav>
 
-        <nav aria-label="Nos services" className="lg:col-span-3">
-          <FooterTitle>Nos services</FooterTitle>
-          <ul className="space-y-2.5">
+        <nav aria-label="Nos expertises" className="lg:col-span-3">
+          <FooterTitle>Expertises</FooterTitle>
+          <ul className="space-y-3">
             {services.map((s) => (
               <li key={s.slug}>
-                <Link href={`/services/${s.slug}`} className="group inline-flex items-center gap-1.5 hover:text-white">
-                  <ChevronRight
-                    className="size-3.5 text-gold-400 transition-transform group-hover:translate-x-0.5"
-                    aria-hidden="true"
-                  />
+                <Link href={`/services/${s.slug}`} className={linkCls}>
                   {s.title}
                 </Link>
               </li>
@@ -118,20 +131,16 @@ export function Footer() {
             <li>
               <Link
                 href="/devis"
-                className="group inline-flex items-center gap-1.5 font-semibold text-gold-300 hover:text-gold-200"
+                className="inline-flex items-center gap-1.5 font-semibold text-gold-300 hover:text-gold-200"
               >
-                <ChevronRight
-                  className="size-3.5 transition-transform group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                />
-                Demander un devis
+                Demander un devis <ArrowUpRight className="size-4" aria-hidden="true" />
               </Link>
             </li>
           </ul>
         </nav>
 
         <div className="lg:col-span-3">
-          <FooterTitle>Contactez-nous</FooterTitle>
+          <FooterTitle>Contact</FooterTitle>
           <ul className="space-y-4">
             <li className="flex gap-3">
               <MapPin className="mt-0.5 size-5 shrink-0 text-gold-400" aria-hidden="true" />

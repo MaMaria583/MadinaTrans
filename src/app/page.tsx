@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { siteMeta } from "@/config/site";
+import { services } from "@/content/services";
 import { Hero } from "@/components/sections/Hero";
-import { ServicesGrid } from "@/components/sections/ServicesGrid";
-import { ChainStrengths } from "@/components/sections/ChainStrengths";
-import { AboutPreview } from "@/components/sections/AboutPreview";
-import { CommitmentsStrip } from "@/components/sections/CommitmentsStrip";
+import { EditorialIntro } from "@/components/sections/EditorialIntro";
+import { ExpertiseExplorer } from "@/components/sections/ExpertiseExplorer";
+import { IntegratedChain } from "@/components/sections/IntegratedChain";
+import { CommitmentAxes } from "@/components/sections/CommitmentAxes";
+import { ImmersiveBand } from "@/components/sections/ImmersiveBand";
+import { MethodSteps } from "@/components/sections/MethodSteps";
 import { QuoteSection } from "@/components/sections/QuoteSection";
-import { QualityService } from "@/components/sections/QualityService";
-import { LatestArticles } from "@/components/sections/LatestArticles";
-import { FinalCta } from "@/components/sections/FinalCta";
+import { Container, Highlight, SectionHeading } from "@/components/ui/Section";
 
 export const metadata: Metadata = {
   title: { absolute: siteMeta.defaultTitle },
@@ -19,15 +20,38 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
+      {/* A–C : navigation (layout), hero, bandeau de positionnement */}
       <Hero />
-      <ServicesGrid />
-      <ChainStrengths />
-      <AboutPreview />
-      <CommitmentsStrip />
-      <QuoteSection index={5} />
-      <QualityService />
-      <LatestArticles />
-      <FinalCta />
+      {/* D : présentation */}
+      <EditorialIntro />
+      {/* E : expertises */}
+      <section aria-labelledby="expertises-title" className="section-y bg-white">
+        <Container>
+          <SectionHeading
+            index={2}
+            eyebrow="Nos expertises"
+            id="expertises-title"
+            title={
+              <>
+                Quatre métiers, une même <Highlight>exigence</Highlight>
+              </>
+            }
+            intro="Du premier kilomètre à la livraison finale, des expertises complémentaires pour accompagner vos flux au Mali et vers l'international."
+            className="mb-14 lg:mb-16"
+          />
+          <ExpertiseExplorer services={services} />
+        </Container>
+      </section>
+      {/* F : chaîne intégrée */}
+      <IntegratedChain />
+      {/* G : engagements */}
+      <CommitmentAxes />
+      {/* H : composition immersive */}
+      <ImmersiveBand />
+      {/* I : méthode */}
+      <MethodSteps />
+      {/* J : devis — K : pied de page (layout) */}
+      <QuoteSection index={6} />
     </>
   );
 }

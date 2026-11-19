@@ -17,12 +17,22 @@ export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [menuTop, setMenuTop] = useState(78);
   const headerRef = useRef<HTMLElement>(null);
   const menuId = useId();
 
+  // En-tête intelligent : se retire quand on descend, revient dès qu'on remonte
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 12);
+      if (Math.abs(y - lastY) > 6) {
+        setHidden(y > lastY && y > 320);
+        lastY = y;
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -61,14 +71,15 @@ export function Header() {
       <header
         ref={headerRef}
         className={cn(
-          "sticky top-0 z-50 border-b bg-white/95 backdrop-blur-md transition-shadow duration-300",
-          scrolled ? "border-line shadow-[0_6px_24px_-12px_rgb(11_26_56/0.25)]" : "border-transparent",
+          "sticky top-0 z-50 border-b bg-white/92 backdrop-blur-xl transition-[transform,box-shadow] duration-500 ease-[var(--ease-premium)]",
+          scrolled ? "border-line shadow-[0_10px_30px_-20px_rgb(16_29_50/0.35)]" : "border-transparent",
+          hidden && !open && "-translate-y-full",
         )}
       >
         <div
           className={cn(
-            "mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 transition-[height] duration-300 sm:px-6 lg:px-8",
-            scrolled ? "h-[68px]" : "h-[78px]",
+            "mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 transition-[height] duration-300 sm:px-8 lg:px-10",
+            scrolled ? "h-[68px]" : "h-[80px]",
           )}
         >
           <Logo />
@@ -83,16 +94,16 @@ export function Header() {
                       href={item.href}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "relative inline-flex h-10 items-center rounded-full px-2 text-[0.88rem] font-semibold whitespace-nowrap transition-colors xl:px-3 xl:text-[0.94rem]",
-                        active ? "text-navy-900" : "text-navy-700/80 hover:text-navy-900",
+                        "group/nav relative inline-flex h-10 items-center px-2 text-[0.86rem] font-medium whitespace-nowrap transition-colors xl:px-3.5 xl:text-[0.9rem]",
+                        active ? "text-navy-900" : "text-navy-600 hover:text-navy-900",
                       )}
                     >
                       {item.label}
                       <span
                         aria-hidden="true"
                         className={cn(
-                          "absolute inset-x-2 -bottom-0.5 h-[3px] origin-left rounded-full bg-gold-400 transition-transform duration-300 xl:inset-x-3",
-                          active ? "scale-x-100" : "scale-x-0",
+                          "absolute inset-x-2 bottom-0.5 h-px origin-left bg-gold-500 transition-transform duration-500 ease-[var(--ease-premium)] xl:inset-x-3.5",
+                          active ? "scale-x-100" : "scale-x-0 group-hover/nav:scale-x-100",
                         )}
                       />
                     </Link>
@@ -105,7 +116,7 @@ export function Header() {
           <div className="flex items-center gap-2">
             <Link
               href={quoteHref}
-              className="hidden min-h-11 items-center gap-2 rounded-full bg-gold-400 px-5 whitespace-nowrap text-[0.92rem] font-bold text-navy-950 shadow-[0_8px_20px_-8px_rgb(217_154_11/0.7)] transition-all hover:-translate-y-0.5 hover:bg-gold-300 sm:inline-flex"
+              className="hidden min-h-11 items-center gap-2 rounded-[3px] bg-navy-900 px-5 text-[0.88rem] font-semibold whitespace-nowrap text-white transition-colors duration-300 hover:bg-gold-400 hover:text-navy-950 sm:inline-flex"
             >
               <span className="lg:hidden xl:inline">Demander un devis</span>
               <span className="hidden lg:inline xl:hidden">Devis</span>
@@ -113,7 +124,7 @@ export function Header() {
             </Link>
             <button
               type="button"
-              className="inline-flex size-11 items-center justify-center rounded-full border border-line text-navy-800 transition-colors hover:bg-navy-50 lg:hidden"
+              className="inline-flex size-11 items-center justify-center rounded-[3px] border border-line text-navy-900 transition-colors hover:bg-ivory lg:hidden"
               aria-expanded={open}
               aria-controls={menuId}
               aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
@@ -129,26 +140,34 @@ export function Header() {
       <div
         id={menuId}
         hidden={!open}
-        className="fixed inset-x-0 bottom-0 z-[45] overflow-y-auto overscroll-contain border-t border-line bg-white lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-[45] animate-fade-in overflow-y-auto overscroll-contain bg-navy-950 text-white lg:hidden"
         style={{ top: menuTop }}
       >
-        <nav aria-label="Navigation mobile" className="px-4 pt-4 pb-10 sm:px-6">
-          <ul className="divide-y divide-line">
-            {mainNav.map((item) => {
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-routes" />
+        <nav aria-label="Navigation mobile" className="relative px-5 pt-6 pb-12 sm:px-8">
+          <p className="label-caps text-gold-300">Menu</p>
+          <ul className="mt-4">
+            {mainNav.map((item, i) => {
               const active = isActive(pathname, item.href);
               return (
-                <li key={item.href}>
+                <li key={item.href} className="border-b border-white/10">
                   <Link
                     href={item.href}
                     onClick={close}
                     aria-current={active ? "page" : undefined}
-                    className={cn(
-                      "flex min-h-14 items-center justify-between text-lg font-semibold",
-                      active ? "text-gold-600" : "text-navy-900",
-                    )}
+                    className="flex min-h-16 items-baseline gap-4"
                   >
-                    {item.label}
-                    <ArrowRight className="size-5 opacity-40" aria-hidden="true" />
+                    <span className="font-display text-sm text-white/40 tabular-nums">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span
+                      className={cn(
+                        "font-display text-[1.75rem] leading-none font-normal",
+                        active ? "text-gold-300 italic" : "text-white",
+                      )}
+                    >
+                      {item.label}
+                    </span>
                   </Link>
                 </li>
               );
@@ -157,24 +176,24 @@ export function Header() {
           <Link
             href={quoteHref}
             onClick={close}
-            className="mt-6 flex min-h-14 items-center justify-center gap-2 rounded-full bg-gold-400 text-base font-bold text-navy-950"
+            className="mt-8 flex min-h-14 items-center justify-center gap-2 rounded-[3px] bg-gold-400 text-base font-semibold text-navy-950"
           >
             Demander un devis <ArrowRight className="size-5" aria-hidden="true" />
           </Link>
-          <div className="mt-8 space-y-3 rounded-2xl bg-mist p-5 text-[0.95rem] text-navy-800">
+          <div className="mt-8 space-y-3 border-t border-white/10 pt-6 text-[0.95rem] text-navy-100">
             {isDisplayable(contact.phone) && (
               <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                <Phone className="size-4 text-gold-600" aria-hidden="true" />
-                <ContactValue kind="phone" />
+                <Phone className="size-4 text-gold-400" aria-hidden="true" />
+                <ContactValue kind="phone" tone="dark" />
               </p>
             )}
             {isDisplayable(contact.email) && (
               <p className="flex flex-wrap items-center gap-x-3 gap-y-1 break-all">
-                <Mail className="size-4 shrink-0 text-gold-600" aria-hidden="true" />
-                <ContactValue kind="email" />
+                <Mail className="size-4 shrink-0 text-gold-400" aria-hidden="true" />
+                <ContactValue kind="email" tone="dark" />
               </p>
             )}
-            <p className="pt-2 text-sm font-medium text-gold-700 italic">{company.tagline}</p>
+            <p className="pt-2 font-display text-lg text-gold-300 italic">{company.tagline}</p>
           </div>
         </nav>
       </div>

@@ -27,7 +27,7 @@ const reassurance = [
 export default function QuotePage() {
   return (
     <>
-      <QuoteSection withParams headingLevel="h1" />
+      <QuoteSection withParams headingLevel="h1" tone="ivory" />
       <section aria-label="Nos garanties" className="py-16">
         <Container>
           <ul className="grid gap-6 md:grid-cols-3">

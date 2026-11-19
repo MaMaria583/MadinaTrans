@@ -6,7 +6,7 @@ import { images } from "@/content/images";
 import { services } from "@/content/services";
 import { pageMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/sections/PageHero";
-import { FinalCta } from "@/components/sections/FinalCta";
+import { ImmersiveBand } from "@/components/sections/ImmersiveBand";
 import { Container, Highlight, SectionHeading } from "@/components/ui/Section";
 import { ServiceIcon } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
@@ -108,14 +108,14 @@ export default function AboutPage() {
       {/* Vision & mission */}
       <section
         aria-labelledby="vision-title"
-        className="section-y-sm relative isolate overflow-clip bg-navy-950 text-white"
+        className="section-y relative isolate overflow-clip bg-navy-950 text-white"
       >
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-routes" />
         <Container>
           <h2 id="vision-title" className="sr-only">
             Vision et mission
           </h2>
-          <div className="grid gap-5 md:grid-cols-2 md:gap-6">
+          <div className="grid gap-14 md:grid-cols-2 md:gap-0">
             {[
               { icon: Compass, title: "Notre vision", text: institutional.vision },
               { icon: Users, title: "Notre mission", text: institutional.mission },
@@ -123,11 +123,15 @@ export default function AboutPage() {
               <Reveal
                 key={b.title}
                 delay={i * 100}
-                className="rounded-3xl border border-white/10 bg-white/[0.04] p-7 sm:p-10"
+                className="md:px-10 md:first:border-r md:first:border-white/10 md:first:pl-0 md:last:pr-0"
               >
-                <b.icon className="size-10 text-gold-400" aria-hidden="true" />
-                <h3 className="mt-5 text-2xl font-bold">{b.title}</h3>
-                <p className="mt-3 text-[1.05rem] leading-relaxed text-navy-100 sm:text-lg">{b.text}</p>
+                <p className="inline-flex items-center gap-3 label-caps text-gold-300">
+                  <b.icon className="size-4" aria-hidden="true" />
+                  {b.title}
+                </p>
+                <p className="mt-6 font-display text-[clamp(1.5rem,2.6vw,2.15rem)] leading-[1.3] font-normal text-white">
+                  « {b.text} »
+                </p>
               </Reveal>
             ))}
           </div>
@@ -260,7 +264,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <FinalCta />
+      <ImmersiveBand image={images.portCranes} />
     </>
   );
 }

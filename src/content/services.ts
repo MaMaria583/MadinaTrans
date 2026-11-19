@@ -68,7 +68,7 @@ export const services: Service[] = [
       { title: "Chargement", text: "Enlèvement, sécurisation et contrôle." },
       { title: "Livraison", text: "Acheminement, suivi et remise au destinataire." },
     ],
-    image: images.truckSunset,
+    image: images.heroTruck,
     secondaryImage: images.truckCab,
     verification: {
       domain: "provided",

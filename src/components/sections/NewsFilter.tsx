@@ -4,7 +4,15 @@ import { useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 /** Filtre par catégorie des articles (rendu serveur, filtrage côté client). */
-export function NewsFilter({ categories, children }: { categories: string[]; children: ReactNode }) {
+export function NewsFilter({
+  categories,
+  children,
+  listClassName = "grid gap-6 sm:grid-cols-2 lg:grid-cols-3",
+}: {
+  categories: string[];
+  children: ReactNode;
+  listClassName?: string;
+}) {
   const [active, setActive] = useState("Tous");
   const listRef = useRef<HTMLUListElement>(null);
 
@@ -25,17 +33,17 @@ export function NewsFilter({ categories, children }: { categories: string[]; chi
             aria-pressed={active === cat}
             onClick={() => select(cat)}
             className={cn(
-              "min-h-10 rounded-full border px-4 text-sm font-semibold transition-colors",
+              "min-h-10 rounded-[3px] border px-4 text-sm font-medium transition-colors",
               active === cat
-                ? "border-navy-800 bg-navy-800 text-white"
-                : "border-line bg-white text-navy-800 hover:border-navy-800",
+                ? "border-navy-900 bg-navy-900 text-white"
+                : "border-line bg-white text-navy-800 hover:border-navy-900",
             )}
           >
             {cat}
           </button>
         ))}
       </div>
-      <ul ref={listRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <ul ref={listRef} className={listClassName}>
         {children}
       </ul>
     </>

@@ -2,52 +2,32 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 export function Container({ className, children }: { className?: string; children: ReactNode }) {
-  return <div className={cn("mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8", className)}>{children}</div>;
+  return <div className={cn("mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10", className)}>{children}</div>;
 }
 
-/** Sur-titre de section, avec numéro optionnel (« 01 — Nos métiers »). */
+/** Sur-titre éditorial : numéro, filet doré et petite capitale espacée. */
 export function Eyebrow({ children, light = false, index }: { children: ReactNode; light?: boolean; index?: number }) {
   return (
-    <p
-      className={cn(
-        "mb-4 inline-flex items-center gap-3 text-[0.78rem] font-bold tracking-[0.16em] uppercase",
-        light ? "text-gold-300" : "text-gold-600",
-      )}
-    >
+    <p className={cn("mb-5 inline-flex items-center gap-3 label-caps", light ? "text-gold-300" : "text-gold-700")}>
       {index !== undefined ? (
         <span
-          className={cn(
-            "font-display text-[0.8rem] tracking-normal tabular-nums",
-            light ? "text-white/60" : "text-navy-300",
-          )}
+          className={cn("font-display text-sm tracking-normal tabular-nums", light ? "text-white/55" : "text-navy-400")}
         >
           {String(index).padStart(2, "0")}
         </span>
       ) : null}
-      <span aria-hidden="true" className="h-px w-8 bg-gold-400" />
+      <span aria-hidden="true" className="h-px w-10 bg-gold-400" />
       {children}
     </p>
   );
 }
 
 /**
- * Mot ou expression mis en valeur dans un titre : or + trait de soulignement
- * en forme de route, rappel du logo.
+ * Mise en valeur dans un titre : italique serif en or champagne.
+ * Signature typographique de la marque.
  */
 export function Highlight({ children, light = false }: { children: ReactNode; light?: boolean }) {
-  return (
-    <span className={cn("relative inline-block whitespace-nowrap", light ? "text-gold-400" : "text-gold-600")}>
-      <span className="relative z-10">{children}</span>
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 200 12"
-        preserveAspectRatio="none"
-        className="absolute -bottom-1.5 left-0 h-2.5 w-full text-gold-400/70"
-      >
-        <path d="M2 9C40 3 120 1 198 5" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" />
-      </svg>
-    </span>
-  );
+  return <em className={cn("font-normal italic", light ? "text-gold-300" : "text-gold-600")}>{children}</em>;
 }
 
 export function SectionHeading({
@@ -59,6 +39,7 @@ export function SectionHeading({
   light = false,
   as: Tag = "h2",
   id,
+  size = "lg",
   className,
 }: {
   eyebrow?: string;
@@ -69,6 +50,7 @@ export function SectionHeading({
   light?: boolean;
   as?: "h1" | "h2";
   id?: string;
+  size?: "md" | "lg";
   className?: string;
 }) {
   return (
@@ -81,7 +63,10 @@ export function SectionHeading({
       <Tag
         id={id}
         className={cn(
-          "text-[clamp(1.8rem,4.4vw,2.75rem)] leading-[1.12] font-extrabold",
+          "font-normal tracking-[-0.02em]",
+          size === "lg"
+            ? "text-[clamp(2rem,4.8vw,3.4rem)] leading-[1.06]"
+            : "text-[clamp(1.7rem,3.6vw,2.5rem)] leading-[1.1]",
           light ? "text-white" : "text-navy-900",
         )}
       >
@@ -90,9 +75,9 @@ export function SectionHeading({
       {intro && (
         <p
           className={cn(
-            "mt-5 text-[1.05rem] leading-relaxed sm:text-lg",
-            align === "center" && "mx-auto max-w-2xl",
-            light ? "text-navy-100" : "text-muted",
+            "mt-6 max-w-2xl text-[1.05rem] leading-[1.75] sm:text-lg",
+            align === "center" && "mx-auto",
+            light ? "text-navy-100/90" : "text-muted",
           )}
         >
           {intro}

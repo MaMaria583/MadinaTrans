@@ -361,7 +361,7 @@ export function QuoteForm({
             <button
               type="button"
               onClick={back}
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-4 font-semibold text-navy-800 hover:bg-mist"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[3px] px-4 font-semibold text-navy-800 hover:bg-mist"
             >
               <ArrowLeft className="size-4" aria-hidden="true" /> Retour
             </button>
@@ -373,7 +373,7 @@ export function QuoteForm({
           <button
             type="submit"
             disabled={submitting}
-            className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-gold-400 px-7 font-bold text-navy-950 shadow-[0_8px_20px_-8px_rgb(217_154_11/0.7)] transition-all hover:-translate-y-0.5 hover:bg-gold-300 disabled:cursor-wait disabled:opacity-70 sm:w-auto"
+            className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-[3px] bg-gold-400 px-7 font-semibold text-navy-950 shadow-[0_8px_20px_-8px_rgb(198_166_106/0.45)] transition-all hover:-translate-y-0.5 hover:bg-gold-300 disabled:cursor-wait disabled:opacity-70 sm:w-auto"
           >
             {submitting ? (
               <>

@@ -42,7 +42,7 @@ presse, registre). **Aucune information n'a donc le statut « vérifiée ».**
 | E-mail | `contact@madinatrans.example` | Domaine `.example` réservé, non fonctionnel, badge « Fictif » |
 | WhatsApp | `22300000000` | Bouton « DÉMO » expliquant qu'il n'est pas opérationnel |
 | Logo | Concept graphique temporaire (SVG) | Ce n'est **pas** le logo officiel |
-| Photographies | Unsplash (illustrations) | Ne représentent ni la flotte, ni les locaux, ni le personnel |
+| Photographies | Unsplash (illustrations), hébergées dans `public/images` | Ne représentent ni la flotte, ni les locaux, ni le personnel |
 | Articles (4) | Contenus pédagogiques généraux | Badge « Article d'exemple », dates fictives |
 | Textes des services, présentation, valeurs, vision, mission, engagements, atouts | Rédaction de démonstration (`institutional` dans `site.ts`) | Décrivent des prestations types, sans chiffre ni référence |
 | Secteurs d'activité (commerce, construction, agro-alimentaire…) | Capacités présentées, pas des références clients | À valider avec la direction |
@@ -140,6 +140,9 @@ Fichier : `src/content/services.ts` → champ `verification` de chaque service
 - [ ] Outils de suivi des stocks proposés au client
 
 ### Contenus institutionnels
+- [ ] Accroche « Nous connectons les routes, les marchés et les opportunités » et positionnement international
+- [ ] Chaîne intégrée (collecte, transport, transit, acheminement, livraison) : étapes réellement assurées
+- [ ] Axes d'engagement (fiabilité, proximité, réactivité, qualité de service)
 - [ ] Présentation, vision, mission, valeurs (`institutional` dans `src/config/site.ts`)
 - [ ] Atouts mis en avant sur l'accueil (« chaîne multimodale », « interlocuteur unique », « ancrage à Bamako », « devis détaillés »)
 - [ ] Démarche qualité (4 étapes) et engagements (sécurité, délais, qualité, transparence…)

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import { DEMO_MODE, company, siteMeta } from "@/config/site";
 import { DemoBanner } from "@/components/layout/DemoBanner";
 import { TopBar } from "@/components/layout/TopBar";
@@ -11,10 +11,11 @@ import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/seo/Organization
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
+// Titres : serif contemporaine à axe optique (élégante et expressive)
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  axes: ["opsz"],
   display: "swap",
 });
 
@@ -52,14 +53,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b1a38",
+  themeColor: "#101d32",
   width: "device-width",
   initialScale: 1,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="fr" className={`${inter.variable} ${jakarta.variable} antialiased`}>
+    <html lang="fr" className={`${inter.variable} ${fraunces.variable} antialiased`}>
       <body className="flex min-h-screen flex-col pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">
         <a
           href="#contenu"

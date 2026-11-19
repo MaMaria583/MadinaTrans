@@ -25,7 +25,7 @@ export function TopBar() {
             <span>{contact.city.value}</span>
           </li>
         </ul>
-        <p className="font-medium text-gold-200 italic">{company.tagline}</p>
+        <p className="font-display text-[0.95rem] text-gold-300 italic">{company.tagline}</p>
       </Container>
     </div>
   );

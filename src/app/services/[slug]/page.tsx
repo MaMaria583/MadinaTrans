@@ -143,7 +143,7 @@ async function ServiceContent({ params }: { params: PageProps<"/services/[slug]"
                   delay={i * 80}
                   className="relative rounded-2xl bg-white p-7 shadow-card"
                 >
-                  <span className="font-display text-5xl font-extrabold text-gold-300">
+                  <span className="font-display text-5xl font-medium text-gold-300">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="mt-3 text-lg font-bold text-navy-900">{step.title}</h3>
@@ -159,7 +159,7 @@ async function ServiceContent({ params }: { params: PageProps<"/services/[slug]"
 
       <section aria-labelledby="others-title" className="section-y-sm">
         <Container>
-          <h2 id="others-title" className="text-2xl font-extrabold text-navy-900 sm:text-3xl">
+          <h2 id="others-title" className="text-2xl font-medium text-navy-900 sm:text-3xl">
             Découvrez nos autres services
           </h2>
           <ul className="mt-8 grid gap-5 md:grid-cols-3">

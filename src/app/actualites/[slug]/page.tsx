@@ -9,7 +9,8 @@ import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 import { ogFromUnsplash, pageMetadata } from "@/lib/seo";
 import { Container } from "@/components/ui/Section";
 import { ArticleCard } from "@/components/sections/ArticleCard";
-import { FinalCta } from "@/components/sections/FinalCta";
+import { ImmersiveBand } from "@/components/sections/ImmersiveBand";
+import { images } from "@/content/images";
 import { DemoBadge } from "@/components/ui/DemoBadge";
 import { DEMO_MODE } from "@/config/site";
 
@@ -83,7 +84,7 @@ async function ArticleContent({ params }: { params: PageProps<"/actualites/[slug
               </span>
               {article.isSample && <DemoBadge label="Article d'exemple" />}
             </div>
-            <h1 className="mt-5 text-3xl leading-tight font-extrabold text-navy-900 sm:text-4xl lg:text-5xl">
+            <h1 className="mt-5 text-3xl leading-tight font-medium text-navy-900 sm:text-4xl lg:text-5xl">
               {article.title}
             </h1>
             <p className="mt-5 text-xl leading-relaxed text-muted">{article.excerpt}</p>
@@ -132,7 +133,7 @@ async function ArticleContent({ params }: { params: PageProps<"/actualites/[slug
 
       <section aria-labelledby="related-title" className="bg-mist section-y-sm">
         <Container>
-          <h2 id="related-title" className="text-2xl font-extrabold text-navy-900 sm:text-3xl">
+          <h2 id="related-title" className="text-2xl font-medium text-navy-900 sm:text-3xl">
             À lire également
           </h2>
           <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -145,7 +146,7 @@ async function ArticleContent({ params }: { params: PageProps<"/actualites/[slug
         </Container>
       </section>
 
-      <FinalCta />
+      <ImmersiveBand image={images.portContainers} />
     </>
   );
 }

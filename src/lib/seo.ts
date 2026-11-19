@@ -25,7 +25,7 @@ export function pageMetadata({
   publishedTime?: string;
 }): Metadata {
   const ogImage = image
-    ? { url: image, width: 1200, height: 630, alt: imageAlt ?? title }
+    ? { url: image, alt: imageAlt ?? title }
     : { url: "/opengraph-image", width: 1200, height: 630, alt: siteMeta.defaultTitle };
 
   return {
@@ -51,5 +51,6 @@ export function pageMetadata({
   };
 }
 
-/** Image Unsplash recadrée au format Open Graph (1200 × 630). */
-export const ogFromUnsplash = (src: string) => src.replace(/w=\d+/, "w=1200").replace("fit=crop", "fit=crop&h=630");
+/** Image de partage à partir d'un visuel du site (chemin local rendu absolu via metadataBase). */
+export const ogFromUnsplash = (src: string) =>
+  src.startsWith("http") ? src.replace(/w=\d+/, "w=1200").replace("fit=crop", "fit=crop&h=630") : src;

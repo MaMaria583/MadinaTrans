@@ -4,7 +4,7 @@ import { services } from "@/content/services";
 import { pageMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/sections/PageHero";
 import { ServiceDetail } from "@/components/sections/ServiceDetail";
-import { FinalCta } from "@/components/sections/FinalCta";
+import { ImmersiveBand } from "@/components/sections/ImmersiveBand";
 import { Container } from "@/components/ui/Section";
 import { ServiceIcon } from "@/components/ui/Icons";
 
@@ -38,7 +38,7 @@ export default function ServicesPage() {
               <li key={s.slug} className="shrink-0">
                 <Link
                   href={`#${s.slug}`}
-                  className="inline-flex min-h-10 items-center gap-2 rounded-full border border-line px-4 text-sm font-semibold whitespace-nowrap text-navy-800 transition-colors hover:border-navy-800 hover:bg-navy-50"
+                  className="inline-flex min-h-10 items-center gap-2 rounded-[3px] border border-line px-4 text-sm font-medium whitespace-nowrap text-navy-800 transition-colors hover:border-navy-800 hover:bg-navy-50"
                 >
                   <ServiceIcon name={s.icon} className="size-4 text-gold-600" />
                   {s.shortTitle}
@@ -57,9 +57,15 @@ export default function ServicesPage() {
         </Container>
       </div>
 
-      <FinalCta
-        title="Besoin d'une solution sur mesure ?"
-        text="Chaque projet est unique. Décrivez-nous votre besoin, nous construisons avec vous l'organisation la plus adaptée."
+      <ImmersiveBand
+        image={images.warehouseAerial}
+        eyebrow="Une solution sur mesure"
+        title={
+          <>
+            Chaque projet est unique. <em className="text-gold-300 italic">Parlons du vôtre.</em>
+          </>
+        }
+        text="Décrivez-nous votre besoin : nous construisons avec vous l'organisation la plus adaptée."
       />
     </>
   );

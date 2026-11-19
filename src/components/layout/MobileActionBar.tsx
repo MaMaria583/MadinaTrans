@@ -42,7 +42,7 @@ export function MobileActionBar() {
         {!onQuotePage && (
           <Link
             href="/devis"
-            className="my-2 flex flex-[1.6] items-center justify-center gap-2 rounded-full bg-gold-400 text-[0.92rem] font-bold text-navy-950"
+            className="my-2 flex flex-[1.6] items-center justify-center gap-2 rounded-[3px] bg-gold-400 text-[0.92rem] font-semibold text-navy-950"
           >
             <FileText className="size-4" aria-hidden="true" /> Demander un devis
           </Link>
