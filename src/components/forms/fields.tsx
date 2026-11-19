@@ -1,9 +1,15 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { ChevronDown } from "lucide-react";
+import { Check, ChevronDown, CircleAlert } from "lucide-react";
 import { cn } from "@/lib/cn";
 
+/**
+ * Champs de formulaire accessibles.
+ * - Mode contrôlé : passer `value` + `onChange`.
+ * - Mode non contrôlé : passer `defaultValue` (lecture via FormData).
+ * Les erreurs sont reliées au champ (aria-invalid / aria-describedby).
+ */
 interface BaseProps {
   name: string;
   label: string;
@@ -11,12 +17,12 @@ interface BaseProps {
   required?: boolean;
   hint?: string;
   className?: string;
-  tone?: "light" | "dark";
   onBlur?: (name: string, value: string) => void;
+  onChange?: (name: string, value: string) => void;
 }
 
 const inputBase =
-  "w-full rounded-xl border bg-white px-4 text-[1rem] text-ink placeholder:text-navy-300 transition-[border-color,box-shadow] outline-none focus:border-navy-600 focus:ring-4 focus:ring-navy-100";
+  "w-full rounded-xl border bg-white px-4 text-[1rem] text-ink placeholder:text-navy-300 transition-[border-color,box-shadow] duration-200 outline-none focus:border-navy-600 focus:ring-4 focus:ring-navy-100 aria-invalid:border-red-500 aria-invalid:focus:ring-red-100";
 
 function FieldShell({
   name,
@@ -25,42 +31,37 @@ function FieldShell({
   required,
   hint,
   className,
-  tone = "light",
   children,
-}: Omit<BaseProps, "onBlur"> & { children: ReactNode }) {
+}: Omit<BaseProps, "onBlur" | "onChange"> & { children: ReactNode }) {
   return (
     <div className={cn("flex flex-col gap-1.5", className)}>
-      <label
-        htmlFor={`f-${name}`}
-        className={cn("text-[0.88rem] font-semibold", tone === "dark" ? "text-navy-50" : "text-navy-900")}
-      >
+      <label htmlFor={`f-${name}`} className="text-[0.9rem] font-semibold text-navy-900">
         {label}
         {required ? (
-          <span className="ml-0.5 text-gold-500" aria-hidden="true">
+          <span className="ml-0.5 text-gold-600" aria-hidden="true">
             *
           </span>
         ) : (
-          <span className={cn("ml-1.5 font-normal", tone === "dark" ? "text-navy-300" : "text-muted")}>
-            (facultatif)
-          </span>
+          <span className="ml-1.5 text-[0.82rem] font-normal text-muted">(facultatif)</span>
         )}
       </label>
       {children}
       {hint && !error && (
-        <p id={`f-${name}-hint`} className={cn("text-[0.8rem]", tone === "dark" ? "text-navy-300" : "text-muted")}>
+        <p id={`f-${name}-hint`} className="text-[0.82rem] leading-snug text-muted">
           {hint}
         </p>
       )}
-      {error && (
-        <p
-          id={`f-${name}-error`}
-          role="alert"
-          className={cn("text-[0.82rem] font-medium", tone === "dark" ? "text-red-300" : "text-red-700")}
-        >
-          {error}
-        </p>
-      )}
+      {error && <FieldError id={`f-${name}-error`}>{error}</FieldError>}
     </div>
+  );
+}
+
+export function FieldError({ id, children }: { id: string; children: ReactNode }) {
+  return (
+    <p id={id} role="alert" className="flex items-start gap-1.5 text-[0.84rem] leading-snug font-medium text-red-700">
+      <CircleAlert className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
+      {children}
+    </p>
   );
 }
 
@@ -73,15 +74,21 @@ export function TextField({
   placeholder,
   inputMode,
   defaultValue,
+  value,
+  enterKeyHint,
+  min,
   ...props
 }: BaseProps & {
-  type?: "text" | "email" | "tel";
+  type?: "text" | "email" | "tel" | "date";
   autoComplete?: string;
   placeholder?: string;
   inputMode?: "text" | "email" | "tel";
   defaultValue?: string;
+  value?: string;
+  enterKeyHint?: "next" | "done" | "send";
+  min?: string;
 }) {
-  const { name, error, required, hint, onBlur } = props;
+  const { name, error, required, hint, onBlur, onChange } = props;
   return (
     <FieldShell {...props}>
       <input
@@ -91,12 +98,16 @@ export function TextField({
         autoComplete={autoComplete}
         placeholder={placeholder}
         inputMode={inputMode}
-        defaultValue={defaultValue}
+        enterKeyHint={enterKeyHint}
+        min={min}
+        {...(value !== undefined ? { value } : { defaultValue })}
         required={required}
+        aria-required={required || undefined}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy(name, error, hint)}
         onBlur={(e) => onBlur?.(name, e.currentTarget.value)}
-        className={cn(inputBase, "h-12", error ? "border-red-500" : "border-line")}
+        onChange={(e) => onChange?.(name, e.currentTarget.value)}
+        className={cn(inputBase, "h-12 border-line", type === "date" && "appearance-none")}
       />
     </FieldShell>
   );
@@ -105,9 +116,11 @@ export function TextField({
 export function TextAreaField({
   placeholder,
   rows = 5,
+  value,
+  maxLength,
   ...props
-}: BaseProps & { placeholder?: string; rows?: number }) {
-  const { name, error, required, hint, onBlur } = props;
+}: BaseProps & { placeholder?: string; rows?: number; value?: string; maxLength?: number }) {
+  const { name, error, required, hint, onBlur, onChange } = props;
   return (
     <FieldShell {...props}>
       <textarea
@@ -115,12 +128,21 @@ export function TextAreaField({
         name={name}
         rows={rows}
         placeholder={placeholder}
+        maxLength={maxLength}
+        {...(value !== undefined ? { value } : {})}
         required={required}
+        aria-required={required || undefined}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy(name, error, hint)}
         onBlur={(e) => onBlur?.(name, e.currentTarget.value)}
-        className={cn(inputBase, "resize-y py-3 leading-relaxed", error ? "border-red-500" : "border-line")}
+        onChange={(e) => onChange?.(name, e.currentTarget.value)}
+        className={cn(inputBase, "resize-y border-line py-3 leading-relaxed")}
       />
+      {value !== undefined && maxLength && (
+        <p className="-mt-0.5 self-end text-[0.75rem] text-muted tabular-nums" aria-hidden="true">
+          {value.length} / {maxLength}
+        </p>
+      )}
     </FieldShell>
   );
 }
@@ -129,13 +151,15 @@ export function SelectField({
   options,
   placeholder = "Sélectionnez…",
   defaultValue = "",
+  value,
   ...props
 }: BaseProps & {
   options: ReadonlyArray<{ value: string; label: string }>;
   placeholder?: string;
   defaultValue?: string;
+  value?: string;
 }) {
-  const { name, error, required, hint, onBlur } = props;
+  const { name, error, required, hint, onBlur, onChange } = props;
   return (
     <FieldShell {...props}>
       <div className="relative">
@@ -143,12 +167,16 @@ export function SelectField({
           id={`f-${name}`}
           name={name}
           required={required}
-          defaultValue={defaultValue}
+          aria-required={required || undefined}
+          {...(value !== undefined ? { value } : { defaultValue })}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy(name, error, hint)}
           onBlur={(e) => onBlur?.(name, e.currentTarget.value)}
-          onChange={(e) => onBlur?.(name, e.currentTarget.value)}
-          className={cn(inputBase, "h-12 appearance-none pr-11", error ? "border-red-500" : "border-line")}
+          onChange={(e) => {
+            onChange?.(name, e.currentTarget.value);
+            onBlur?.(name, e.currentTarget.value);
+          }}
+          className={cn(inputBase, "h-12 appearance-none border-line pr-11")}
         >
           <option value="" disabled>
             {placeholder}
@@ -168,59 +196,144 @@ export function SelectField({
   );
 }
 
+/** Choix sous forme de grandes cartes (cibles tactiles confortables). */
+export function ChoiceCards({
+  name,
+  legend,
+  options,
+  value,
+  onChange,
+  error,
+  renderIcon,
+}: {
+  name: string;
+  legend: string;
+  options: ReadonlyArray<{ value: string; label: string; hint?: string }>;
+  value: string;
+  onChange: (name: string, value: string) => void;
+  error?: string;
+  renderIcon?: (value: string) => ReactNode;
+}) {
+  return (
+    <fieldset aria-describedby={error ? `f-${name}-error` : undefined}>
+      <legend className="mb-3 text-[0.9rem] font-semibold text-navy-900">
+        {legend}
+        <span className="ml-0.5 text-gold-600" aria-hidden="true">
+          *
+        </span>
+      </legend>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {options.map((o) => {
+          const checked = value === o.value;
+          return (
+            <label
+              key={o.value}
+              className={cn(
+                "group relative flex min-h-[4.5rem] cursor-pointer items-center gap-3.5 rounded-2xl border-2 p-4 transition-all duration-200",
+                checked
+                  ? "border-navy-800 bg-navy-50/70 shadow-card"
+                  : "border-line bg-white hover:border-navy-200 hover:bg-mist",
+                o.value === "autre" && "sm:col-span-2",
+              )}
+            >
+              <input
+                type="radio"
+                name={name}
+                value={o.value}
+                checked={checked}
+                onChange={() => onChange(name, o.value)}
+                className="peer sr-only"
+              />
+              {renderIcon && (
+                <span
+                  className={cn(
+                    "inline-flex size-11 shrink-0 items-center justify-center rounded-xl transition-colors",
+                    checked ? "bg-navy-800 text-gold-300" : "bg-mist text-navy-700",
+                  )}
+                >
+                  {renderIcon(o.value)}
+                </span>
+              )}
+              <span className="min-w-0 flex-1">
+                <span className="block font-semibold text-navy-900">{o.label}</span>
+                {o.hint && <span className="block text-[0.82rem] leading-snug text-muted">{o.hint}</span>}
+              </span>
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "inline-flex size-6 shrink-0 items-center justify-center rounded-full border-2 transition-colors",
+                  checked ? "border-navy-800 bg-navy-800 text-white" : "border-navy-200",
+                )}
+              >
+                {checked && <Check className="size-3.5" strokeWidth={3.5} />}
+              </span>
+              <span className="pointer-events-none absolute inset-0 rounded-2xl ring-gold-400 peer-focus-visible:ring-4" />
+            </label>
+          );
+        })}
+      </div>
+      {error && (
+        <div className="mt-2">
+          <FieldError id={`f-${name}-error`}>{error}</FieldError>
+        </div>
+      )}
+    </fieldset>
+  );
+}
+
 export function ConsentField({
   name = "consent",
   error,
-  tone = "light",
+  checked,
   onBlur,
+  onChange,
 }: {
   name?: string;
   error?: string;
-  tone?: "light" | "dark";
+  checked?: boolean;
   onBlur?: (name: string, value: string) => void;
+  onChange?: (name: string, value: string) => void;
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label
-        className={cn(
-          "flex cursor-pointer items-start gap-3 text-[0.88rem] leading-relaxed",
-          tone === "dark" ? "text-navy-100" : "text-muted",
-        )}
-      >
+      <label className="flex cursor-pointer items-start gap-3 text-[0.88rem] leading-relaxed text-muted">
         <input
           type="checkbox"
           name={name}
           required
+          {...(checked !== undefined ? { checked } : {})}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? `f-${name}-error` : undefined}
-          onChange={(e) => onBlur?.(name, e.currentTarget.checked ? "on" : "")}
-          className="mt-0.5 size-5 shrink-0 cursor-pointer rounded accent-gold-500"
+          onChange={(e) => {
+            const v = e.currentTarget.checked ? "on" : "";
+            onChange?.(name, v);
+            onBlur?.(name, v);
+          }}
+          className="mt-0.5 size-5 shrink-0 cursor-pointer rounded accent-navy-800"
         />
         <span>
           J&apos;accepte que les informations saisies soient utilisées pour traiter ma demande et me recontacter. Elles
           ne sont ni revendues ni cédées.
         </span>
       </label>
-      {error && (
-        <p
-          id={`f-${name}-error`}
-          role="alert"
-          className={cn("text-[0.82rem] font-medium", tone === "dark" ? "text-red-300" : "text-red-700")}
-        >
-          {error}
-        </p>
-      )}
+      {error && <FieldError id={`f-${name}-error`}>{error}</FieldError>}
     </div>
   );
 }
 
 /** Champ piège invisible pour les robots (ne pas remplir). */
-export function HoneypotField() {
+export function HoneypotField({ value, onChange }: { value?: string; onChange?: (v: string) => void }) {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute top-0 left-0 h-px w-px overflow-hidden opacity-0">
       <label>
         Ne pas remplir ce champ
-        <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+        <input
+          type="text"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          {...(value !== undefined ? { value, onChange: (e) => onChange?.(e.currentTarget.value) } : {})}
+        />
       </label>
     </div>
   );

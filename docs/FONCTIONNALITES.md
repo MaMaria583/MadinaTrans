@@ -1,46 +1,40 @@
-# Fonctionnalités — état au 18/11/2026
+# Fonctionnalités — état au 19/11/2026 (phase 2)
 
 ## ✅ Opérationnelles
 
 | Fonctionnalité | Détail |
 | --- | --- |
-| Site multipage | 10 pages + 4 fiches services + 4 articles + page 404 |
-| Navigation | Menu sticky avec page active, menu mobile (hamburger, Échap, verrouillage du défilement) |
-| Responsive | Testé 375 px (mobile), 768 px, 1280 px — aucun débordement horizontal |
-| Formulaire de devis | 10 champs + consentement, validation navigateur **et** serveur, messages d'erreur accessibles |
-| Pré-sélection du service | `/devis?service=…` et formulaires des fiches services |
-| Formulaire de contact | Validation complète, champ anti-robot |
-| API `/api/requests` | Validation, anti-spam, transmission webhook (testée), gestion d'erreur |
-| Filtre des actualités | Par catégorie, côté navigateur |
-| Mode démonstration | Bandeau, badges « À confirmer », valeurs fictives non cliquables |
-| Mode production | Masquage automatique de toute donnée non confirmée |
-| SEO | Titres, descriptions, canoniques, Open Graph, image de partage, sitemap, robots |
-| Données structurées | Activation automatique quand téléphone et adresse sont confirmés |
-| Accessibilité | Lien d'évitement, focus visibles, `aria-*`, un `h1` par page, mouvement réduit respecté |
-| Sécurité | En-têtes HTTP (nosniff, frame, referrer, permissions), aucun secret dans le code |
-| Performance | Pages statiques, images AVIF/WebP lazy-loadées, polices auto-hébergées |
+| Site multipage | 8 pages, 4 fiches services, 4 articles d'exemple, page 404 |
+| Identité visuelle | Bleu marine / blanc / or, motif « plan de route », sections numérotées, soulignement doré signature |
+| Accueil | Hero avec « devis express », métiers en grille éditoriale, chaîne multimodale + atouts (sans chiffres inventés), à propos avec mission, engagements, devis, secteurs, actualités, appel à l'action |
+| Formulaire de devis | 3 étapes, validation par étape et côté serveur, messages explicites, confirmation avec référence |
+| Envoi des demandes | **Resend prêt** (e-mail HTML à l'administrateur, réponse directe au client) — testé avec un serveur Resend simulé |
+| Anti-spam | Champ piège, délai minimal, limitation de débit, contrôle d'origine, taille limitée, échappement HTML |
+| Formulaire de contact | Même validation, même acheminement (destinataire `CONTACT_EMAIL` possible) |
+| Page Contact | Cartes d'accès direct (téléphone, e-mail, WhatsApp, adresse), carte affichée seulement après vérification de l'adresse |
+| Mobile | Barre d'actions fixe (Devis + Appel/WhatsApp si confirmés), menu plein écran, cibles tactiles ≥ 44 px, aucun débordement de 360 à 430 px |
+| Animations | Apparitions au défilement, zoom lent des visuels, fondu entre les pages, désactivées si « mouvement réduit » |
+| Mode démonstration / production | Données non confirmées signalées (démo) ou masquées automatiquement (production) |
+| SEO | Titres et descriptions par page, Open Graph complet avec image, sitemap, robots, manifeste, fil d'Ariane structuré, schémas `Service` et `WebSite`, référencement local Bamako |
+| Images | 24 visuels distincts, optimisés AVIF/WebP, chargement différé, fond d'attente marine |
 
 ## ⚙️ À configurer (dépend de Madina Trans)
 
-| Fonctionnalité | Action requise | Fichier |
+| Fonctionnalité | Action requise | Où |
 | --- | --- | --- |
-| Réception des demandes | Choisir un service (Formspree, Make…) et renseigner `FORM_WEBHOOK_URL` | Vercel / `.env.local` |
+| **Envoi des devis par e-mail** | Compte Resend, domaine vérifié, clé API, adresse(s) destinataire(s) | Variables Vercel : `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `ADMIN_EMAIL`, `CONTACT_EMAIL` |
 | Coordonnées réelles | Téléphone, e-mail, adresse, horaires | `src/config/site.ts` |
-| Bouton WhatsApp | Numéro WhatsApp Business confirmé | `src/config/site.ts` |
+| Bouton WhatsApp / appel mobile | Numéros confirmés | `src/config/site.ts` |
 | Carte de localisation | Adresse vérifiée + URL d'intégration Google Maps | `src/config/site.ts` |
-| Chiffres clés | Valeurs officielles | `src/config/site.ts` |
-| Partenaires / références | Logos + autorisations écrites | `src/config/site.ts`, `public/partners/` |
-| Réseaux sociaux | URLs des pages officielles | `src/config/site.ts` |
-| Logo officiel | Fichier vectoriel | `src/components/ui/Logo.tsx`, `src/app/icon.svg` |
-| Photos officielles | Flotte, équipes, locaux | `src/content/images.ts`, `public/images/` |
-| Actualités réelles | Rédaction des articles | `src/content/articles.ts` |
-| Mentions légales | RCCM, NIF, directeur de publication, hébergeur | `src/config/site.ts`, `src/app/mentions-legales/page.tsx` |
-| Nom de domaine + indexation | Domaine, `NEXT_PUBLIC_DEMO_MODE=false`, Search Console | Vercel |
+| Chiffres clés | Valeurs officielles (affichées automatiquement une fois confirmées) | `src/config/site.ts` → `keyFigures` |
+| Partenaires / références | Logos + autorisations écrites | `src/config/site.ts` → `partners` |
+| Textes institutionnels | Validation de la présentation, vision, mission, valeurs, atouts, secteurs | `src/config/site.ts` → `institutional` |
+| Réseaux sociaux | URLs officielles | `src/config/site.ts` |
+| Logo, photos, actualités | Fichiers et contenus officiels | voir README |
+| Mise en ligne | Domaine, `NEXT_PUBLIC_DEMO_MODE=false`, Search Console | Vercel |
 
-## 💡 Évolutions possibles (hors périmètre)
+## 💡 Évolutions possibles
 
-- Suivi d'expédition en ligne (espace client)
-- Version anglaise (clients internationaux)
-- Gestion des contenus par un CMS (Sanity, Strapi, Decap) pour éditer actualités et services sans code
-- Mesure d'audience respectueuse de la vie privée (Vercel Analytics, Plausible)
-- Accusé de réception automatique par e-mail au demandeur de devis
+- Accusé de réception automatique au demandeur (Resend) — volontairement non activé pour éviter tout envoi vers des adresses saisies par des robots.
+- Limitation de débit partagée entre instances (Upstash Redis) si le trafic l'exige.
+- Espace client avec suivi d'expédition, version anglaise, CMS pour les actualités.

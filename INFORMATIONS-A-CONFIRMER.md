@@ -44,7 +44,8 @@ presse, registre). **Aucune information n'a donc le statut « vérifiée ».**
 | Logo | Concept graphique temporaire (SVG) | Ce n'est **pas** le logo officiel |
 | Photographies | Unsplash (illustrations) | Ne représentent ni la flotte, ni les locaux, ni le personnel |
 | Articles (4) | Contenus pédagogiques généraux | Badge « Article d'exemple », dates fictives |
-| Textes des services, valeurs, vision, mission, engagements | Rédaction de démonstration | Décrivent des prestations types, sans chiffre ni référence |
+| Textes des services, présentation, valeurs, vision, mission, engagements, atouts | Rédaction de démonstration (`institutional` dans `site.ts`) | Décrivent des prestations types, sans chiffre ni référence |
+| Secteurs d'activité (commerce, construction, agro-alimentaire…) | Capacités présentées, pas des références clients | À valider avec la direction |
 
 ## 4. Informations manquantes — à obtenir
 
@@ -65,6 +66,10 @@ presse, registre). **Aucune information n'a donc le statut « vérifiée ».**
 - [ ] Nom de domaine souhaité (ex. madinatrans.ml / .com)
 
 ### Chiffres clés (ne jamais estimer)
+
+> La page d'accueil n'affiche plus d'emplacements « XX » : les chiffres n'apparaissent qu'une fois
+> renseignés et confirmés dans `keyFigures`. En attendant, des atouts qualitatifs sont présentés.
+
 - [ ] Années d'expérience
 - [ ] Nombre de véhicules (et types : porteurs, semi-remorques, plateaux, citernes…)
 - [ ] Pays / corridors desservis
@@ -84,7 +89,8 @@ presse, registre). **Aucune information n'a donc le statut « vérifiée ».**
 - [ ] Actualités réelles à publier
 
 ### Technique
-- [ ] Service de réception des formulaires choisi (Formspree, Make, CRM…) et adresse de destination
+- [ ] Compte Resend + domaine d'envoi vérifié (DNS SPF/DKIM) + clé API
+- [ ] Adresse(s) e-mail qui recevront les devis (`ADMIN_EMAIL`) et les messages de contact (`CONTACT_EMAIL`)
 - [ ] Compte GitHub et compte Vercel (ou autre hébergeur) au nom de l'entreprise
 
 ## 5. Comment intégrer une information confirmée

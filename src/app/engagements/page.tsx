@@ -23,11 +23,12 @@ export default function CommitmentsPage() {
         eyebrow="Nos engagements"
         title="Des engagements concrets pour des opérations maîtrisées"
         intro="La confiance se construit opération après opération. Voici les principes qui guident notre travail au quotidien."
-        image={images.truckSunset}
+        image={images.truckTrailer}
         crumbs={[{ label: "Nos engagements" }]}
+        path="/engagements"
       />
 
-      <section aria-labelledby="engagements-list" className="py-20 lg:py-28">
+      <section aria-labelledby="engagements-list" className="section-y">
         <Container>
           <h2 id="engagements-list" className="sr-only">
             Liste de nos engagements

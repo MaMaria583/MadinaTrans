@@ -23,11 +23,12 @@ export default function NewsPage() {
         eyebrow="Actualités"
         title="Actualités & conseils"
         intro="Informations, conseils pratiques et nouvelles de Madina Trans sur le transport et la logistique."
-        image={images.containerShip}
+        image={images.tracking}
         crumbs={[{ label: "Actualités" }]}
+        path="/actualites"
       />
 
-      <section aria-label="Articles" className="py-16 lg:py-24">
+      <section aria-label="Articles" className="section-y-sm">
         <Container>
           {DEMO_MODE && (
             <div

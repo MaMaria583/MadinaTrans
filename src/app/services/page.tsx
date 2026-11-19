@@ -24,6 +24,7 @@ export default function ServicesPage() {
         intro="De la route au port, de l'entrepôt au client final : Madina Trans vous accompagne sur l'ensemble de votre chaîne logistique."
         image={images.portContainers}
         crumbs={[{ label: "Nos services" }]}
+        path="/services"
       />
 
       {/* Navigation rapide */}
@@ -48,7 +49,7 @@ export default function ServicesPage() {
         </Container>
       </nav>
 
-      <div className="py-20 lg:py-28">
+      <div className="section-y">
         <Container className="space-y-24 lg:space-y-32">
           {services.map((s, i) => (
             <ServiceDetail key={s.slug} service={s} reverse={i % 2 === 1} />

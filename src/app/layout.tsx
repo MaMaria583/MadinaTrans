@@ -6,7 +6,8 @@ import { TopBar } from "@/components/layout/TopBar";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
-import { OrganizationJsonLd } from "@/components/seo/OrganizationJsonLd";
+import { MobileActionBar } from "@/components/layout/MobileActionBar";
+import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/seo/OrganizationJsonLd";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
@@ -30,7 +31,11 @@ export const metadata: Metadata = {
     "transport de marchandises",
     "affrètement maritime",
     "société de transport à Bamako",
+    "transitaire Bamako",
+    "logistique Bamako",
+    "fret Mali",
   ],
+  category: "transport",
   openGraph: {
     type: "website",
     locale: siteMeta.locale,
@@ -42,6 +47,8 @@ export const metadata: Metadata = {
   // Le site de démonstration n'est pas indexé tant que les informations ne sont pas validées.
   robots: DEMO_MODE ? { index: false, follow: false } : { index: true, follow: true },
   formatDetection: { telephone: false, email: false, address: false },
+  // Référencement local : zone géographique (ville confirmée dans le brief)
+  other: { "geo.region": "ML-BKO", "geo.placename": "Bamako, Mali" },
 };
 
 export const viewport: Viewport = {
@@ -53,7 +60,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="fr" className={`${inter.variable} ${jakarta.variable} antialiased`}>
-      <body className="flex min-h-screen flex-col">
+      <body className="flex min-h-screen flex-col pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">
         <a
           href="#contenu"
           className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-lg focus:bg-gold-400 focus:px-4 focus:py-2 focus:font-semibold focus:text-navy-950"
@@ -71,7 +78,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
         <Footer />
         <WhatsAppButton />
+        <MobileActionBar />
         <OrganizationJsonLd />
+        <WebsiteJsonLd />
       </body>
     </html>
   );

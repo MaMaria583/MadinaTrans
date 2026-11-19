@@ -1,7 +1,7 @@
-# Rapport de tests — Madina Trans (démonstration)
+# Rapport de tests — Madina Trans (phase 2)
 
-**Date :** 18/11/2026 · **Environnement :** Windows 11, Node.js 24.18, npm 11.16, Next.js 16.4.6
-**Résultat global :** ✅ build de production réussi, 0 erreur TypeScript, 0 erreur ESLint, aucune erreur serveur ou console applicative.
+**Date :** 19/11/2026 · **Environnement :** Windows 11, Node.js 24.18, Next.js 16.4.6 (Turbopack)
+**Résultat global :** ✅ build de production réussi (26 routes), 0 erreur TypeScript, 0 erreur ESLint.
 
 ## 1. Contrôles automatisés
 
@@ -9,98 +9,72 @@
 | --- | --- | --- |
 | Lint | `npm run lint` | ✅ 0 erreur, 0 avertissement |
 | Types | `npm run typecheck` | ✅ 0 erreur |
-| Build production (mode démo) | `npm run build` | ✅ 25 routes générées |
-| Build production (mode production) | `NEXT_PUBLIC_DEMO_MODE=false npm run build` | ✅ 25 routes générées |
-| Chaîne complète | `npm run check` | ✅ |
+| Build (mode démo) | `npm run build` | ✅ 26 routes |
+| Build (mode production) | `NEXT_PUBLIC_DEMO_MODE=false npm run build` | ✅ 26 routes |
 
-## 2. Pages et liens
-
-Toutes les pages ont été chargées et contrôlées (titre, `h1` unique, rendu) :
-`/`, `/a-propos`, `/services`, `/services/transport-routier`, `/services/transit-affretement`,
-`/services/affretement-maritime`, `/services/logistique-distribution`, `/engagements`, `/actualites`,
-4 articles, `/contact`, `/devis`, `/mentions-legales`.
+## 2. Liens et SEO (serveur de production local)
 
 | Test | Résultat |
 | --- | --- |
-| Exploration de tous les liens internes (20 URL distinctes, y compris `?service=`) | ✅ 20/20 en HTTP 200 |
+| Liens internes (24 URL distinctes) | ✅ 24/24 en HTTP 200 |
+| `robots.txt`, `sitemap.xml`, `manifest.webmanifest`, `/opengraph-image`, `icon.svg` | ✅ HTTP 200 |
 | Un seul `h1` par page | ✅ |
-| Page inexistante | ✅ page 404 personnalisée (HTTP 404 sur les URL hors routes) |
-| Slug inconnu sous `/services/…` ou `/actualites/…` | ⚠️ page 404 affichée avec `noindex`, mais statut HTTP 200 (comportement du pré-rendu partiel de Next 16) |
-| `robots.txt`, `sitemap.xml`, `/opengraph-image`, `icon.svg` | ✅ HTTP 200 |
-| En-têtes de sécurité (nosniff, X-Frame-Options, Referrer-Policy) | ✅ présents |
+| Open Graph propre aux fiches services et articles | ✅ image 1200 × 630 |
+| Données structurées (WebSite, BreadcrumbList, Service) | ✅ présentes ; LocalBusiness absente tant que les coordonnées ne sont pas confirmées |
+| Mode démo : `noindex` + `Disallow: /` | ✅ |
+| Mode production : indexable, sitemap déclaré | ✅ |
 
-## 3. Navigation
-
-| Test | Résultat |
-| --- | --- |
-| Menu desktop : page active soulignée, pas de retour à la ligne à 1280 px | ✅ (corrigé pendant les tests) |
-| Menu mobile : ouverture, fermeture, verrouillage du défilement, fermeture au clic sur un lien | ✅ |
-| Menu mobile affiché en plein écran sous l'en-tête | ✅ (bug corrigé : le flou d'arrière-plan de l'en-tête confinait le menu) |
-| Fermeture par la touche Échap, fermeture au passage en desktop | Implémenté, non testé manuellement |
-| Navigation côté client vers une fiche service | ✅ contenu complet affiché |
-| Ancres de la page Services (barre d'accès rapide) | ✅ |
-| Filtre des actualités par catégorie | ✅ |
-
-## 4. Formulaires
+## 3. Formulaire de devis (navigateur, 390 px)
 
 | Test | Résultat |
 | --- | --- |
-| Envoi vide du devis | ✅ 8 messages d'erreur, focus sur le premier champ en erreur |
-| E-mail invalide / téléphone trop court / description < 20 caractères | ✅ messages spécifiques |
-| Envoi valide sans service configuré | ✅ panneau « Formulaire validé — mode démonstration : aucune demande n'a été transmise » + récapitulatif |
-| Pré-sélection `/devis?service=affretement-maritime` | ✅ (bug corrigé : la version initiale à base de `<Suspense>` ne s'affichait pas) |
-| API : JSON invalide | ✅ HTTP 400 |
-| API : type de formulaire inconnu | ✅ HTTP 400 |
-| API : champs invalides | ✅ HTTP 422 + erreurs par champ |
-| API : champ anti-robot rempli | ✅ ignoré silencieusement |
-| **Envoi réel** avec `FORM_WEBHOOK_URL` vers un webhook local | ✅ `{"status":"sent"}`, charge JSON reçue complète, en-tête `Authorization: Bearer` transmis |
-| Webhook indisponible | ✅ HTTP 502 + message d'erreur clair |
-| Formulaire de contact : envoi vide (5 erreurs) puis envoi valide (panneau démo) | ✅ |
+| Étape 1 sans choix | ✅ « Veuillez sélectionner une option. » |
+| Étape 2 vide | ✅ 3 erreurs nommées, focus sur le premier champ |
+| Saisie au clavier, Entrée pour passer à l'étape suivante | ✅ |
+| E-mail `awa@exemple` | ✅ « Adresse e-mail invalide : vérifiez le format… » |
+| Téléphone `+223 70 12` | ✅ « Un numéro malien comporte 8 chiffres après +223… » |
+| Description trop courte | ✅ « Encore 15 caractères minimum… » |
+| Consentement manquant | ✅ message explicite |
+| Envoi valide sans Resend | ✅ panneau « mode démonstration : aucune demande n'a été transmise » + récapitulatif |
+| Pré-sélection `/devis?service=…` | ✅ |
+
+## 4. Envoi Resend et sécurité (serveur Resend simulé localement, aucune vraie clé)
+
+| Test | Résultat |
+| --- | --- |
+| Envoi valide | ✅ `sent` + référence `MT-261119-…` |
+| Requête reçue par « Resend » | ✅ clé en en-tête `Authorization`, expéditeur, 2 destinataires, `reply_to` = client, objet avec service + nom + référence, en-tête d'idempotence |
+| Injection HTML (`<b>` dans un champ) | ✅ échappée dans l'e-mail HTML |
+| Envoi en moins de 3 s | ✅ filtré, rien n'est transmis |
+| Champ piège rempli | ✅ filtré, rien n'est transmis |
+| Origine étrangère | ✅ HTTP 403 |
+| Téléphone invalide (contournement du navigateur) | ✅ HTTP 422 avec message |
+| 6 envois depuis la même IP | ✅ 5 acceptés, 6ᵉ refusé (HTTP 429) |
+| Resend en erreur | ✅ HTTP 502 + message clair à l'utilisateur |
+| Formulaire de contact, envoi réel simulé | ✅ écran « Message envoyé » avec référence (vérifié à l'écran) |
+| Formulaire de contact, échec d'envoi | ✅ message d'erreur affiché (vérifié à l'écran) |
 
 ## 5. Responsive
 
-Contrôle automatisé de la largeur de défilement sur toutes les pages + captures d'écran.
-
-| Largeur | Résultat |
-| --- | --- |
-| 320 px (petit Android) | ✅ aucun débordement (logo réduit pendant les tests) |
-| 360 / 375 px (smartphones) | ✅ |
-| 768 px (tablette) | ✅ |
-| 1024 px (tablette paysage / petit portable) | ✅ |
-| 1280 / 1440 px (desktop) | ✅ |
-
-Points vérifiés : boutons ≥ 44 px de haut, champs de 48 px, textes ≥ 16 px dans les formulaires (pas de zoom iOS),
-grilles qui passent à une colonne, images recadrées correctement.
-
-## 6. Images
-
-| Test | Résultat |
-| --- | --- |
-| 16 photos Unsplash retenues, vérifiées une à une (chargement + pertinence du sujet) | ✅ ; 3 photos hors sujet écartées (caddie de supermarché, image abstraite, chantier) |
-| Optimisation `next/image` (AVIF/WebP, tailles adaptatives, lazy-loading hors écran) | ✅ |
-| Aucune image cassée observée à l'écran | ✅ |
-
-## 7. Mode démonstration / mode production
-
-| Élément | Mode démo | Mode production (données non confirmées) |
+| Largeur | Pages testées | Débordement horizontal |
 | --- | --- | --- |
-| Bandeau « Site de démonstration » | Affiché | Masqué ✅ |
-| Badges « À confirmer » | Affichés | 0 occurrence ✅ |
-| Téléphone / e-mail fictifs | Affichés, non cliquables | Masqués ✅ |
-| Bouton WhatsApp | « DÉMO » + explication | Masqué ✅ |
-| Chiffres clés, partenaires | Emplacements neutres | Sections masquées ✅ |
-| `robots.txt` | `Disallow: /` | `Allow: /` + sitemap ✅ |
-| Balise `noindex` | Présente | Absente ✅ |
-| Données structurées | Absentes | Absentes tant que téléphone + adresse non confirmés ✅ |
+| 360 px | 10 pages | ✅ aucun (débordement de la page Contact corrigé) |
+| 390 px | 10 pages | ✅ aucun |
+| 430 px | 10 pages | ✅ aucun |
+| 1440 px | accueil, contact, devis | ✅ revue visuelle |
 
-## 8. Console et serveur
+Corrections apportées pendant les tests : titre de la carte « Transport routier » masqué par l'icône sur mobile,
+cartes de contact trop larges à 360 px, ligne verticale parasite dans le hero, lisibilité du « devis express »,
+numérotation des sections, encadrés « à compléter » visibles en mode production (désormais limités au mode démo).
 
-- Console navigateur : aucune erreur applicative (seules apparaissent les réponses 400/422/404 provoquées volontairement par les tests).
-- Serveur : avertissement Next 16 « instant navigation » sur les routes dynamiques corrigé (frontière `<Suspense>`), 0 erreur après redémarrage.
+## 6. Mode production
 
-## 9. Limites connues
+Build avec `NEXT_PUBLIC_DEMO_MODE=false` : 0 coordonnée fictive, 0 badge « À confirmer », 0 « XX »,
+0 encadré « Références à fournir » sur l'accueil, le contact, le devis et la page À propos.
 
-- Les contrôles Core Web Vitals (Lighthouse / PageSpeed) n'ont pas été mesurés : ils seront à exécuter sur l'URL Vercel.
-  L'architecture est optimisée (pages statiques, images optimisées, polices locales, JS client limité).
-- Tests réalisés sur un moteur Chromium ; Safari iOS et Firefox restent à contrôler visuellement après déploiement.
-- Les photos sont chargées depuis Unsplash via l'optimiseur Next.js : elles seront à remplacer par des fichiers locaux officiels.
+## 7. Limites connues
+
+- Resend n'a pas été testé avec un vrai compte (aucune clé fournie) : le format de requête suit l'API officielle et a été vérifié sur un serveur simulé.
+- La limitation de débit est propre à chaque instance serveur (mémoire) : protection « au mieux » sur Vercel.
+- Scores Lighthouse / Core Web Vitals à mesurer sur l'URL Vercel ; tests effectués sur moteur Chromium uniquement.
+- Une adresse inexistante sous `/services/…` ou `/actualites/…` affiche la page 404 (`noindex`) avec un statut HTTP 200 (pré-rendu partiel de Next 16).

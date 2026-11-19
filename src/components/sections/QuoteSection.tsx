@@ -1,25 +1,25 @@
-import { Calculator, CircleCheck, Clock, Phone } from "lucide-react";
+import { ClipboardList, MessagesSquare, FileSignature, Phone, ShieldCheck } from "lucide-react";
 import { contact, isConfirmed, isDisplayable } from "@/config/site";
 import { ContactValue } from "@/components/ui/ContactValue";
-import { Container, SectionHeading } from "@/components/ui/Section";
+import { Container, Highlight, SectionHeading } from "@/components/ui/Section";
 import { QuoteForm } from "@/components/forms/QuoteForm";
 import { DemoBadge } from "@/components/ui/DemoBadge";
 
 const steps = [
   {
-    icon: Calculator,
-    title: "Décrivez votre besoin",
-    text: "Quelques informations suffisent pour étudier votre demande.",
+    icon: ClipboardList,
+    title: "Vous décrivez votre besoin",
+    text: "Service, trajet, marchandise : trois étapes suffisent.",
   },
   {
-    icon: Clock,
-    title: "Nous analysons",
-    text: "Nos équipes étudient votre demande et la faisabilité de l'opération.",
+    icon: MessagesSquare,
+    title: "Nous étudions votre demande",
+    text: "Nos équipes analysent la faisabilité et reviennent vers vous si besoin.",
   },
   {
-    icon: CircleCheck,
-    title: "Recevez votre offre",
-    text: "Une proposition claire et détaillée, adaptée à votre projet.",
+    icon: FileSignature,
+    title: "Vous recevez une proposition",
+    text: "Une offre claire et détaillée, adaptée à votre projet.",
   },
 ];
 
@@ -27,31 +27,40 @@ export function QuoteSection({
   withParams = false,
   headingLevel = "h2",
   defaultService = "",
+  index,
 }: {
   withParams?: boolean;
   defaultService?: string;
   headingLevel?: "h1" | "h2";
+  index?: number;
 }) {
   return (
-    <section id="devis" aria-labelledby="quote-title" className="relative overflow-clip bg-navy-950 py-20 lg:py-28">
+    <section id="devis" aria-labelledby="quote-title" className="section-y relative isolate overflow-clip bg-navy-950">
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-routes" />
       <div
         aria-hidden="true"
-        className="absolute -top-40 -right-40 size-[32rem] rounded-full bg-navy-700/40 blur-3xl"
+        className="absolute -top-40 -right-40 -z-10 size-[32rem] rounded-full bg-navy-700/40 blur-3xl"
       />
       <div
         aria-hidden="true"
-        className="absolute -bottom-48 -left-32 size-[28rem] rounded-full bg-gold-500/10 blur-3xl"
+        className="absolute -bottom-48 -left-32 -z-10 size-[28rem] rounded-full bg-gold-500/10 blur-3xl"
       />
-      <Container className="relative grid gap-12 lg:grid-cols-12 lg:gap-14">
+      <Container className="grid gap-10 lg:grid-cols-12 lg:gap-14">
         <div className="lg:col-span-5">
           <SectionHeading
             light
             as={headingLevel}
+            index={index}
             eyebrow="Demande de devis"
-            title={<span id="quote-title">Obtenez un devis personnalisé pour votre transport</span>}
+            id="quote-title"
+            title={
+              <>
+                Obtenez un devis <Highlight light>personnalisé</Highlight> pour votre transport
+              </>
+            }
             intro="Transport routier, transit, maritime ou logistique : décrivez votre projet, nous vous proposons une solution adaptée."
           />
-          <ol className="mt-10 space-y-6">
+          <ol className="mt-10 hidden space-y-6 sm:block">
             {steps.map((s, i) => (
               <li key={s.title} className="flex gap-4">
                 <span className="relative inline-flex size-12 shrink-0 items-center justify-center rounded-xl bg-white/8 text-gold-400 ring-1 ring-white/10">
@@ -67,19 +76,23 @@ export function QuoteSection({
               </li>
             ))}
           </ol>
-          {isDisplayable(contact.phone) && (
-            <div className="mt-10 flex flex-wrap items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5">
-              <Phone className="size-5 text-gold-400" aria-hidden="true" />
-              <p className="text-navy-100">
+          <ul className="mt-8 space-y-3 text-sm text-navy-100 sm:mt-10">
+            <li className="flex items-center gap-2.5">
+              <ShieldCheck className="size-4 text-gold-400" aria-hidden="true" />
+              Vos données servent uniquement à traiter votre demande.
+            </li>
+            {isDisplayable(contact.phone) && (
+              <li className="flex flex-wrap items-center gap-2.5">
+                <Phone className="size-4 text-gold-400" aria-hidden="true" />
                 Une question ? <ContactValue kind="phone" className="font-semibold text-white" />
-              </p>
-              {!isConfirmed(contact.phone) && <DemoBadge tone="dark" />}
-            </div>
-          )}
+                {!isConfirmed(contact.phone) && <DemoBadge tone="dark" />}
+              </li>
+            )}
+          </ul>
         </div>
 
         <div className="lg:col-span-7">
-          <div className="rounded-3xl bg-white p-6 shadow-lift sm:p-9">
+          <div className="rounded-3xl bg-white p-5 shadow-lift sm:p-9">
             <QuoteForm defaultService={defaultService} serviceFromUrl={withParams} />
           </div>
         </div>

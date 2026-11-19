@@ -5,7 +5,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CalendarDays, Clock } from "lucide-react";
 import { articles, formatDate, getArticle } from "@/content/articles";
-import { pageMetadata } from "@/lib/seo";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { ogFromUnsplash, pageMetadata } from "@/lib/seo";
 import { Container } from "@/components/ui/Section";
 import { ArticleCard } from "@/components/sections/ArticleCard";
 import { FinalCta } from "@/components/sections/FinalCta";
@@ -25,6 +26,9 @@ export async function generateMetadata({ params }: PageProps<"/actualites/[slug]
     description: article.excerpt,
     path: `/actualites/${slug}`,
     type: "article",
+    image: ogFromUnsplash(article.cover.src),
+    imageAlt: article.cover.alt,
+    publishedTime: article.date,
   });
 }
 
@@ -49,6 +53,12 @@ async function ArticleContent({ params }: { params: PageProps<"/actualites/[slug
 
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Actualités", path: "/actualites" },
+          { name: article.title, path: `/actualites/${article.slug}` },
+        ]}
+      />
       <article>
         <header className="bg-mist pt-12 pb-10 lg:pt-16">
           <Container className="max-w-4xl">
@@ -120,7 +130,7 @@ async function ArticleContent({ params }: { params: PageProps<"/actualites/[slug
         </Container>
       </article>
 
-      <section aria-labelledby="related-title" className="bg-mist py-16 lg:py-20">
+      <section aria-labelledby="related-title" className="bg-mist section-y-sm">
         <Container>
           <h2 id="related-title" className="text-2xl font-extrabold text-navy-900 sm:text-3xl">
             À lire également

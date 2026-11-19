@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Quote } from "lucide-react";
 import { images } from "@/content/images";
-import { services } from "@/content/services";
+import { institutional } from "@/config/site";
 import { ButtonLink } from "@/components/ui/Button";
-import { Container, SectionHeading } from "@/components/ui/Section";
+import { Container, Highlight, SectionHeading } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 
 const strengths = [
@@ -15,27 +15,37 @@ const strengths = [
 
 export function AboutPreview() {
   return (
-    <section aria-labelledby="about-title" className="overflow-clip bg-mist py-20 lg:py-28">
-      <Container className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
-        <Reveal className="relative">
-          <div className="relative aspect-[4/3.4] overflow-hidden rounded-3xl shadow-lift">
-            <Image
-              src={images.portContainers.src}
-              alt={images.portContainers.alt}
-              fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover"
-            />
-          </div>
-          <div className="absolute -right-3 -bottom-8 hidden w-56 overflow-hidden rounded-2xl border-[6px] border-mist shadow-lift sm:block lg:-right-10">
-            <div className="relative aspect-square">
+    <section aria-labelledby="about-title" className="section-y overflow-clip bg-mist">
+      <Container className="grid items-center gap-14 lg:grid-cols-12 lg:gap-16">
+        {/* Composition d'images */}
+        <Reveal className="relative lg:col-span-6">
+          <div className="grid grid-cols-6 grid-rows-6 gap-3 sm:gap-4">
+            <div className="relative col-span-4 row-span-6 aspect-[4/5] overflow-hidden rounded-3xl shadow-lift">
               <Image
-                src={images.warehouse.src}
-                alt={images.warehouse.alt}
+                src={images.portTerminal.src}
+                alt={images.portTerminal.alt}
                 fill
-                sizes="224px"
+                sizes="(min-width: 1024px) 34vw, 66vw"
                 className="object-cover"
               />
+            </div>
+            <div className="relative col-span-2 row-span-3 overflow-hidden rounded-2xl">
+              <Image
+                src={images.warehouseRacks.src}
+                alt={images.warehouseRacks.alt}
+                fill
+                sizes="(min-width: 1024px) 17vw, 33vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="relative col-span-2 row-span-3 flex flex-col justify-end overflow-hidden rounded-2xl bg-navy-900 p-4 text-white sm:p-5">
+              <div aria-hidden="true" className="absolute inset-0 bg-routes" />
+              <span className="relative font-display text-[0.7rem] font-bold tracking-[0.14em] text-gold-300 uppercase sm:text-xs">
+                Bamako · Mali
+              </span>
+              <span className="relative mt-1 font-display text-sm leading-tight font-bold sm:text-lg">
+                Route · Mer · Entrepôt
+              </span>
             </div>
           </div>
           <div
@@ -44,37 +54,33 @@ export function AboutPreview() {
           />
         </Reveal>
 
-        <Reveal delay={120}>
+        <Reveal delay={120} className="lg:col-span-6">
           <SectionHeading
+            index={3}
             eyebrow="À propos de Madina Trans"
-            title={<span id="about-title">Une expertise au service de vos ambitions</span>}
+            id="about-title"
+            title={
+              <>
+                Une expertise au service de <Highlight>vos ambitions</Highlight>
+              </>
+            }
           />
-          <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
+          <div className="mt-6 space-y-4 text-[1.05rem] leading-relaxed text-muted sm:text-lg">
             <p>
               Madina Trans est une entreprise malienne spécialisée dans le{" "}
               <strong className="text-navy-900">transport et la logistique</strong>. Depuis Bamako, elle accompagne les
               entreprises et les institutions dans l&apos;acheminement de leurs marchandises, au Mali comme à
               l&apos;international.
             </p>
-            <p>
-              Notre approche repose sur une conviction simple : chaque expédition mérite une organisation rigoureuse,
-              une communication transparente et un engagement sans faille.
-            </p>
           </div>
 
-          <h3 className="mt-8 text-sm font-bold tracking-[0.12em] text-navy-800 uppercase">
-            Domaines d&apos;expertise
-          </h3>
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {services.map((s) => (
-              <li
-                key={s.slug}
-                className="rounded-full border border-navy-100 bg-white px-3.5 py-1.5 text-sm font-semibold text-navy-800"
-              >
-                {s.title}
-              </li>
-            ))}
-          </ul>
+          <figure className="mt-7 rounded-2xl border-l-4 border-gold-400 bg-white p-5 shadow-card sm:p-6">
+            <Quote className="size-6 text-gold-500" aria-hidden="true" />
+            <blockquote className="mt-2 font-display text-[1.05rem] leading-snug font-semibold text-navy-900 sm:text-lg">
+              {institutional.mission}
+            </blockquote>
+            <figcaption className="mt-3 text-sm font-medium text-muted">Notre mission</figcaption>
+          </figure>
 
           <ul className="mt-7 grid gap-3 sm:grid-cols-2">
             {strengths.map((item) => (
@@ -87,9 +93,14 @@ export function AboutPreview() {
             ))}
           </ul>
 
-          <ButtonLink href="/a-propos" variant="navy" size="lg" className="mt-9">
-            En savoir plus <ArrowRight aria-hidden="true" />
-          </ButtonLink>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <ButtonLink href="/a-propos" variant="navy" size="lg">
+              En savoir plus <ArrowRight aria-hidden="true" />
+            </ButtonLink>
+            <ButtonLink href="/contact" variant="outline" size="lg">
+              Rencontrer nos équipes
+            </ButtonLink>
+          </div>
         </Reveal>
       </Container>
     </section>

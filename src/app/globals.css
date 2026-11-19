@@ -38,6 +38,33 @@
   --shadow-lift: 0 2px 4px rgb(11 26 56 / 0.05), 0 22px 44px -16px rgb(11 26 56 / 0.28);
 
   --animate-fade-up: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.5s ease-out both;
+  --animate-slow-zoom: slow-zoom 18s ease-out both;
+  --animate-dash: dash 2.4s linear infinite;
+
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes slow-zoom {
+    from {
+      transform: scale(1.08);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  @keyframes dash {
+    to {
+      stroke-dashoffset: -28;
+    }
+  }
 
   @keyframes fade-up {
     from {
@@ -157,4 +184,62 @@
 }
 .prose-mt strong {
   color: var(--color-navy-900);
+}
+
+/* ------------------------------------------------------------------
+   Utilitaires de mise en page — rythme vertical unique pour tout le site
+------------------------------------------------------------------- */
+@utility section-y {
+  padding-block: 4.5rem;
+  @media (width >= 40rem) {
+    padding-block: 5.5rem;
+  }
+  @media (width >= 64rem) {
+    padding-block: 7rem;
+  }
+}
+
+@utility section-y-sm {
+  padding-block: 3.5rem;
+  @media (width >= 64rem) {
+    padding-block: 5rem;
+  }
+}
+
+/* Carte standard : bordure fine, ombre douce, levée au survol */
+@utility card {
+  border-radius: 1.25rem;
+  border: 1px solid var(--color-line);
+  background: #fff;
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 0.4s var(--ease-premium),
+    box-shadow 0.4s var(--ease-premium),
+    border-color 0.4s var(--ease-premium);
+}
+@utility card-hover {
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift);
+    border-color: var(--color-gold-300);
+  }
+}
+
+/* Motif signature : quadrillage « plan de route » discret */
+@utility bg-routes {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+@utility bg-routes-light {
+  background-image:
+    linear-gradient(to right, rgb(11 26 56 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(11 26 56 / 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Les images se chargent sur un fond marine (pas de flash blanc) */
+img[data-nimg="fill"] {
+  background-color: var(--color-navy-800);
 }

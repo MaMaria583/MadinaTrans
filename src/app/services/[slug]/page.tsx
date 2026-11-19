@@ -5,7 +5,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Check, CircleDot } from "lucide-react";
 import { getService, services } from "@/content/services";
-import { pageMetadata } from "@/lib/seo";
+import { ogFromUnsplash, pageMetadata } from "@/lib/seo";
+import { ServiceJsonLd } from "@/components/seo/OrganizationJsonLd";
 import { PageHero } from "@/components/sections/PageHero";
 import { QuoteSection } from "@/components/sections/QuoteSection";
 import { ButtonLink } from "@/components/ui/Button";
@@ -21,7 +22,13 @@ export async function generateMetadata({ params }: PageProps<"/services/[slug]">
   const { slug } = await params;
   const service = getService(slug);
   if (!service) return {};
-  return pageMetadata({ title: service.seo.title, description: service.seo.description, path: `/services/${slug}` });
+  return pageMetadata({
+    title: service.seo.title,
+    description: service.seo.description,
+    path: `/services/${slug}`,
+    image: ogFromUnsplash(service.image.src),
+    imageAlt: service.image.alt,
+  });
 }
 
 /**
@@ -45,12 +52,14 @@ async function ServiceContent({ params }: { params: PageProps<"/services/[slug]"
 
   return (
     <>
+      <ServiceJsonLd name={service.title} description={service.excerpt} path={`/services/${service.slug}`} />
       <PageHero
         eyebrow={service.tagline}
         title={service.title}
         intro={service.excerpt}
         image={service.image}
         crumbs={[{ label: "Nos services", href: "/services" }, { label: service.title }]}
+        path={`/services/${service.slug}`}
       >
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <ButtonLink href={`/devis?service=${service.slug}`} size="lg">
@@ -62,7 +71,7 @@ async function ServiceContent({ params }: { params: PageProps<"/services/[slug]"
         </div>
       </PageHero>
 
-      <section aria-labelledby="desc-title" className="py-20 lg:py-28">
+      <section aria-labelledby="desc-title" className="section-y">
         <Container className="grid gap-14 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <SectionHeading eyebrow="Le service" title={<span id="desc-title">{service.tagline}</span>} />
@@ -110,7 +119,7 @@ async function ServiceContent({ params }: { params: PageProps<"/services/[slug]"
         </Container>
       </section>
 
-      <section aria-labelledby="steps-title" className="bg-mist py-20 lg:py-24">
+      <section aria-labelledby="steps-title" className="bg-mist section-y-sm">
         <Container>
           <SectionHeading
             align="center"
@@ -133,7 +142,7 @@ async function ServiceContent({ params }: { params: PageProps<"/services/[slug]"
 
       <QuoteSection defaultService={service.slug} />
 
-      <section aria-labelledby="others-title" className="py-20 lg:py-24">
+      <section aria-labelledby="others-title" className="section-y-sm">
         <Container>
           <h2 id="others-title" className="text-2xl font-extrabold text-navy-900 sm:text-3xl">
             Découvrez nos autres services

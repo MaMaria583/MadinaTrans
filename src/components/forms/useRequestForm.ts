@@ -1,25 +1,64 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { rulesFor, validateField, validateForm, type FieldErrors, type FormKind } from "@/lib/forms";
 
 export type SubmitState =
   | { status: "idle" }
   | { status: "submitting" }
   | { status: "demo"; fields: Record<string, string> }
-  | { status: "sent" }
+  | { status: "sent"; reference?: string; fields: Record<string, string> }
   | { status: "error"; message: string };
 
-/** Gestion commune : validation navigateur, envoi à /api/requests, états. */
+type ApiResponse = {
+  status?: string;
+  message?: string;
+  reference?: string;
+  errors?: FieldErrors;
+};
+
+/** Envoi à l'API, commun aux formulaires de devis et de contact. */
+export async function submitRequest(
+  kind: FormKind,
+  fields: Record<string, string>,
+  meta: { website: string; elapsed: number },
+): Promise<ApiResponse & { httpStatus: number }> {
+  try {
+    const res = await fetch("/api/requests", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ kind, fields, ...meta }),
+    });
+    const json = (await res.json().catch(() => ({}))) as ApiResponse;
+    return { ...json, httpStatus: res.status };
+  } catch {
+    return {
+      status: "error",
+      message: "Impossible de joindre le serveur. Vérifiez votre connexion internet et réessayez.",
+      httpStatus: 0,
+    };
+  }
+}
+
+/** Mesure le temps passé sur le formulaire (anti-robot). */
+export function useFillTimer() {
+  const startedAt = useRef(0);
+  useEffect(() => {
+    startedAt.current = Date.now();
+  }, []);
+  return () => (startedAt.current ? Date.now() - startedAt.current : 0);
+}
+
+/** Gestion du formulaire de contact (non contrôlé, lecture via FormData). */
 export function useRequestForm(kind: FormKind) {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [state, setState] = useState<SubmitState>({ status: "idle" });
+  const elapsed = useFillTimer();
 
   const onFieldBlur = (name: string, value: string) => {
     const rule = rulesFor(kind)[name];
     if (!rule) return;
     setErrors((prev) => {
-      // On ne signale une erreur au blur que si le champ a déjà été saisi ou était en erreur
       if (!value && !prev[name]) return prev;
       return { ...prev, [name]: validateField(rule, value) };
     });
@@ -46,35 +85,16 @@ export function useRequestForm(kind: FormKind) {
     }
 
     setState({ status: "submitting" });
-    try {
-      const res = await fetch("/api/requests", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ kind, fields, website: data.get("website") ?? "" }),
-      });
-      const json = (await res.json().catch(() => ({}))) as {
-        status?: string;
-        message?: string;
-        errors?: FieldErrors;
-      };
-      if (json.status === "demo") {
-        setState({ status: "demo", fields });
-        form.reset();
-      } else if (json.status === "sent") {
-        setState({ status: "sent" });
-        form.reset();
-      } else if (json.status === "invalid" && json.errors) {
-        setErrors(json.errors);
-        setState({ status: "idle" });
-      } else {
-        setState({ status: "error", message: json.message ?? "Une erreur est survenue. Merci de réessayer." });
-      }
-    } catch {
-      setState({
-        status: "error",
-        message: "Impossible de joindre le serveur. Vérifiez votre connexion et réessayez.",
-      });
-    }
+    const res = await submitRequest(kind, fields, {
+      website: String(data.get("website") ?? ""),
+      elapsed: elapsed(),
+    });
+    if (res.status === "demo") setState({ status: "demo", fields });
+    else if (res.status === "sent") setState({ status: "sent", reference: res.reference, fields });
+    else if (res.status === "invalid" && res.errors) {
+      setErrors(res.errors);
+      setState({ status: "idle" });
+    } else setState({ status: "error", message: res.message ?? "Une erreur est survenue. Merci de réessayer." });
   };
 
   const reset = () => {

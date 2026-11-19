@@ -42,7 +42,7 @@ export function WhatsAppButton() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contacter Madina Trans sur WhatsApp"
-        className={`fixed right-4 bottom-4 z-40 sm:right-6 sm:bottom-6 ${buttonClass}`}
+        className={`fixed right-6 bottom-6 z-40 max-md:hidden ${buttonClass}`}
       >
         <WhatsappIcon className="size-7" />
       </a>
@@ -52,7 +52,7 @@ export function WhatsAppButton() {
   if (!DEMO_MODE) return null;
 
   return (
-    <div ref={panelRef} className="fixed right-4 bottom-4 z-40 flex flex-col items-end gap-3 sm:right-6 sm:bottom-6">
+    <div ref={panelRef} className="fixed right-6 bottom-6 z-40 flex flex-col items-end gap-3 max-md:hidden">
       {open && (
         <div
           role="dialog"

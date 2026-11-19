@@ -17,7 +17,7 @@ Dépôt : https://github.com/MaMaria583/MadinaTrans
 4. [Structure du projet](#structure-du-projet)
 5. [Modifier les contenus](#modifier-les-contenus)
 6. [Mode démonstration](#mode-démonstration)
-7. [Formulaires : connecter un service de réception](#formulaires--connecter-un-service-de-réception)
+7. [Formulaires : envoi par e-mail avec Resend](#formulaires--envoi-par-e-mail-avec-resend)
 8. [Variables d'environnement](#variables-denvironnement)
 9. [SEO](#seo)
 10. [Qualité et commandes](#qualité-et-commandes)
@@ -90,12 +90,13 @@ src/
 │   ├── articles.ts           # Articles (actualités)
 │   └── images.ts             # Banque d'images centralisée
 ├── components/
-│   ├── layout/               # TopBar, Header (menu mobile), Footer, DemoBanner, WhatsAppButton
+│   ├── layout/               # TopBar, Header (menu mobile), Footer, DemoBanner, WhatsAppButton, MobileActionBar
 │   ├── sections/             # Sections de pages réutilisables
 │   ├── forms/                # Formulaires, champs, logique d'envoi
 │   ├── seo/                  # Données structurées (conditionnelles)
 │   └── ui/                   # Boutons, logo, badges, icônes, animations
 └── lib/
+    ├── server/               # delivery.ts (Resend / webhook), rate-limit.ts — serveur uniquement
     ├── forms.ts              # Règles de validation partagées navigateur / serveur
     ├── seo.ts                # Générateur de métadonnées par page
     └── cn.ts
@@ -108,6 +109,7 @@ Tout se modifie **sans toucher aux composants** :
 | Je veux modifier… | Fichier |
 | --- | --- |
 | Téléphone, e-mail, WhatsApp, adresse, carte, horaires, réseaux sociaux | `src/config/site.ts` |
+| Présentation, vision, mission, valeurs, atouts, secteurs | `src/config/site.ts` → `institutional` |
 | Chiffres clés (années, véhicules, pays, clients) | `src/config/site.ts` → `keyFigures` |
 | Partenaires / références (logos dans `public/partners/`) | `src/config/site.ts` → `partners` |
 | Textes des services | `src/content/services.ts` |
@@ -135,39 +137,59 @@ Activé par défaut (`NEXT_PUBLIC_DEMO_MODE` absent ou `true`) :
 En production (`NEXT_PUBLIC_DEMO_MODE=false`) : tout élément non confirmé est **masqué automatiquement**
 (chiffres, partenaires, coordonnées, WhatsApp, carte…). Le site reste cohérent même s'il manque des informations.
 
-## Formulaires : connecter un service de réception
+## Formulaires : envoi par e-mail avec Resend
 
-Les formulaires de devis et de contact effectuent une **vraie validation** (navigateur **et** serveur via
-`src/lib/forms.ts`), avec champ anti-robot invisible.
+### Le formulaire de devis (outil de génération de prospects)
 
-- **Sans configuration** : l'API `/api/requests` valide la demande puis répond `demo`. L'utilisateur voit
-  clairement « Formulaire validé — mode démonstration : aucune demande n'a été transmise ». Rien n'est stocké.
-- **Avec `FORM_WEBHOOK_URL`** : la demande validée est envoyée en `POST` JSON au service indiqué, puis
-  l'utilisateur voit « Demande envoyée ». En cas d'échec, un message d'erreur explicite s'affiche (HTTP 502).
+Formulaire en **3 étapes** (`src/components/forms/QuoteForm.tsx`) :
 
-Exemple de charge utile envoyée :
+1. **Service** — grandes cartes tactiles (pré-sélection possible : `/devis?service=transport-routier`) ;
+2. **Trajet & marchandise** — départ, destination, marchandise, poids/volume, date souhaitée ;
+3. **Coordonnées** — nom, entreprise, e-mail, téléphone, description, consentement.
 
-```json
-{
-  "source": "site-madina-trans",
-  "type": "Demande de devis",
-  "submittedAt": "2026-11-18T15:45:49.303Z",
-  "fullName": "…", "company": "…", "email": "…", "phone": "…",
-  "service": "transport-routier", "origin": "…", "destination": "…",
-  "goods": "…", "message": "…", "consent": "on"
-}
-```
+- Validation à chaque étape (navigateur) **et** côté serveur, avec les mêmes règles (`src/lib/forms.ts`).
+- Messages d'erreur explicites : format e-mail, numéro malien (+223 + 8 chiffres) ou international, nombre de caractères manquants.
+- Barre de progression, retour arrière sans perte de saisie, focus automatique sur le premier champ en erreur.
+- Confirmation après envoi avec **référence de suivi** (ex. `MT-261119-K7Q2`) et prochaines étapes.
 
-Services compatibles (au choix, à souscrire par Madina Trans) :
+### Protection anti-spam (API `/api/requests`)
 
-| Service | Procédure |
+| Protection | Détail |
 | --- | --- |
-| **Formspree** | Créer un formulaire → copier l'URL `https://formspree.io/f/xxxx` dans `FORM_WEBHOOK_URL` |
-| **Make / Zapier / n8n** | Créer un scénario « Webhook » → copier l'URL → router vers e-mail, Google Sheets, CRM… |
-| **Google Apps Script** | Déployer un script `doPost(e)` en application web → copier l'URL |
-| **API interne / CRM** | Toute URL acceptant un `POST` JSON ; jeton optionnel via `FORM_WEBHOOK_TOKEN` (en-tête `Authorization: Bearer`) |
+| Champ piège invisible | Un robot qui le remplit est ignoré silencieusement |
+| Délai minimal | Envoi en moins de 3 s après affichage → ignoré |
+| Limitation de débit | 5 envois / 10 min / IP (mémoire de l'instance) |
+| Origine | Requêtes d'un autre site refusées (403) |
+| Taille | Corps limité à 16 Ko (413) |
+| Validation serveur | Champs inconnus supprimés, longueurs bornées, sauts de ligne neutralisés |
+| E-mail | Contenu échappé (aucune injection HTML possible) |
 
-> Le chemin « envoi réel » a été testé avec un webhook local : voir `docs/RAPPORT-TESTS.md`.
+### Acheminement des demandes
+
+`src/lib/server/delivery.ts` choisit automatiquement le canal :
+
+1. **Resend** si `RESEND_API_KEY`, `RESEND_FROM_EMAIL` et `ADMIN_EMAIL` sont définis : e-mail HTML + texte
+   à l'administrateur, `reply_to` = adresse du client (on répond directement), en-tête d'idempotence ;
+2. sinon **webhook JSON** si `FORM_WEBHOOK_URL` est défini ;
+3. sinon **mode démonstration** : la demande est validée mais **rien n'est envoyé**, et l'utilisateur en est clairement informé.
+
+Aucune clé n'est dans le code. En cas d'échec d'envoi, l'utilisateur voit un message d'erreur (HTTP 502) et l'erreur est journalisée côté serveur.
+
+### Configurer Resend
+
+1. Créer un compte sur resend.com (à souscrire par Madina Trans).
+2. **Domains → Add Domain** : ajouter le domaine de l'entreprise et créer les enregistrements DNS indiqués (SPF / DKIM).
+3. **API Keys → Create API Key** (permission « Sending access »).
+4. Renseigner dans Vercel (ou `.env.local`) :
+
+   ```
+   RESEND_API_KEY=re_xxxxxxxx
+   RESEND_FROM_EMAIL=Madina Trans <devis@domaine-verifie.ml>
+   ADMIN_EMAIL=commercial@domaine.ml,direction@domaine.ml
+   CONTACT_EMAIL=contact@domaine.ml
+   ```
+
+5. Redéployer, puis envoyer une demande de test : l'e-mail arrive avec la référence dans l'objet.
 
 ## Variables d'environnement
 
@@ -177,8 +199,11 @@ Voir `.env.example`. Aucune valeur sensible n'est présente dans le code source.
 | --- | --- | --- |
 | `NEXT_PUBLIC_DEMO_MODE` | Build (public) | `true` (défaut) = démonstration · `false` = production |
 | `NEXT_PUBLIC_SITE_URL` | Build (public) | URL publique (canonique, Open Graph, sitemap) |
-| `FORM_WEBHOOK_URL` | Serveur (secret) | Destination des formulaires |
-| `FORM_WEBHOOK_TOKEN` | Serveur (secret) | Jeton d'authentification facultatif |
+| `RESEND_API_KEY` | Serveur (secret) | Clé API Resend |
+| `RESEND_FROM_EMAIL` | Serveur | Expéditeur sur un domaine vérifié dans Resend |
+| `ADMIN_EMAIL` | Serveur | Destinataire(s) des devis (séparés par des virgules) |
+| `CONTACT_EMAIL` | Serveur | Destinataire des messages de contact (sinon `ADMIN_EMAIL`) |
+| `FORM_WEBHOOK_URL` / `FORM_WEBHOOK_TOKEN` | Serveur (secret) | Alternative webhook si Resend n'est pas utilisé |
 
 > Les variables `NEXT_PUBLIC_*` sont intégrées au moment du build : redéployez après modification.
 
@@ -186,11 +211,14 @@ Voir `.env.example`. Aucune valeur sensible n'est présente dans le code source.
 
 - Titres et meta descriptions personnalisés par page (`%s | Madina Trans`), URL propres en français.
 - Balises canoniques, Open Graph et Twitter Card, image de partage générée (`/opengraph-image`).
-- `sitemap.xml` et `robots.txt` générés automatiquement.
+- `sitemap.xml`, `robots.txt` et `manifest.webmanifest` générés automatiquement.
+- Référencement local : balises `geo.region` / `geo.placename` (Bamako), mots-clés locaux dans les contenus.
+- Image de partage propre à chaque fiche service et article (1200 × 630).
 - HTML sémantique : un seul `h1` par page, `nav`, `main`, `article`, fil d'Ariane, attributs `alt`.
 - Mots-clés travaillés naturellement : transport au Mali, transport routier Bamako, transit au Mali,
   logistique au Mali, transport de marchandises, affrètement maritime, société de transport à Bamako.
-- Données structurées `LocalBusiness` publiées **uniquement** quand téléphone et adresse sont confirmés
+- Données structurées `WebSite`, `BreadcrumbList` et `Service` (sans donnée d'entreprise non vérifiée) ;
+  `LocalBusiness` publié **uniquement** quand téléphone et adresse sont confirmés
   et le mode démo désactivé (`src/components/seo/OrganizationJsonLd.tsx`).
 - Performance : pages pré-rendues statiquement, images AVIF/WebP en lazy-loading, polices auto-hébergées,
   animations CSS légères respectant `prefers-reduced-motion`.

@@ -55,8 +55,8 @@ export const services: Service[] = [
       { title: "Chargement", text: "Enlèvement, sécurisation et contrôle." },
       { title: "Livraison", text: "Acheminement, suivi et remise au destinataire." },
     ],
-    image: images.heroTruck,
-    secondaryImage: images.truckHighway,
+    image: images.truckSunset,
+    secondaryImage: images.truckCab,
     seo: {
       title: "Transport routier de marchandises à Bamako et au Mali",
       description:
@@ -94,7 +94,7 @@ export const services: Service[] = [
       { title: "Remise", text: "Livraison et clôture du dossier." },
     ],
     image: images.containersAerial,
-    secondaryImage: images.truckTrailer,
+    secondaryImage: images.portTerminal,
     seo: {
       title: "Transit au Mali : formalités et affrètement",
       description:
@@ -132,7 +132,7 @@ export const services: Service[] = [
       { title: "Post-acheminement", text: "Transport terrestre jusqu'à destination." },
     ],
     image: images.portCranes,
-    secondaryImage: images.containerShip,
+    secondaryImage: images.containerShipAerial,
     seo: {
       title: "Affrètement maritime vers le Mali",
       description:
@@ -169,8 +169,8 @@ export const services: Service[] = [
       { title: "Préparation", text: "Regroupement et conditionnement." },
       { title: "Distribution", text: "Livraison planifiée vers vos sites." },
     ],
-    image: images.warehouse,
-    secondaryImage: images.warehouseAisles,
+    image: images.warehouseWorker,
+    secondaryImage: images.warehouseAerial,
     seo: {
       title: "Logistique et distribution au Mali",
       description:

@@ -13,8 +13,13 @@ export const metadata = pageMetadata({
 export default function LegalPage() {
   return (
     <>
-      <PageHero title="Mentions légales" image={images.warehouseRacks} crumbs={[{ label: "Mentions légales" }]} />
-      <Container className="max-w-3xl py-16 lg:py-20">
+      <PageHero
+        title="Mentions légales"
+        image={images.warehouseRacks}
+        crumbs={[{ label: "Mentions légales" }]}
+        path="/mentions-legales"
+      />
+      <Container className="max-w-3xl section-y-sm">
         <div className="prose-mt">
           {DEMO_MODE && (
             <>
@@ -38,8 +43,8 @@ export default function LegalPage() {
                   Le logo présenté est un concept graphique temporaire, et non le logo officiel de l&apos;entreprise.
                 </li>
                 <li>
-                  Les formulaires sont validés mais n&apos;envoient aucune donnée tant qu&apos;aucun service de
-                  réception n&apos;est configuré.
+                  Les formulaires sont validés mais n&apos;envoient aucune donnée tant que le service d&apos;envoi
+                  d&apos;e-mails (Resend) n&apos;est pas configuré.
                 </li>
               </ul>
             </>
@@ -69,6 +74,11 @@ export default function LegalPage() {
             visiteurs. Elles ne sont ni revendues ni cédées à des tiers. Conformément à la réglementation applicable en
             matière de protection des données personnelles, vous disposez d&apos;un droit d&apos;accès, de rectification
             et de suppression de vos données, que vous pouvez exercer en contactant {company.name}.
+          </p>
+
+          <p>
+            Les demandes envoyées depuis les formulaires sont acheminées par e-mail à {company.name} via le service
+            Resend (Resend, Inc.). Aucune donnée n&apos;est conservée sur le site lui-même.
           </p>
 
           <h2>Cookies</h2>

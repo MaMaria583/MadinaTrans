@@ -61,6 +61,67 @@ export const company = {
     status: "provided",
     note: "Domaines d'activité issus du brief de refonte. À valider avec la direction.",
   } satisfies ConfigValue<string[]>,
+  /** Historique, date de création, réalisations : rien n'est inventé. */
+  history: {
+    value: "",
+    status: "missing",
+    note: "Date de création, étapes clés et réalisations à obtenir auprès de la direction.",
+  } satisfies ConfigValue,
+};
+
+/**
+ * Informations institutionnelles (textes de présentation).
+ * Rédaction de démonstration à valider : aucune date, aucun chiffre,
+ * aucune certification ni référence n'y figure.
+ */
+export const institutional = {
+  status: "demo" as InfoStatus,
+  presentation: [
+    "Basée à Bamako, Madina Trans est une entreprise malienne qui intervient sur l'ensemble de la chaîne du transport de marchandises : transport routier, transit, affrètement maritime, logistique et distribution.",
+    "Pour un pays sans littoral comme le Mali, la maîtrise de la chaîne de transport est un enjeu majeur de développement économique. Madina Trans met son savoir-faire au service des entreprises, des commerçants et des institutions qui ont besoin de solutions fiables pour acheminer leurs marchandises.",
+  ],
+  vision:
+    "Contribuer au développement économique du Mali et de l'Afrique de l'Ouest en rendant les échanges de marchandises plus simples, plus sûrs et plus efficaces.",
+  mission:
+    "Offrir à chaque client une solution de transport et de logistique adaptée à ses besoins, avec un accompagnement personnalisé, une communication transparente et le respect des engagements pris.",
+  values: [
+    { title: "Intégrité", text: "Des engagements tenus et une relation fondée sur la confiance." },
+    { title: "Rigueur", text: "Une organisation méthodique pour chaque opération, quelle que soit sa taille." },
+    { title: "Proximité", text: "Une écoute attentive et un dialogue permanent avec nos clients." },
+    { title: "Excellence", text: "La recherche constante de la qualité dans chacun de nos services." },
+  ],
+  /** Atouts mis en avant à la place de chiffres non confirmés. */
+  strengths: [
+    {
+      icon: "route",
+      title: "Une chaîne multimodale",
+      text: "Route, mer et entrepôt coordonnés par un même partenaire, du point d'enlèvement à la livraison finale.",
+    },
+    {
+      icon: "user",
+      title: "Un interlocuteur unique",
+      text: "Un contact dédié suit votre dossier, centralise les informations et vous tient informé.",
+    },
+    {
+      icon: "pin",
+      title: "Un ancrage à Bamako",
+      text: "Une connaissance du terrain malien et des réalités des corridors d'acheminement vers le Mali.",
+    },
+    {
+      icon: "file",
+      title: "Des devis détaillés",
+      text: "Des propositions claires et détaillées, construites à partir de votre besoin réel.",
+    },
+  ] as const,
+  /** Secteurs pour lesquels les solutions sont conçues (capacités, pas des références clients). */
+  sectors: [
+    "Commerce et distribution",
+    "Construction et matériaux",
+    "Agro-alimentaire",
+    "Industrie et équipements",
+    "Mines et énergie",
+    "Projets et organisations",
+  ],
 };
 
 export const contact = {
@@ -109,7 +170,18 @@ export const socialLinks: Array<{
   { network: "facebook", label: "Facebook", url: { value: "", status: "missing" } },
   { network: "linkedin", label: "LinkedIn", url: { value: "", status: "missing" } },
   { network: "youtube", label: "YouTube", url: { value: "", status: "missing" } },
+  { network: "instagram", label: "Instagram", url: { value: "", status: "missing" } },
 ];
+
+/* ——— Liens d'action : générés UNIQUEMENT pour des coordonnées confirmées ——— */
+export const telHref = () => (isConfirmed(contact.phone) ? `tel:${contact.phone.value.replace(/[^\d+]/g, "")}` : null);
+export const mailHref = () => (isConfirmed(contact.email) ? `mailto:${contact.email.value}` : null);
+export const whatsappHref = (message = "Bonjour Madina Trans, je souhaite obtenir des informations.") =>
+  isConfirmed(contact.whatsapp) && contact.whatsapp.value
+    ? `https://wa.me/${contact.whatsapp.value}?text=${encodeURIComponent(message)}`
+    : null;
+export const mapReady = () =>
+  isConfirmed(contact.address) && isConfirmed(contact.mapEmbedUrl) && contact.mapEmbedUrl.value.length > 0;
 
 /**
  * Chiffres clés — AUCUNE valeur n'est inventée.

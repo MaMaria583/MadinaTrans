@@ -34,7 +34,7 @@ export const articles: Article[] = [
     category: "Conseils",
     date: "2026-10-28",
     readingMinutes: 4,
-    cover: images.truckHighway,
+    cover: images.parcels,
     isSample: true,
     body: [
       {

@@ -49,7 +49,9 @@ Pour rendre le dépôt privé : GitHub → Settings → General → *Danger Zone
    | --- | --- |
    | `NEXT_PUBLIC_DEMO_MODE` | `true` |
    | `NEXT_PUBLIC_SITE_URL` | *(laisser vide : l'URL Vercel est utilisée)* |
-   | `FORM_WEBHOOK_URL` | *(laisser vide tant qu'aucun service n'est choisi)* |
+   | `RESEND_API_KEY` | *(vide tant que Resend n'est pas configuré → mode démonstration)* |
+   | `RESEND_FROM_EMAIL` | *(ex. `Madina Trans <devis@domaine.ml>`)* |
+   | `ADMIN_EMAIL` | *(adresse(s) qui reçoivent les devis)* |
 
 5. **Deploy**. Le lien de démonstration `https://<nom-du-projet>.vercel.app` est prêt en ~1 minute.
 
@@ -71,7 +73,7 @@ vercel --prod     # déploiement de production
 
 1. Compléter `src/config/site.ts` (voir `INFORMATIONS-A-CONFIRMER.md`).
 2. Remplacer les photos et le logo par les éléments officiels.
-3. Configurer `FORM_WEBHOOK_URL` (voir README › Formulaires).
+3. Configurer Resend : `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `ADMIN_EMAIL` (voir README › Formulaires).
 4. Dans Vercel : `NEXT_PUBLIC_DEMO_MODE=false`, `NEXT_PUBLIC_SITE_URL=https://www.<domaine>`.
 5. Vercel → Settings → **Domains** → ajouter le domaine et suivre les instructions DNS.
 6. Redéployer (les variables `NEXT_PUBLIC_*` sont prises en compte au build).
@@ -89,5 +91,6 @@ chaque branche / pull request obtient une URL de prévisualisation.
 | --- | --- |
 | Images Unsplash non affichées | Vérifier `images.remotePatterns` dans `next.config.ts` |
 | Le mode démo reste actif | Vérifier `NEXT_PUBLIC_DEMO_MODE=false` puis **redéployer** |
-| Formulaire « mode démonstration » en production | `FORM_WEBHOOK_URL` absent ou mal orthographié |
+| Formulaire « mode démonstration » en production | Une des 3 variables Resend est absente ou mal orthographiée |
+| Formulaire en erreur 502 avec Resend | Domaine expéditeur non vérifié ou clé invalide : voir Vercel → Logs |
 | Formulaire en erreur 502 | Le service cible refuse la requête : vérifier l'URL / le jeton |

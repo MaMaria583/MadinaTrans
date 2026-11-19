@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { siteMeta } from "@/config/site";
 import { Hero } from "@/components/sections/Hero";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
-import { KeyFigures } from "@/components/sections/KeyFigures";
+import { ChainStrengths } from "@/components/sections/ChainStrengths";
 import { AboutPreview } from "@/components/sections/AboutPreview";
-import { QuoteSection } from "@/components/sections/QuoteSection";
 import { CommitmentsStrip } from "@/components/sections/CommitmentsStrip";
-import { Partners } from "@/components/sections/Partners";
+import { QuoteSection } from "@/components/sections/QuoteSection";
+import { Sectors } from "@/components/sections/Sectors";
+import { LatestArticles } from "@/components/sections/LatestArticles";
 import { FinalCta } from "@/components/sections/FinalCta";
 
 export const metadata: Metadata = {
@@ -20,11 +21,12 @@ export default function HomePage() {
     <>
       <Hero />
       <ServicesGrid />
-      <KeyFigures />
+      <ChainStrengths />
       <AboutPreview />
-      <QuoteSection />
       <CommitmentsStrip />
-      <Partners />
+      <QuoteSection index={5} />
+      <Sectors />
+      <LatestArticles />
       <FinalCta />
     </>
   );

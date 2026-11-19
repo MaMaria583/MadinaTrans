@@ -1,71 +1,109 @@
 import { NextResponse } from "next/server";
-import { sanitize, validateForm, type FormKind } from "@/lib/forms";
+import { MIN_FILL_TIME_MS, sanitize, validateForm, type FormKind } from "@/lib/forms";
+import { createReference, deliver, deliveryChannel } from "@/lib/server/delivery";
+import { isRateLimited } from "@/lib/server/rate-limit";
 
 /**
  * Point de réception des formulaires (devis et contact).
  *
- * - Si FORM_WEBHOOK_URL est défini (variable d'environnement serveur), la
- *   demande validée est transmise en JSON à ce service (Formspree, Make,
- *   Zapier, n8n, Google Apps Script, CRM…). Voir README › Formulaires.
- * - Sinon, la demande est validée puis IGNORÉE et la réponse indique
- *   clairement le mode démonstration : rien n'est transmis ni stocké.
+ * Sécurité :
+ *  - taille de requête limitée, JSON strict, type de formulaire contrôlé ;
+ *  - vérification de l'origine (même site uniquement) ;
+ *  - anti-spam : champ piège invisible + délai minimal de remplissage ;
+ *  - limitation de débit par IP ;
+ *  - validation serveur identique à celle du navigateur ;
+ *  - aucune donnée stockée ; secrets uniquement en variables d'environnement.
+ *
+ * Réponses : "sent" (transmis, avec référence), "demo" (aucun service
+ * configuré : rien n'est transmis), "invalid", "rate_limited", "error".
  */
-export async function POST(request: Request) {
-  let body: unknown;
+
+const MAX_BODY_BYTES = 16_000;
+
+const json = (body: Record<string, unknown>, status = 200) =>
+  NextResponse.json(body, { status, headers: { "Cache-Control": "no-store" } });
+
+function sameOrigin(request: Request) {
+  const origin = request.headers.get("origin");
+  if (!origin) return true; // certains navigateurs/outils n'envoient pas Origin sur same-origin
   try {
-    body = await request.json();
+    const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
+    return new URL(origin).host === host;
   } catch {
-    return NextResponse.json({ status: "error", message: "Requête invalide." }, { status: 400 });
+    return false;
+  }
+}
+
+export async function POST(request: Request) {
+  if (!sameOrigin(request)) {
+    return json({ status: "error", message: "Origine de la requête non autorisée." }, 403);
   }
 
-  const { kind, fields, website } = (body ?? {}) as {
+  const length = Number(request.headers.get("content-length") ?? 0);
+  if (length > MAX_BODY_BYTES) {
+    return json({ status: "error", message: "Demande trop volumineuse." }, 413);
+  }
+
+  let body: unknown;
+  try {
+    const raw = await request.text();
+    if (raw.length > MAX_BODY_BYTES) return json({ status: "error", message: "Demande trop volumineuse." }, 413);
+    body = JSON.parse(raw);
+  } catch {
+    return json({ status: "error", message: "Requête invalide." }, 400);
+  }
+
+  const { kind, fields, website, elapsed } = (body ?? {}) as {
     kind?: string;
     fields?: Record<string, unknown>;
     website?: string;
+    elapsed?: number;
   };
 
   if (kind !== "quote" && kind !== "contact") {
-    return NextResponse.json({ status: "error", message: "Type de formulaire inconnu." }, { status: 400 });
+    return json({ status: "error", message: "Type de formulaire inconnu." }, 400);
   }
 
-  // Champ piège anti-robots : rempli = robot. On répond normalement sans rien faire.
-  if (website) {
-    return NextResponse.json({ status: "demo" });
+  // Anti-spam : champ piège rempli ou envoi quasi instantané → réponse neutre, rien n'est transmis.
+  const tooFast = typeof elapsed !== "number" || elapsed < MIN_FILL_TIME_MS;
+  if (website || tooFast) {
+    return json({ status: "demo", reason: "filtered" });
+  }
+
+  const ip = (request.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || "local";
+  if (isRateLimited(`${kind}:${ip}`)) {
+    return json(
+      {
+        status: "rate_limited",
+        message: "Vous avez envoyé plusieurs demandes en peu de temps. Merci de réessayer dans quelques minutes.",
+      },
+      429,
+    );
   }
 
   const clean = sanitize(kind as FormKind, fields ?? {});
   const errors = validateForm(kind as FormKind, clean);
   if (Object.keys(errors).length > 0) {
-    return NextResponse.json({ status: "invalid", errors }, { status: 422 });
+    return json({ status: "invalid", errors }, 422);
   }
 
-  const webhook = process.env.FORM_WEBHOOK_URL;
-  if (!webhook) {
-    return NextResponse.json({ status: "demo" });
+  // Aucun service configuré : on le dit clairement, rien n'est simulé.
+  if (deliveryChannel() === "none") {
+    return json({ status: "demo" });
   }
 
-  try {
-    const headers: Record<string, string> = { "Content-Type": "application/json", Accept: "application/json" };
-    if (process.env.FORM_WEBHOOK_TOKEN) headers.Authorization = `Bearer ${process.env.FORM_WEBHOOK_TOKEN}`;
+  const submittedAt = new Date();
+  const reference = createReference(submittedAt);
+  const result = await deliver(kind as FormKind, clean, reference, submittedAt);
 
-    const res = await fetch(webhook, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        source: "site-madina-trans",
-        type: kind === "quote" ? "Demande de devis" : "Message de contact",
-        submittedAt: new Date().toISOString(),
-        ...clean,
-      }),
-      signal: AbortSignal.timeout(10_000),
-    });
-    if (!res.ok) throw new Error(`Webhook ${res.status}`);
-    return NextResponse.json({ status: "sent" });
-  } catch (error) {
-    console.error("[api/requests] Échec de transmission :", error);
-    return NextResponse.json(
-      { status: "error", message: "La demande n'a pas pu être transmise. Merci de réessayer plus tard." },
-      { status: 502 },
+  if (!result.ok) {
+    return json(
+      {
+        status: "error",
+        message: "Votre demande n'a pas pu être transmise. Merci de réessayer dans quelques instants.",
+      },
+      502,
     );
   }
+  return json({ status: "sent", reference });
 }

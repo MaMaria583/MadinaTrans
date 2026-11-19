@@ -32,3 +32,36 @@ export function OrganizationJsonLd() {
     />
   );
 }
+
+const ldScript = (data: Record<string, unknown>) => (
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
+  />
+);
+
+/** Site web (nom et URL uniquement : aucune donnée d'entreprise non vérifiée). */
+export function WebsiteJsonLd() {
+  return ldScript({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: company.name,
+    url: siteMeta.url,
+    inLanguage: "fr",
+  });
+}
+
+/** Description d'un service. Le prestataire n'est détaillé que si ses coordonnées sont confirmées. */
+export function ServiceJsonLd({ name, description, path }: { name: string; description: string; path: string }) {
+  return ldScript({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name,
+    serviceType: name,
+    description,
+    url: `${siteMeta.url.replace(/\/$/, "")}${path}`,
+    provider: structuredDataEnabled
+      ? { "@type": "LocalBusiness", name: company.name, telephone: contact.phone.value, url: siteMeta.url }
+      : { "@type": "Organization", name: company.name },
+  });
+}
