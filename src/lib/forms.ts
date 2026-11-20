@@ -158,3 +158,14 @@ export const serviceLabel = (value: string) => serviceOptions.find((o) => o.valu
 
 /** Délai minimal (ms) entre l'affichage du formulaire et l'envoi : en dessous, il s'agit d'un robot. */
 export const MIN_FILL_TIME_MS = 3000;
+
+/** Valeur lisible d'un champ (récapitulatif à l'écran et e-mail). */
+export function displayValue(name: string, value: string): string {
+  if (name === "service") return serviceLabel(value);
+  if (name === "consent") return value === "on" ? "Accepté" : "Non";
+  if (name === "date") {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+    if (m) return `${m[3]}/${m[2]}/${m[1]}`;
+  }
+  return value;
+}

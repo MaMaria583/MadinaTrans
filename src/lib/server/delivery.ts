@@ -1,5 +1,5 @@
 import "server-only";
-import { labelFor, serviceLabel, type FormKind } from "@/lib/forms";
+import { displayValue, labelFor, serviceLabel, type FormKind } from "@/lib/forms";
 
 /**
  * Acheminement des demandes reçues par le site.
@@ -40,13 +40,6 @@ export function createReference(now = new Date()) {
 
 const escapeHtml = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
-
-const displayValue = (name: string, value: string) => {
-  if (name === "service") return serviceLabel(value);
-  if (name === "consent") return value === "on" ? "Accepté" : "Non";
-  if (name === "date" && value) return new Date(`${value}T00:00:00Z`).toLocaleDateString("fr-FR", { timeZone: "UTC" });
-  return value;
-};
 
 function buildEmail(kind: FormKind, fields: Record<string, string>, reference: string, submittedAt: Date) {
   const isQuote = kind === "quote";

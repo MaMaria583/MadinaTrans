@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { CircleCheck, Info, Mail, Phone } from "lucide-react";
 import { contact, telHref } from "@/config/site";
-import { labelFor, serviceLabel, type FormKind } from "@/lib/forms";
+import { displayValue, labelFor, type FormKind } from "@/lib/forms";
 import type { SubmitState } from "./useRequestForm";
 
 /** Panneau affiché après soumission (démonstration ou envoi réel). */
@@ -92,7 +92,7 @@ export function FormResult({
         {summary.map(([k, v]) => (
           <div key={k} className="min-w-0">
             <dt className="text-xs font-semibold tracking-wide text-muted uppercase">{labelFor(kind, k)}</dt>
-            <dd className="truncate">{k === "service" ? serviceLabel(v) : v}</dd>
+            <dd className="truncate">{displayValue(k, v)}</dd>
           </div>
         ))}
       </dl>
