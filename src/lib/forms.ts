@@ -92,14 +92,14 @@ export function checkPhone(value: string): string | undefined {
   }
   if (digits.length === 8) return undefined; // numéro malien saisi sans indicatif
   if (digits.length < 8 || digits.length > 15)
-    return "Numéro invalide : indiquez 8 chiffres, ou l'indicatif international (ex. +223 70 00 00 00).";
+    return "Numéro invalide : indiquez 8 chiffres, ou l'indicatif international (ex. +223 70 00 00 00).";
   if (!value.trim().startsWith("+") && !value.trim().startsWith("00"))
     return "Pour un numéro étranger, ajoutez l'indicatif du pays (ex. +33 6 12 34 56 78).";
   return undefined;
 }
 
 export function checkEmail(value: string): string | undefined {
-  if (!EMAIL_RE.test(value)) return "Adresse e-mail invalide : vérifiez le format (ex. nom@entreprise.com).";
+  if (!EMAIL_RE.test(value)) return "Adresse e-mail invalide : vérifiez le format (ex. nom@entreprise.com).";
   return undefined;
 }
 
@@ -109,11 +109,11 @@ export function validateField(rule: Rule, raw: string | undefined): string | und
     if (!rule.required) return undefined;
     if (rule.oneOf?.includes("on")) return "Merci d'accepter le traitement de vos données pour envoyer la demande.";
     if (rule.oneOf) return "Veuillez sélectionner une option.";
-    return `Le champ « ${rule.label} » est obligatoire.`;
+    return `Le champ « ${rule.label} » est obligatoire.`;
   }
   if (rule.min && value.length < rule.min) {
     const missing = rule.min - value.length;
-    return `Encore ${missing} caractère${missing > 1 ? "s" : ""} minimum : précisez votre ${rule.label.toLowerCase()}.`;
+    return `Encore ${missing} caractère${missing > 1 ? "s" : ""} minimum : précisez votre ${rule.label.toLowerCase()}.`;
   }
   if (value.length > rule.max) return `Ce champ est limité à ${rule.max} caractères.`;
   if (rule.type === "email") return checkEmail(value);

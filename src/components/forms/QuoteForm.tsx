@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useSyncExternalStore } from "react";
-import { ArrowLeft, ArrowRight, CircleHelp, LoaderCircle, Lock, Send, TriangleAlert } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, CircleHelp, LoaderCircle, Lock, Send, TriangleAlert } from "lucide-react";
 import { DEMO_MODE } from "@/config/site";
 import {
   quoteSteps,
@@ -159,23 +159,38 @@ export function QuoteForm({
 
   return (
     <div ref={topRef} className="scroll-mt-32">
-      {/* Progression */}
-      <ol className="mb-7 grid grid-cols-3 gap-2" aria-label="Étapes de la demande">
+      {/* Progression : étape franchie (coche), étape en cours (titre affiché), étape à venir */}
+      <ol className="mb-9 grid grid-cols-3 gap-3" aria-label="Étapes de la demande">
         {quoteSteps.map((s, i) => (
           <li key={s.id} aria-current={i === step ? "step" : undefined}>
+            <span className="relative block h-[3px] overflow-hidden rounded-full bg-line">
+              <span
+                className={cn(
+                  "absolute inset-0 origin-left bg-gold-400 transition-transform duration-700 ease-[var(--ease-premium)]",
+                  i <= step ? "scale-x-100" : "scale-x-0",
+                )}
+              />
+            </span>
             <span
               className={cn(
-                "block h-1.5 rounded-full transition-colors duration-500",
-                i <= step ? "bg-gold-400" : "bg-line",
-              )}
-            />
-            <span
-              className={cn(
-                "mt-2 flex items-center gap-1.5 text-[0.76rem] font-semibold sm:text-[0.82rem]",
-                i === step ? "text-navy-900" : "text-muted",
+                "mt-3 flex items-center gap-2 text-[0.78rem] font-semibold sm:text-[0.84rem]",
+                i === step ? "text-navy-900" : i < step ? "text-navy-700" : "text-muted",
               )}
             >
-              <span className="font-display tabular-nums">{i + 1}.</span>
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "inline-flex size-5 shrink-0 items-center justify-center rounded-full font-display text-[0.72rem] tabular-nums transition-colors duration-500",
+                  i < step
+                    ? "bg-gold-400 text-navy-950"
+                    : i === step
+                      ? "bg-navy-900 text-white"
+                      : "border border-line text-muted",
+                )}
+              >
+                {i < step ? <Check className="size-3" strokeWidth={3} /> : i + 1}
+              </span>
+              <span className="sr-only">Étape {i + 1} : </span>
               <span className={cn(i !== step && "max-sm:sr-only")}>{s.title}</span>
             </span>
           </li>
@@ -198,7 +213,7 @@ export function QuoteForm({
           {step === 0 && (
             <ChoiceCards
               name="service"
-              legend="Quel service vous intéresse ?"
+              legend="Quel service vous intéresse ?"
               options={serviceOptions}
               value={service}
               onChange={setField}
@@ -210,7 +225,7 @@ export function QuoteForm({
           {step === 1 && (
             <div className="grid gap-5 sm:grid-cols-2">
               <p className="rounded-xl bg-mist px-4 py-3 text-sm text-navy-800 sm:col-span-2">
-                Service : <strong>{serviceLabel(service)}</strong>{" "}
+                Service : <strong>{serviceLabel(service)}</strong>{" "}
                 <button type="button" onClick={() => setStep(0)} className="ml-1 font-semibold text-gold-700 underline">
                   modifier
                 </button>
@@ -356,14 +371,18 @@ export function QuoteForm({
           </p>
         )}
 
-        <div className="mt-7 flex flex-col-reverse gap-3 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-9 flex flex-col-reverse gap-3 border-t border-line pt-7 sm:flex-row sm:items-center sm:justify-between">
           {step > 0 ? (
             <button
               type="button"
               onClick={back}
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[3px] px-4 font-semibold text-navy-800 hover:bg-mist"
+              className="group inline-flex min-h-13 items-center justify-center gap-2 rounded-[3px] border border-line px-6 font-semibold text-navy-800 transition-[border-color,background-color,transform] duration-200 hover:border-navy-900 hover:bg-mist active:scale-[0.98]"
             >
-              <ArrowLeft className="size-4" aria-hidden="true" /> Retour
+              <ArrowLeft
+                className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5"
+                aria-hidden="true"
+              />
+              Retour
             </button>
           ) : (
             <p className="flex items-center gap-2 text-[0.8rem] text-muted">
@@ -373,7 +392,7 @@ export function QuoteForm({
           <button
             type="submit"
             disabled={submitting}
-            className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-[3px] bg-gold-400 px-7 font-semibold text-navy-950 shadow-[0_8px_20px_-8px_rgb(198_166_106/0.45)] transition-[transform,background-color,border-color,box-shadow,color] hover:-translate-y-0.5 hover:bg-gold-300 disabled:cursor-wait disabled:opacity-70 sm:w-auto"
+            className="group inline-flex min-h-13 w-full items-center justify-center gap-2.5 rounded-[3px] bg-gold-400 px-8 font-semibold text-navy-950 transition-[transform,background-color,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-gold-300 hover:shadow-[0_14px_30px_-14px_rgb(198_166_106/0.7)] active:scale-[0.98] disabled:cursor-wait disabled:opacity-70 sm:w-auto [&_svg]:transition-transform [&_svg]:duration-300 hover:[&_svg:last-child]:translate-x-0.5"
           >
             {submitting ? (
               <>
@@ -392,7 +411,7 @@ export function QuoteForm({
         </div>
         {DEMO_MODE && isLast && (
           <p className="mt-3 text-center text-[0.8rem] text-muted sm:text-right">
-            Site de démonstration : la demande est vérifiée mais n&apos;est transmise que si Resend est configuré.
+            Site de démonstration : la demande est vérifiée mais n&apos;est transmise que si Resend est configuré.
           </p>
         )}
       </form>

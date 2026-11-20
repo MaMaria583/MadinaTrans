@@ -132,4 +132,4 @@ export const images = {
 } satisfies Record<string, SiteImage>;
 
 export const imageCreditNote =
-  "Photographies : Unsplash, visuels d'illustration ne représentant pas la flotte, les locaux ni le personnel de Madina Trans.";
+  "Photographies : Unsplash, visuels d'illustration ne représentant pas la flotte, les locaux ni le personnel de Madina Trans.";

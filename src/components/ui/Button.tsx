@@ -13,12 +13,12 @@ const base =
   "group/btn inline-flex items-center justify-center gap-2.5 rounded-[3px] font-semibold tracking-[0.01em] transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] select-none active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 [&_svg]:size-[1.05em] [&_svg]:shrink-0 [&_svg]:transition-transform [&_svg]:duration-300 hover:[&_svg:last-child]:translate-x-0.5";
 
 const variants: Record<Variant, string> = {
-  gold: "bg-gold-400 text-navy-950 hover:bg-gold-300",
+  gold: "bg-gold-400 text-navy-950 hover:bg-gold-300 hover:shadow-[0_14px_30px_-14px_rgb(198_166_106/0.7)]",
   navy: "bg-navy-900 text-white hover:bg-navy-700",
   outline:
     "border border-navy-900/25 bg-transparent text-navy-900 hover:border-navy-900 hover:bg-navy-900 hover:text-white",
   outlineLight:
-    "border border-white/40 bg-transparent text-white hover:border-white hover:bg-white hover:text-navy-950",
+    "border border-white/40 bg-white/[0.03] text-white backdrop-blur-[2px] hover:border-white hover:bg-white hover:text-navy-950",
   ghost: "text-navy-900 hover:text-gold-600",
 };
 

@@ -6,7 +6,7 @@ import { Container } from "@/components/ui/Section";
 export const metadata = pageMetadata({
   title: "Demande de devis transport et logistique",
   description:
-    "Demandez un devis à Madina Trans pour votre transport de marchandises au Mali : transport routier, transit, affrètement maritime ou logistique.",
+    "Demandez un devis à Madina Trans pour votre transport de marchandises au Mali : transport routier, transit, affrètement maritime ou logistique.",
   path: "/devis",
 });
 

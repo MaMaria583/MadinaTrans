@@ -77,7 +77,7 @@ export const company = {
 export const institutional = {
   status: "demo" as InfoStatus,
   presentation: [
-    "Basée à Bamako, Madina Trans est une entreprise malienne qui intervient sur l'ensemble de la chaîne du transport de marchandises : transport routier, transit, affrètement maritime, logistique et distribution.",
+    "Basée à Bamako, Madina Trans est une entreprise malienne qui intervient sur l'ensemble de la chaîne du transport de marchandises : transport routier, transit, affrètement maritime, logistique et distribution.",
     "Pour un pays sans littoral comme le Mali, la maîtrise de la chaîne de transport est un enjeu majeur de développement économique. Madina Trans met son savoir-faire au service des entreprises, des commerçants et des institutions qui ont besoin de solutions fiables pour acheminer leurs marchandises.",
   ],
   vision:
@@ -117,7 +117,7 @@ export const institutional = {
   qualityApproach: [
     {
       title: "Analyse préalable",
-      text: "Chaque demande est étudiée : marchandise, trajet, délais et contraintes d'accès.",
+      text: "Chaque demande est étudiée : marchandise, trajet, délais et contraintes d'accès.",
     },
     {
       title: "Chargement maîtrisé",
@@ -149,7 +149,7 @@ export const contact = {
   email: {
     value: "contact@madinatrans.example",
     status: "demo",
-    note: "Domaine .example réservé : adresse volontairement non fonctionnelle.",
+    note: "Domaine .example réservé : adresse volontairement non fonctionnelle.",
   } satisfies ConfigValue,
   whatsapp: {
     /** Format international sans + ni espaces, ex. 22370000000 */
@@ -173,7 +173,7 @@ export const contact = {
     status: "missing",
   } satisfies ConfigValue,
   openingHours: {
-    value: "Lundi – Vendredi : horaires à confirmer",
+    value: "Lundi – Vendredi : horaires à confirmer",
     status: "missing",
   } satisfies ConfigValue,
 };
@@ -249,7 +249,7 @@ export const partners: Array<{ name: string; logo: string; url?: string }> = [];
 
 export const agency = {
   name: "MD Digital Solutions",
-  credit: "Conception & réalisation : MD Digital Solutions",
+  credit: "Conception & réalisation : MD Digital Solutions",
   proposal: "Proposition de conception réalisée par MD Digital Solutions",
 };
 
@@ -263,7 +263,7 @@ export const siteMeta = {
   locale: "fr_ML",
   defaultTitle: "Madina Trans | Transport, transit et logistique au Mali",
   defaultDescription:
-    "Madina Trans, société de transport à Bamako : transport routier de marchandises, transit au Mali, affrètement maritime et logistique. Demandez votre devis.",
+    "Madina Trans, société de transport à Bamako : transport routier de marchandises, transit au Mali, affrètement maritime et logistique. Demandez votre devis.",
   copyrightYear: 2026,
 };
 

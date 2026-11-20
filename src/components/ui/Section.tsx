@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
+import { Reveal } from "./Reveal";
 
 export function Container({ className, children }: { className?: string; children: ReactNode }) {
   return <div className={cn("mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10", className)}>{children}</div>;
@@ -45,7 +46,7 @@ export function SectionHeading({
   className?: string;
 }) {
   return (
-    <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
+    <Reveal className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
       {eyebrow && <Eyebrow light={light}>{eyebrow}</Eyebrow>}
       <Tag
         id={id}
@@ -70,6 +71,6 @@ export function SectionHeading({
           {intro}
         </p>
       )}
-    </div>
+    </Reveal>
   );
 }

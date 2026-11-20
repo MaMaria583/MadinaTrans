@@ -3,7 +3,7 @@ import { DemoBadge } from "./DemoBadge";
 
 /** Libellé unique des coordonnées fictives, utilisé partout sur le site. */
 export const FICTIVE_LABEL = "Fictif";
-export const FICTIVE_TITLE = "Coordonnée fictive de démonstration : ne permet pas de joindre Madina Trans";
+export const FICTIVE_TITLE = "Coordonnée fictive de démonstration : ne permet pas de joindre Madina Trans";
 
 /**
  * Affiche une coordonnée (téléphone ou e-mail).

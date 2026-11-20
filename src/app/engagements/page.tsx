@@ -9,9 +9,9 @@ import { CommitmentIconView } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata = pageMetadata({
-  title: "Engagements transport : sécurité, délais, qualité",
+  title: "Engagements transport : sécurité, délais, qualité",
   description:
-    "Sécurité, respect des délais, qualité de service, transparence : découvrez les engagements de Madina Trans pour le transport de vos marchandises au Mali.",
+    "Sécurité, respect des délais, qualité de service, transparence : découvrez les engagements de Madina Trans pour le transport de vos marchandises au Mali.",
   path: "/engagements",
 });
 
@@ -51,7 +51,7 @@ export default function CommitmentsPage() {
             />
             <p className="self-end leading-relaxed text-muted lg:col-span-6 lg:col-start-7">
               Ces engagements décrivent notre approche. Ils ne constituent ni des garanties contractuelles, ni des
-              certifications : les conditions de chaque opération sont précisées dans la proposition commerciale.
+              certifications : les conditions de chaque opération sont précisées dans la proposition commerciale.
             </p>
           </div>
 

@@ -12,14 +12,15 @@ export interface RouteStage {
 /**
  * Signature du site : « la route d'or ».
  * Sur ordinateur, la section se fige (sticky) pendant que le visiteur fait
- * défiler : une route dorée se trace d'un bout à l'autre, un repère la suit et
- * chaque étape s'allume à son passage. Sur mobile, la même route se trace à la
- * verticale sans figer la page. Mouvement réduit : route entièrement tracée.
+ * défiler : une ligne dorée relie les étapes en passant par le centre de chaque
+ * pictogramme, un repère la suit et chaque étape s'allume à son passage (l'étape
+ * en cours est pleine). Sur mobile, la même ligne se trace à la verticale, en
+ * chronologie, sans figer la page. Mouvement réduit : ligne entièrement tracée.
  *
  * Moteur : une seule boucle requestAnimationFrame déclenchée par le défilement,
  * qui s'arrête dès que la progression est stable, et n'écrit dans le DOM que
  * lorsque la valeur change (méthodes du Skill 10k-websites, scrub-pipeline).
- * Seuls transform, opacity et stroke-dashoffset sont animés.
+ * Seuls transform et opacity sont animés ; la position découle de --route en CSS.
  */
 export function RouteJourney({ header, stages }: { header: ReactNode; stages: RouteStage[] }) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -28,44 +29,42 @@ export function RouteJourney({ header, stages }: { header: ReactNode; stages: Ro
     const wrap = wrapRef.current;
     if (!wrap) return;
     const items = Array.from(wrap.querySelectorAll<HTMLElement>("[data-stage]"));
-    const path = wrap.querySelector<SVGPathElement>("path[data-route]");
-    const dot = wrap.querySelector<HTMLElement>("[data-route-dot]");
-    const total = path?.getTotalLength() ?? 0;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     const pinned = window.matchMedia("(min-width: 1024px)");
+    const last = stages.length - 1;
 
     let target = 0;
     let shown = -1;
     let raf: number | null = null;
-    let lastActive = -1;
+    let lastActive = -2;
 
     const measure = () => {
       const r = wrap.getBoundingClientRect();
       const vh = window.innerHeight;
       if (pinned.matches) {
         const total = r.height - vh;
-        return total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 1;
+        // La ligne se termine un peu avant la fin du maintien : la dernière étape reste lisible
+        return total > 0 ? Math.min(1, Math.max(0, -r.top / (total * 0.85))) : 1;
       }
-      // Mobile : progression à mesure que la liste traverse l'écran
-      return Math.min(1, Math.max(0, (vh * 0.8 - r.top) / (r.height * 0.9)));
+      // Mobile : progression à mesure que la chronologie traverse l'écran
+      return Math.min(1, Math.max(0, (vh * 0.72 - r.top) / (r.height * 0.82)));
     };
 
     const write = (p: number) => {
       wrap.style.setProperty("--route", p.toFixed(4));
-      if (path && dot && total) {
-        // Le repère suit la route : position calculée dans le repère du SVG (1000 × 120), exprimée en %
-        const pt = path.getPointAtLength(p * total);
-        dot.style.transform = `translate(${(pt.x / 10).toFixed(2)}cqw, ${((pt.y / 120) * 100).toFixed(2)}cqh)`;
-      }
-      const active = Math.min(stages.length - 1, Math.floor(p * (stages.length - 1) + 0.15));
+      // Une étape s'allume quand la ligne atteint le centre de son pictogramme
+      const active = p <= 0 ? -1 : Math.min(last, Math.floor(p * last + 0.02));
       if (active !== lastActive) {
         lastActive = active;
-        items.forEach((el, i) => el.toggleAttribute("data-on", i <= active));
+        items.forEach((el, i) => {
+          el.toggleAttribute("data-on", i <= active);
+          el.toggleAttribute("data-current", i === active);
+        });
       }
     };
 
     const tick = () => {
-      // Lissage (lerp) : la route suit la main avec une légère inertie, puis la boucle se repose
+      // Lissage (lerp) : la ligne suit la main avec une légère inertie, puis la boucle se repose
       shown = shown < 0 ? target : shown + (target - shown) * 0.18;
       if (Math.abs(target - shown) < 0.0015) shown = target;
       write(shown);
@@ -103,75 +102,70 @@ export function RouteJourney({ header, stages }: { header: ReactNode; stages: Ro
     };
   }, [stages.length]);
 
-  // Tracé de la route (ordinateur) : une ligne légèrement ondulée, comme un axe routier vu de haut
-  const d = "M 0 60 C 120 20, 200 100, 320 60 S 520 20, 640 60 S 860 100, 1000 60";
-
   return (
-    <div ref={wrapRef} className="relative lg:h-[240vh]" style={{ ["--route" as string]: 0 }}>
-      <div className="lg:sticky lg:top-0 lg:flex lg:min-h-screen lg:flex-col lg:justify-center lg:py-16">
+    <div ref={wrapRef} className="relative lg:h-[230vh]" style={{ ["--route" as string]: 0 }}>
+      <div className="lg:sticky lg:top-0 lg:flex lg:min-h-screen lg:flex-col lg:justify-center lg:py-20">
         {header}
 
-        {/* Ordinateur : route horizontale */}
-        <div className="relative mt-16 hidden lg:block">
-          <svg
-            viewBox="0 0 1000 120"
-            preserveAspectRatio="none"
-            className="h-24 w-full overflow-visible"
-            aria-hidden="true"
-          >
-            <path
-              d={d}
-              fill="none"
-              stroke="rgb(255 255 255 / 0.12)"
-              strokeWidth="2"
-              vectorEffect="non-scaling-stroke"
-            />
-            <path
-              data-route
-              d={d}
-              pathLength={1}
-              fill="none"
-              stroke="var(--color-gold-400)"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              vectorEffect="non-scaling-stroke"
-              style={{ strokeDasharray: 1, strokeDashoffset: "calc(1 - var(--route))" }}
-            />
-          </svg>
-          <span aria-hidden="true" className="pointer-events-none absolute inset-0 [container-type:size]">
+        <div className="relative mt-14 [container-type:inline-size] lg:mt-20">
+          {/* Ordinateur : ligne horizontale du centre du 1er pictogramme au centre du dernier (80 % de la largeur) */}
+          <div aria-hidden="true" className="absolute top-8 left-8 hidden h-px w-[80cqw] bg-white/14 lg:block">
             <span
-              data-route-dot
-              className="absolute top-0 left-0 -mt-2 -ml-2 block size-4 rounded-full bg-gold-300 shadow-[0_0_0_6px_rgb(198_166_106/0.25)] will-change-transform"
+              className="block h-full origin-left bg-gradient-to-r from-gold-500 to-gold-300"
+              style={{ transform: "scaleX(var(--route))" }}
             />
-          </span>
-        </div>
+            <span
+              className="absolute top-0 left-0 -mt-[5px] -ml-[5px] block size-[11px] rounded-full bg-gold-300 shadow-[0_0_0_5px_rgb(198_166_106/0.22),0_0_18px_rgb(216_192_143/0.55)] will-change-transform"
+              style={{ transform: "translateX(calc(var(--route) * 80cqw))" }}
+            />
+          </div>
 
-        <ol className="relative mt-10 grid gap-0 lg:mt-12 lg:grid-cols-5 lg:gap-6">
-          {/* Mobile : route verticale qui se trace */}
-          <li aria-hidden="true" className="absolute top-2 bottom-2 left-[1.6rem] w-px bg-white/12 lg:hidden">
-            <span className="block h-full w-px origin-top bg-gold-400" style={{ transform: "scaleY(var(--route))" }} />
-          </li>
-          {stages.map((stage, i) => (
-            <li
-              key={stage.title}
-              data-stage
-              className={cn(
-                "group/stage relative flex gap-5 pb-10 last:pb-0 lg:block lg:pb-0",
-                "[&:not([data-on])_.stage-icon]:border-white/15 [&:not([data-on])_.stage-icon]:text-navy-300",
-                "[&:not([data-on])_.stage-text]:opacity-45",
-              )}
-            >
-              <span className="stage-icon relative z-10 inline-flex size-[3.25rem] shrink-0 items-center justify-center rounded-full border border-gold-400/70 bg-navy-900 text-gold-300 transition-[color,border-color] duration-300">
-                {stage.icon}
-              </span>
-              <div className="stage-text transition-opacity duration-500 lg:mt-5">
-                <p className="font-display text-sm text-gold-400 tabular-nums">{String(i + 1).padStart(2, "0")}</p>
-                <h3 className="mt-1 font-display text-2xl font-normal">{stage.title}</h3>
-                <p className="mt-2 max-w-[28ch] text-[0.95rem] leading-relaxed text-navy-200">{stage.text}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+          {/* Mobile : ligne verticale qui passe par le centre des pictogrammes */}
+          <div aria-hidden="true" className="absolute top-7 bottom-0 left-7 w-px bg-white/14 lg:hidden">
+            <span
+              className="block h-full w-px origin-top bg-gradient-to-b from-gold-500 to-gold-300"
+              style={{ transform: "scaleY(var(--route))" }}
+            />
+          </div>
+
+          <ol className="relative grid lg:grid-cols-5">
+            {stages.map((stage, i) => (
+              <li
+                key={stage.title}
+                data-stage
+                className={cn(
+                  "group/stage relative flex gap-6 pb-12 last:pb-0 lg:block lg:pr-8 lg:pb-0",
+                  // Étape pas encore atteinte : estompée mais lisible
+                  "[&:not([data-on])_.stage-icon]:border-white/15 [&:not([data-on])_.stage-icon]:text-navy-300",
+                  "[&:not([data-on])_.stage-text]:opacity-55",
+                  // Étape en cours : pictogramme plein, halo doré
+                  "[&[data-current]_.stage-icon]:bg-gold-400 [&[data-current]_.stage-icon]:text-navy-950 [&[data-current]_.stage-icon]:shadow-[0_0_0_7px_rgb(198_166_106/0.16)]",
+                )}
+              >
+                {i === stages.length - 1 && (
+                  // La ligne verticale s'arrête au centre du dernier pictogramme
+                  <span
+                    aria-hidden="true"
+                    className="absolute top-14 bottom-0 left-[1.6rem] w-1.5 bg-navy-900 lg:hidden"
+                  />
+                )}
+                <span className="stage-icon relative z-10 inline-flex size-14 shrink-0 items-center justify-center rounded-full border border-gold-400/80 bg-navy-900 text-gold-300 transition-[color,border-color,background-color,box-shadow] duration-500 ease-[var(--ease-premium)] lg:size-16">
+                  {stage.icon}
+                </span>
+                <div className="stage-text pt-1 transition-opacity duration-500 lg:mt-7 lg:pt-0">
+                  <p className="label-caps text-gold-400">
+                    Étape <span className="tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                  </p>
+                  <h3 className="mt-2.5 font-display text-[1.7rem] leading-tight font-normal lg:text-[1.85rem]">
+                    {stage.title}
+                  </h3>
+                  <span aria-hidden="true" className="mt-4 block h-px w-8 bg-gold-400/60" />
+                  <p className="mt-4 max-w-[30ch] text-[1.02rem] leading-relaxed text-navy-100">{stage.text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </div>
   );

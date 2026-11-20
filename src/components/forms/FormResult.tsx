@@ -45,7 +45,7 @@ export function FormResult({
         </div>
         {state.reference && (
           <p className="rounded-xl bg-mist px-4 py-3 text-sm text-navy-800">
-            Référence de votre demande : <strong className="font-mono tracking-wide">{state.reference}</strong>
+            Référence de votre demande : <strong className="font-mono tracking-wide">{state.reference}</strong>
             <span className="block text-muted">Conservez-la pour tout échange avec nos équipes.</span>
           </p>
         )}

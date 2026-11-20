@@ -7,6 +7,7 @@ import { imageCreditNote } from "@/content/images";
 import { Container } from "@/components/ui/Section";
 import { FooterInvite } from "./FooterInvite";
 import { Logo } from "@/components/ui/Logo";
+import { ButtonLink } from "@/components/ui/Button";
 import { DemoBadge } from "@/components/ui/DemoBadge";
 import { ContactValue } from "@/components/ui/ContactValue";
 import { FacebookIcon, InstagramIcon, LinkedinIcon, YoutubeIcon } from "@/components/ui/Icons";
@@ -19,10 +20,11 @@ const socialIcon = {
 };
 
 function FooterTitle({ children }: { children: React.ReactNode }) {
-  return <h2 className="mb-6 label-caps text-gold-300">{children}</h2>;
+  return <h2 className="mb-5 border-b border-white/10 pb-4 label-caps text-gold-300">{children}</h2>;
 }
 
-const linkCls = "inline-block py-1.5 text-navy-100 transition-colors hover:text-white link-underline";
+const linkCls =
+  "inline-block py-1.5 text-navy-200 transition-colors duration-300 hover:text-white focus-visible:text-white link-underline";
 
 export function Footer() {
   const configuredSocials = socialLinks.filter((s) => isConfirmed(s.url) && s.url.value);
@@ -42,24 +44,18 @@ export function Footer() {
               </p>
             </div>
             <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row [&>a]:whitespace-nowrap">
-              <Link
-                href="/devis"
-                className="inline-flex min-h-13 items-center justify-center gap-2.5 rounded-[3px] bg-gold-400 px-7 font-semibold text-navy-950 transition-colors hover:bg-gold-300"
-              >
-                Demander un devis <ArrowRight className="size-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex min-h-13 items-center justify-center gap-2.5 rounded-[3px] border border-white/30 px-7 font-semibold text-white transition-colors hover:border-white hover:bg-white hover:text-navy-950"
-              >
+              <ButtonLink href="/devis" size="lg">
+                Demander un devis <ArrowRight aria-hidden="true" />
+              </ButtonLink>
+              <ButtonLink href="/contact" size="lg" variant="outlineLight">
                 Nous contacter
-              </Link>
+              </ButtonLink>
             </div>
           </div>
         </Container>
       </FooterInvite>
 
-      <Container className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
+      <Container className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10 lg:py-20">
         <div className="lg:col-span-4">
           <Logo inverted />
           <p className="mt-6 max-w-sm leading-relaxed text-navy-200">{company.shortDescription}</p>
@@ -131,12 +127,16 @@ export function Footer() {
                 </Link>
               </li>
             ))}
-            <li>
+            <li className="mt-4 border-t border-white/10 pt-4">
               <Link
                 href="/devis"
-                className="inline-flex items-center gap-1.5 font-semibold text-gold-300 hover:text-gold-200"
+                className="group inline-flex min-h-11 items-center gap-1.5 font-semibold text-gold-300 transition-colors hover:text-gold-200"
               >
-                Demander un devis <ArrowUpRight className="size-4" aria-hidden="true" />
+                Demander un devis{" "}
+                <ArrowUpRight
+                  className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  aria-hidden="true"
+                />
               </Link>
             </li>
           </ul>
@@ -144,7 +144,7 @@ export function Footer() {
 
         <div className="lg:col-span-3">
           <FooterTitle>Contact</FooterTitle>
-          <ul className="space-y-4">
+          <ul className="space-y-4 text-navy-100">
             <li className="flex gap-3">
               <MapPin className="mt-0.5 size-5 shrink-0 text-gold-400" aria-hidden="true" />
               <span>{contact.city.value}</span>
@@ -173,10 +173,8 @@ export function Footer() {
               Mentions légales
             </Link>
           </p>
-          <div className="flex flex-col gap-1 md:items-end">
-            <p>{agency.credit}</p>
-            {DEMO_MODE && <p className="text-navy-400">{agency.proposal}</p>}
-          </div>
+          {/* En démonstration, la mention de proposition remplace le crédit (même information, sans doublon) */}
+          <p>{DEMO_MODE ? agency.proposal : agency.credit}</p>
         </Container>
         {DEMO_MODE && (
           <Container className="pb-6 text-[0.75rem] text-navy-400">

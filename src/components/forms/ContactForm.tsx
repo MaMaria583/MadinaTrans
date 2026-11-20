@@ -85,7 +85,7 @@ export function ContactForm() {
       <div className="flex flex-col gap-3 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-[0.8rem] text-muted">
           <span className="text-gold-500">*</span> Champs obligatoires
-          {DEMO_MODE && " · Démonstration : aucun message n'est transmis."}
+          {DEMO_MODE && " · Démonstration : aucun message n'est transmis."}
         </p>
         <Button type="submit" variant="navy" size="lg" disabled={submitting} className="w-full sm:w-auto">
           {submitting ? <LoaderCircle className="animate-spin" aria-hidden="true" /> : <Send aria-hidden="true" />}

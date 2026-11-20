@@ -48,7 +48,7 @@ export const services: Service[] = [
       "Acheminement de vos marchandises par la route, au Mali et vers les pays de la sous-région, avec un suivi rigoureux à chaque étape.",
     description: [
       "Au Mali, la route porte l'essentiel des échanges commerciaux. Madina Trans organise l'acheminement de vos marchandises depuis leur point d'enlèvement jusqu'à leur destination finale, en adaptant chaque opération à la nature de la cargaison et aux contraintes du trajet.",
-      "Chargement, sécurisation, planification de l'itinéraire, communication avec le destinataire : chaque étape est préparée pour limiter les aléas et garantir une livraison dans les délais convenus.",
+      "Chargement, sécurisation, planification de l'itinéraire, communication avec le destinataire : chaque étape est préparée pour limiter les aléas et garantir une livraison dans les délais convenus.",
     ],
     advantages: [
       "Un interlocuteur unique du chargement à la livraison",
@@ -74,8 +74,8 @@ export const services: Service[] = [
       domain: "provided",
       details: "demo",
       toConfirm: [
-        "Liaisons réellement assurées : national uniquement ou aussi transfrontalier (quels pays / corridors) ?",
-        "Flotte propre ou affrétée ? Types de véhicules (porteurs, semi-remorques, plateaux, citernes…)",
+        "Liaisons réellement assurées : national uniquement ou aussi transfrontalier (quels pays / corridors) ?",
+        "Flotte propre ou affrétée ? Types de véhicules (porteurs, semi-remorques, plateaux, citernes…)",
         "Marchandises acceptées / exclues (dangereuses, réfrigérées, hors gabarit…)",
         "Modalités de suivi et d'information du client",
         "Assurance marchandises proposée ou non",
@@ -84,7 +84,7 @@ export const services: Service[] = [
     seo: {
       title: "Transport routier à Bamako et au Mali",
       description:
-        "Transport routier Bamako : Madina Trans organise le transport de marchandises au Mali et vers la sous-région. Planification, sécurité et suivi. Demandez un devis.",
+        "Transport routier Bamako : Madina Trans organise le transport de marchandises au Mali et vers la sous-région. Planification, sécurité et suivi. Demandez un devis.",
     },
   },
   {
@@ -123,16 +123,16 @@ export const services: Service[] = [
       domain: "provided",
       details: "demo",
       toConfirm: [
-        "Madina Trans dispose-t-elle d'un agrément de commissionnaire en douane / transitaire ?",
+        "Madina Trans dispose-t-elle d'un agrément de commissionnaire en douane / transitaire ?",
         "Formalités prises en charge directement ou via un partenaire agréé",
         "Bureaux de douane et frontières habituellement traités",
-        "Affrètement : moyens propres ou sous-traités",
+        "Affrètement : moyens propres ou sous-traités",
       ],
     },
     seo: {
-      title: "Transit au Mali : formalités et affrètement",
+      title: "Transit au Mali : formalités et affrètement",
       description:
-        "Transit au Mali avec Madina Trans : accompagnement dans les formalités import-export, coordination des intervenants et affrètement de moyens adaptés.",
+        "Transit au Mali avec Madina Trans : accompagnement dans les formalités import-export, coordination des intervenants et affrètement de moyens adaptés.",
     },
   },
   {
@@ -144,7 +144,7 @@ export const services: Service[] = [
     excerpt:
       "Organisation de vos expéditions par voie maritime et coordination du pré- et post-acheminement entre les ports et le Mali.",
     description: [
-      "Pays sans littoral, le Mali dépend des ports de la sous-région pour une large part de ses échanges internationaux. L'affrètement maritime ne s'arrête donc pas au quai : il se prolonge par un acheminement terrestre qui doit être parfaitement coordonné.",
+      "Pays sans littoral, le Mali dépend des ports de la sous-région pour une large part de ses échanges internationaux. L'affrètement maritime ne s'arrête donc pas au quai : il se prolonge par un acheminement terrestre qui doit être parfaitement coordonné.",
       "Madina Trans vous accompagne dans l'organisation de vos expéditions maritimes, en conteneur complet ou en groupage, et dans la coordination de la chaîne jusqu'à destination.",
     ],
     advantages: [
@@ -171,7 +171,7 @@ export const services: Service[] = [
       domain: "provided",
       details: "demo",
       toConfirm: [
-        "Activité réellement exercée (organisation de fret maritime) ou simple coordination avec des transitaires ?",
+        "Activité réellement exercée (organisation de fret maritime) ou simple coordination avec des transitaires ?",
         "Ports de la sous-région utilisés (Dakar, Abidjan, Lomé, Cotonou, Conakry…)",
         "Conteneur complet (FCL) et/ou groupage (LCL)",
         "Prise en charge du post-acheminement port → Mali",
@@ -180,7 +180,7 @@ export const services: Service[] = [
     seo: {
       title: "Affrètement maritime vers le Mali",
       description:
-        "Affrètement maritime et coordination port–Mali : Madina Trans organise vos expéditions en conteneur complet ou en groupage, jusqu'à destination finale.",
+        "Affrètement maritime et coordination port–Mali : Madina Trans organise vos expéditions en conteneur complet ou en groupage, jusqu'à destination finale.",
     },
   },
   {
@@ -218,8 +218,8 @@ export const services: Service[] = [
       domain: "provided",
       details: "demo",
       toConfirm: [
-        "Entrepôts disponibles ? (propres ou partenaires, localisation, surface) : à ne pas annoncer sans confirmation",
-        "Préparation de commandes et gestion de stocks réellement proposées ?",
+        "Entrepôts disponibles ? (propres ou partenaires, localisation, surface) : à ne pas annoncer sans confirmation",
+        "Préparation de commandes et gestion de stocks réellement proposées ?",
         "Zones de distribution couvertes",
         "Outils de suivi des stocks proposés au client",
       ],
@@ -227,7 +227,7 @@ export const services: Service[] = [
     seo: {
       title: "Logistique et distribution au Mali",
       description:
-        "Logistique au Mali : Madina Trans organise la réception, le stockage, la préparation et la distribution de vos marchandises. Une chaîne logistique maîtrisée.",
+        "Logistique au Mali : Madina Trans organise la réception, le stockage, la préparation et la distribution de vos marchandises. Une chaîne logistique maîtrisée.",
     },
   },
 ];

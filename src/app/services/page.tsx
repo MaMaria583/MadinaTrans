@@ -11,7 +11,7 @@ import { ServiceIcon } from "@/components/ui/Icons";
 export const metadata = pageMetadata({
   title: "Nos services de transport et de logistique",
   description:
-    "Transport routier, transit, affrètement maritime, logistique et distribution : découvrez les services de Madina Trans pour le transport de marchandises au Mali.",
+    "Transport routier, transit, affrètement maritime, logistique et distribution : découvrez les services de Madina Trans pour le transport de marchandises au Mali.",
   path: "/services",
 });
 
@@ -21,7 +21,7 @@ export default function ServicesPage() {
       <PageHero
         eyebrow="Nos services"
         title="Le transport de vos marchandises, organisé de bout en bout"
-        intro="De la route au port, de l'entrepôt au client final : Madina Trans vous accompagne sur l'ensemble de votre chaîne logistique."
+        intro="De la route au port, de l'entrepôt au client final : Madina Trans vous accompagne sur l'ensemble de votre chaîne logistique."
         image={images.portContainers}
         crumbs={[{ label: "Nos services" }]}
         path="/services"
@@ -65,7 +65,7 @@ export default function ServicesPage() {
             Chaque projet est unique. <em className="text-gold-300 italic">Parlons du vôtre.</em>
           </>
         }
-        text="Décrivez-nous votre besoin : nous construisons avec vous l'organisation la plus adaptée."
+        text="Décrivez-nous votre besoin : nous construisons avec vous l'organisation la plus adaptée."
       />
     </>
   );

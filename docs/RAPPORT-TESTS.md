@@ -142,3 +142,16 @@ ont été téléchargées dans `public/images` (8,4 Mo de fichiers sources) ; le
 | Structure et libellés                                                          | ✅ 1 `h1`/page, 0 saut de titre, 0 champ sans libellé, 0 image sans `alt` |
 
 Détail des Skills mobilisés et des corrections : `docs/AUDIT-SKILLS.md`.
+
+## Phase 6 : finition design (20/11/2026)
+
+| Contrôle                                                      | Résultat                                                                      |
+| ------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `npm run check` (lint + typecheck + build)                    | ✅ 0 erreur, 26 routes                                                        |
+| Contraste au pire pixel (24 mesures, ordinateur et mobile)    | ✅ 24/24 ≥ 3,5:1 (titre du hero : 5,51 ordinateur, 4,15 mobile)               |
+| Débordement horizontal : 320 à 2560 px (9 largeurs × 8 pages) | ✅ aucun                                                                      |
+| Console                                                       | ✅ 0 erreur                                                                   |
+| Chaîne logistique à mi-parcours                               | ✅ section figée, 3 étapes allumées, étape en cours pleine                    |
+| Mouvement réduit                                              | ✅ ligne entièrement tracée, 5 étapes allumées, aucune animation d'apparition |
+| Formulaire de devis (validations, Entrée, envoi démo)         | ✅ inchangé fonctionnellement, réponse `demo`                                 |
+| Structure et libellés                                         | ✅ 1 `h1`/page, 0 champ sans libellé, 0 lien sans nom                         |

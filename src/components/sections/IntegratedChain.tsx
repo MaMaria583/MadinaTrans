@@ -6,7 +6,7 @@ import { Highlight, SectionHeading } from "@/components/ui/Section";
 import { DemoBadge } from "@/components/ui/DemoBadge";
 import { RouteJourney, type RouteStage } from "./RouteJourney";
 
-const iconCls = "size-6";
+const iconCls = "size-6 lg:size-7";
 
 /**
  * F. Chaîne logistique intégrée : moment fort (« peak ») de la page.
@@ -51,7 +51,7 @@ export function IntegratedChain() {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover opacity-[0.16] mix-blend-luminosity"
+          className="parallax-media object-cover opacity-[0.16] mix-blend-luminosity"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-navy-900 via-navy-900/75 to-navy-900" />
       </div>

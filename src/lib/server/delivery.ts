@@ -45,7 +45,7 @@ function buildEmail(kind: FormKind, fields: Record<string, string>, reference: s
   const isQuote = kind === "quote";
   const title = isQuote ? "Nouvelle demande de devis" : "Nouveau message de contact";
   const subjectDetail = isQuote ? serviceLabel(fields.service) : fields.subject;
-  const subject = `${title} : ${subjectDetail}, ${fields.fullName} [${reference}]`
+  const subject = `${title} : ${subjectDetail}, ${fields.fullName} [${reference}]`
     .replace(/[\r\n]+/g, " ")
     .slice(0, 200);
 
@@ -59,7 +59,7 @@ function buildEmail(kind: FormKind, fields: Record<string, string>, reference: s
     `${title} (${reference})`,
     `Reçue le ${dateStr} (heure de Bamako) depuis le site Madina Trans.`,
     "",
-    ...rows.map(([label, value]) => `${label} : ${value}`),
+    ...rows.map(([label, value]) => `${label} : ${value}`),
     "",
     "Répondez directement à cet e-mail pour contacter le demandeur.",
   ].join("\n");

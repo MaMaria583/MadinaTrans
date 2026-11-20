@@ -22,7 +22,7 @@ interface BaseProps {
 }
 
 const inputBase =
-  "w-full rounded-xl border bg-white px-4 text-[1rem] text-ink placeholder:text-navy-300 transition-[border-color,box-shadow] duration-200 outline-none focus:border-navy-600 focus:ring-4 focus:ring-navy-100 aria-invalid:border-red-500 aria-invalid:focus:ring-red-100";
+  "w-full rounded-xl border bg-white px-4 text-[1rem] text-ink placeholder:text-navy-300 transition-[border-color,box-shadow] duration-200 outline-none hover:border-navy-300 focus:border-navy-800 focus:ring-4 focus:ring-gold-200/70 aria-invalid:border-red-500 aria-invalid:focus:ring-red-100";
 
 function FieldShell({
   name,
@@ -107,7 +107,7 @@ export function TextField({
         aria-describedby={describedBy(name, error, hint)}
         onBlur={(e) => onBlur?.(name, e.currentTarget.value)}
         onChange={(e) => onChange?.(name, e.currentTarget.value)}
-        className={cn(inputBase, "h-12 border-line", type === "date" && "appearance-none")}
+        className={cn(inputBase, "h-13 border-line", type === "date" && "appearance-none")}
       />
     </FieldShell>
   );
@@ -176,7 +176,7 @@ export function SelectField({
             onChange?.(name, e.currentTarget.value);
             onBlur?.(name, e.currentTarget.value);
           }}
-          className={cn(inputBase, "h-12 appearance-none border-line pr-11")}
+          className={cn(inputBase, "h-13 appearance-none border-line pr-11")}
         >
           <option value="" disabled>
             {placeholder}
@@ -229,10 +229,10 @@ export function ChoiceCards({
             <label
               key={o.value}
               className={cn(
-                "group relative flex min-h-[4.5rem] cursor-pointer items-center gap-3.5 rounded-2xl border-2 p-4 transition-[border-color,background-color,box-shadow] duration-200",
+                "group relative flex min-h-[4.75rem] cursor-pointer items-center gap-4 rounded-xl border p-4 transition-[border-color,background-color,box-shadow] duration-300 ease-[var(--ease-premium)]",
                 checked
-                  ? "border-navy-800 bg-navy-50/70 shadow-card"
-                  : "border-line bg-white hover:border-navy-200 hover:bg-mist",
+                  ? "border-navy-900 bg-white shadow-[inset_0_0_0_1px_var(--color-navy-900),0_12px_28px_-18px_rgb(16_29_50/0.45)]"
+                  : "border-line bg-white hover:border-navy-300 hover:shadow-card",
                 o.value === "autre" && "sm:col-span-2",
               )}
             >
@@ -248,7 +248,7 @@ export function ChoiceCards({
                 <span
                   className={cn(
                     "inline-flex size-11 shrink-0 items-center justify-center rounded-xl transition-colors",
-                    checked ? "bg-navy-800 text-gold-300" : "bg-mist text-navy-700",
+                    checked ? "bg-navy-900 text-gold-300" : "bg-mist text-navy-700 group-hover:bg-gold-50",
                   )}
                 >
                   {renderIcon(o.value)}
@@ -262,12 +262,12 @@ export function ChoiceCards({
                 aria-hidden="true"
                 className={cn(
                   "inline-flex size-6 shrink-0 items-center justify-center rounded-full border-2 transition-colors",
-                  checked ? "border-navy-800 bg-navy-800 text-white" : "border-navy-200",
+                  checked ? "border-gold-400 bg-gold-400 text-navy-950" : "border-navy-200 group-hover:border-navy-400",
                 )}
               >
                 {checked && <Check className="size-3.5" strokeWidth={3.5} />}
               </span>
-              <span className="pointer-events-none absolute inset-0 rounded-2xl ring-gold-400 peer-focus-visible:ring-4" />
+              <span className="pointer-events-none absolute inset-0 rounded-xl ring-gold-400 peer-focus-visible:ring-4" />
             </label>
           );
         })}

@@ -3,17 +3,23 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-/** Apparition discrète au défilement (respecte prefers-reduced-motion via CSS). */
+/**
+ * Apparition discrète au défilement (respecte prefers-reduced-motion via CSS).
+ * kind="fade" : le bloc monte et apparaît ; kind="media" : la photographie se
+ * dévoile de bas en haut et se pose ; kind="rule" : un filet se trace.
+ */
 export function Reveal({
   children,
   className,
   delay = 0,
+  kind = "fade",
   as: Tag = "div",
 }: {
-  children: ReactNode;
+  children?: ReactNode;
   className?: string;
   delay?: number;
-  as?: "div" | "li" | "article" | "section";
+  kind?: "fade" | "media" | "rule";
+  as?: "div" | "li" | "article" | "section" | "span";
 }) {
   const ref = useRef<HTMLElement>(null);
 
@@ -42,7 +48,7 @@ export function Reveal({
   return (
     <Tag
       ref={ref as never}
-      className={cn("reveal", className)}
+      className={cn(kind === "media" ? "reveal-media" : kind === "rule" ? "reveal-rule" : "reveal", className)}
       style={delay ? ({ "--reveal-delay": `${delay}ms` } as React.CSSProperties) : undefined}
     >
       {children}

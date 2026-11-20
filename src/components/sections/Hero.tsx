@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { images } from "@/content/images";
 import { services } from "@/content/services";
 import { Container } from "@/components/ui/Section";
+import { ButtonLink } from "@/components/ui/Button";
 
 const shortNames = ["Transport routier", "Transit", "Maritime", "Logistique"];
 
@@ -15,23 +16,25 @@ export function Hero() {
   return (
     <section aria-labelledby="hero-title" className="relative">
       <div className="relative isolate flex min-h-[min(88svh,860px)] flex-col overflow-clip bg-navy-950 text-white">
-        <div className="grain absolute inset-0 -z-10 lg:left-[40%] lg:[mask-image:linear-gradient(to_right,transparent_0%,black_30%)]">
+        <div className="grain absolute inset-0 -z-10 animate-fade-in lg:left-[40%] lg:[mask-image:linear-gradient(to_right,transparent_0%,black_34%)]">
           <Image
             src={images.truckSunset.src}
             alt={images.truckSunset.alt}
             fill
             preload
             quality={85}
-            sizes="100vw"
-            className="animate-slow-zoom object-cover object-[58%_70%] lg:object-[50%_65%]"
+            sizes="(min-width: 1024px) 62vw, 100vw"
+            className="photo-grade animate-slow-zoom object-cover object-[58%_70%] lg:object-[46%_62%]"
           />
+          {/* Reflet champagne du couchant : donne à la photo la chaleur de la marque */}
+          <div aria-hidden="true" className="absolute inset-0 hidden tone-warm lg:block" />
           <div
             aria-hidden="true"
             className="absolute inset-0 bg-[linear-gradient(to_top,rgb(10_19_34/0.96)_0%,rgb(10_19_34/0.88)_45%,rgb(10_19_34/0.3)_72%,rgb(10_19_34/0.05)_100%)] lg:hidden"
           />
           <div
             aria-hidden="true"
-            className="absolute inset-0 hidden bg-gradient-to-t from-navy-950/85 via-transparent via-45% to-transparent lg:block"
+            className="absolute inset-0 hidden bg-gradient-to-t from-navy-950/80 via-transparent via-40% to-transparent lg:block"
           />
           <div
             aria-hidden="true"
@@ -39,38 +42,37 @@ export function Hero() {
           />
         </div>
 
-        <Container className="relative flex flex-1 flex-col justify-end pt-24 pb-14 sm:pt-28 sm:pb-16 lg:pb-20">
-          <p className="mb-7 inline-flex items-center gap-3 label-caps text-gold-300">
-            <span aria-hidden="true" className="h-px w-10 bg-gold-400" />
-            Transport, transit et logistique à Bamako
-          </p>
-          <h1
-            id="hero-title"
-            className="max-w-[22ch] animate-fade-up text-[clamp(2.4rem,6vw,5rem)] lg:max-w-[14ch] lg:text-[clamp(3.4rem,5vw,4.8rem)] leading-[1] font-normal tracking-[-0.03em]"
-          >
-            Nous connectons les routes, les marchés et les <em className="text-gold-300 italic">opportunités</em>.
-          </h1>
-          <div
-            className="mt-9 flex animate-fade-up flex-col gap-8 lg:flex-row lg:items-end lg:justify-between"
-            style={{ animationDelay: "150ms" }}
-          >
-            <p className="max-w-xl text-[1.05rem] leading-[1.7] text-navy-100 sm:text-lg">
+        <Container className="relative flex flex-1 flex-col justify-end pt-24 pb-14 sm:pt-28 sm:pb-16 lg:pb-24">
+          <div className="max-w-[40rem]">
+            <p className="hero-in mb-7 inline-flex items-center gap-4 label-caps text-gold-300">
+              <span
+                aria-hidden="true"
+                className="hero-rule h-px w-12 bg-gold-400"
+                style={{ ["--d" as string]: "200ms" }}
+              />
+              Transport, transit et logistique à Bamako
+            </p>
+            <h1
+              id="hero-title"
+              className="hero-in max-w-[16ch] text-[clamp(2.5rem,6.4vw,5rem)] leading-[0.98] font-normal tracking-[-0.032em] lg:max-w-[14ch] lg:text-[clamp(3.5rem,5.2vw,5.1rem)]"
+              style={{ ["--d" as string]: "120ms" }}
+            >
+              Nous connectons les routes, les marchés et les <em className="text-gold-300 italic">opportunités</em>.
+            </h1>
+            <p
+              className="hero-in mt-8 max-w-[34rem] border-l border-gold-400/50 pl-5 text-[1.05rem] leading-[1.7] text-navy-100 sm:text-lg"
+              style={{ ["--d" as string]: "280ms" }}
+            >
               Des solutions de transport, de transit et de logistique pensées pour accompagner vos ambitions au Mali et
               à l&apos;international.
             </p>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/services"
-                className="inline-flex min-h-13 items-center justify-center gap-2.5 rounded-[3px] bg-gold-400 px-7 font-semibold text-navy-950 transition-colors hover:bg-gold-300"
-              >
-                Découvrir nos solutions <ArrowRight className="size-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/devis"
-                className="inline-flex min-h-13 items-center justify-center gap-2.5 rounded-[3px] border border-white/40 px-7 font-semibold text-white transition-colors hover:border-white hover:bg-white hover:text-navy-950"
-              >
+            <div className="hero-in mt-10 flex flex-col gap-3 sm:flex-row" style={{ ["--d" as string]: "420ms" }}>
+              <ButtonLink href="/services" size="lg">
+                Découvrir nos solutions <ArrowRight aria-hidden="true" />
+              </ButtonLink>
+              <ButtonLink href="/devis" size="lg" variant="outlineLight">
                 Demander un devis
-              </Link>
+              </ButtonLink>
             </div>
           </div>
         </Container>
@@ -89,7 +91,13 @@ export function Hero() {
                   href={`/services/${s.slug}`}
                   className="group flex h-full flex-col gap-2 px-5 py-6 transition-colors hover:bg-white/[0.04] sm:px-7 sm:py-8"
                 >
-                  <span className="font-display text-[1.25rem] leading-tight sm:text-[1.6rem]">{shortNames[i]}</span>
+                  <span className="flex items-start justify-between gap-3">
+                    <span className="font-display text-[1.25rem] leading-tight sm:text-[1.6rem]">{shortNames[i]}</span>
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="mt-1 size-4 shrink-0 text-gold-400 opacity-0 transition-[opacity,transform] duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100 group-focus-visible:opacity-100"
+                    />
+                  </span>
                   <span
                     aria-hidden="true"
                     className="mt-2 h-px w-8 bg-gold-400 transition-[width] duration-500 ease-[var(--ease-premium)] group-hover:w-16"

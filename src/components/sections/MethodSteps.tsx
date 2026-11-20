@@ -5,7 +5,7 @@ import { Reveal } from "@/components/ui/Reveal";
 const steps = [
   {
     title: "Expression du besoin",
-    text: "Vous décrivez votre projet : nature de la marchandise, trajet, volumes, délais et contraintes.",
+    text: "Vous décrivez votre projet : nature de la marchandise, trajet, volumes, délais et contraintes.",
   },
   {
     title: "Étude de la demande",

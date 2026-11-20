@@ -41,7 +41,15 @@ export function PageHero({
     <section className="relative isolate overflow-clip bg-navy-950 text-white">
       {path && <BreadcrumbJsonLd items={crumbs.map((c) => ({ name: c.label, path: c.href ?? path }))} />}
       <div className="grain absolute inset-0 -z-10">
-        <Image src={image.src} alt="" fill preload sizes="100vw" className="animate-slow-zoom object-cover" />
+        <Image
+          src={image.src}
+          alt=""
+          fill
+          preload
+          sizes="100vw"
+          className="photo-grade animate-slow-zoom object-cover"
+        />
+        <div aria-hidden="true" className="absolute inset-0 tone-warm" />
         <div aria-hidden="true" className="absolute inset-0 scrim-band md:hidden" />
         <div aria-hidden="true" className="absolute inset-0 hidden scrim-column md:block" />
         <div aria-hidden="true" className="absolute inset-0 bg-navy-950/35" />
@@ -79,15 +87,31 @@ export function PageHero({
             ))}
           </ol>
         </nav>
-        <div className="max-w-4xl animate-fade-up">
+        <div className="max-w-4xl">
           {eyebrow && (
-            <p className="mb-6 inline-flex items-center gap-3 label-caps text-gold-300">
-              <span aria-hidden="true" className="h-px w-10 bg-gold-400" />
+            <p className="hero-in mb-6 inline-flex items-center gap-4 label-caps text-gold-300">
+              <span
+                aria-hidden="true"
+                className="hero-rule h-px w-12 bg-gold-400"
+                style={{ ["--d" as string]: "150ms" }}
+              />
               {eyebrow}
             </p>
           )}
-          <h1 className="text-[clamp(2.4rem,6.2vw,4.8rem)] leading-[1.02] font-normal tracking-[-0.03em]">{title}</h1>
-          {intro && <p className="mt-6 max-w-2xl text-[1.05rem] leading-[1.7] text-navy-100 sm:text-lg">{intro}</p>}
+          <h1
+            className="hero-in text-[clamp(2.4rem,6.2vw,4.8rem)] leading-[1.02] font-normal tracking-[-0.03em]"
+            style={{ ["--d" as string]: "100ms" }}
+          >
+            {title}
+          </h1>
+          {intro && (
+            <p
+              className="hero-in mt-6 max-w-2xl text-[1.05rem] leading-[1.7] text-navy-100 sm:text-lg"
+              style={{ ["--d" as string]: "220ms" }}
+            >
+              {intro}
+            </p>
+          )}
           {children}
         </div>
       </Container>

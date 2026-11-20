@@ -13,9 +13,9 @@ import { Reveal } from "@/components/ui/Reveal";
 import { DemoBadge } from "@/components/ui/DemoBadge";
 
 export const metadata = pageMetadata({
-  title: "À propos : transport et logistique à Bamako",
+  title: "À propos : transport et logistique à Bamako",
   description:
-    "Madina Trans, société de transport et de logistique à Bamako : présentation, vision, mission, valeurs et expertise en transport de marchandises au Mali.",
+    "Madina Trans, société de transport et de logistique à Bamako : présentation, vision, mission, valeurs et expertise en transport de marchandises au Mali.",
   path: "/a-propos",
 });
 
@@ -231,7 +231,7 @@ export default function AboutPage() {
             </ol>
             {DEMO_MODE && (
               <p className="mt-6 flex flex-wrap items-center gap-2 text-sm text-muted">
-                Certifications et agréments : publiés uniquement sur justificatifs. <DemoBadge />
+                Certifications et agréments : publiés uniquement sur justificatifs. <DemoBadge />
               </p>
             )}
           </Reveal>

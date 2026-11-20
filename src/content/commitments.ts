@@ -16,7 +16,7 @@ export const homeCommitments: Commitment[] = [
     icon: "shield",
     title: "Fiabilité",
     subtitle: "Préparer, sécuriser, tenir parole",
-    text: "Chaque opération est préparée avec méthode : chargement, itinéraire, documents. L'objectif : une expédition qui se déroule comme prévu.",
+    text: "Chaque opération est préparée avec méthode : chargement, itinéraire, documents. L'objectif : une expédition qui se déroule comme prévu.",
   },
   {
     id: "proximite",
@@ -48,7 +48,7 @@ export const commitments: Commitment[] = [
     icon: "lock",
     title: "La sécurité",
     subtitle: "Des personnes, des marchandises et des opérations",
-    text: "La sécurité guide chacune de nos opérations : préparation des chargements, arrimage, choix des itinéraires et respect des règles de circulation.",
+    text: "La sécurité guide chacune de nos opérations : préparation des chargements, arrimage, choix des itinéraires et respect des règles de circulation.",
     points: [
       "Contrôle des chargements avant départ",
       "Arrimage adapté à la nature des marchandises",
@@ -92,7 +92,7 @@ export const commitments: Commitment[] = [
     icon: "eye",
     title: "La transparence",
     subtitle: "Des engagements clairs",
-    text: "Devis détaillés, conditions explicites et informations régulières : vous savez à tout moment ce qui est fait et à quel prix.",
+    text: "Devis détaillés, conditions explicites et informations régulières : vous savez à tout moment ce qui est fait et à quel prix.",
     points: [
       "Devis détaillés et compréhensibles",
       "Information régulière sur l'avancement",

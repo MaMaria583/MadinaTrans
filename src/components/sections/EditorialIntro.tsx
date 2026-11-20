@@ -23,7 +23,7 @@ export function EditorialIntro() {
           <figure className="absolute -bottom-8 left-6 max-w-[16rem] bg-navy-900 p-5 text-white shadow-lift sm:left-10 sm:p-6">
             <p className="label-caps text-gold-300">Depuis Bamako</p>
             <p className="mt-2 font-display text-xl leading-snug">
-              Route, mer et entrepôt : <em className="text-gold-300 italic">une seule chaîne</em>.
+              Route, mer et entrepôt : <em className="text-gold-300 italic">une seule chaîne</em>.
             </p>
           </figure>
         </Reveal>
@@ -40,8 +40,8 @@ export function EditorialIntro() {
             }
           />
           <p className="mt-6 text-[1.05rem] leading-[1.8] text-muted sm:text-lg">
-            Madina Trans accompagne les entreprises et les institutions dans l&apos;acheminement de leurs marchandises :
-            transport routier, transit, affrètement maritime et logistique. Notre conviction : chaque expédition mérite
+            Madina Trans accompagne les entreprises et les institutions dans l&apos;acheminement de leurs marchandises :
+            transport routier, transit, affrètement maritime et logistique. Notre conviction : chaque expédition mérite
             une organisation rigoureuse et une communication transparente.
           </p>
           <div className="rule-gold mt-9 w-24" />

@@ -56,7 +56,7 @@ export default function LegalPage() {
             <br />
             Siège : {contact.address.value}
             <br />
-            Immatriculation (RCCM), NIF et directeur de la publication : à compléter.
+            Immatriculation (RCCM), NIF et directeur de la publication : à compléter.
           </p>
 
           <h2>Conception et réalisation</h2>

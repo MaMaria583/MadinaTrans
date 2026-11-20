@@ -24,7 +24,7 @@ import { cn } from "@/lib/cn";
 export const metadata = pageMetadata({
   title: "Contact, société de transport à Bamako",
   description:
-    "Contactez Madina Trans à Bamako pour vos besoins en transport routier, transit, affrètement maritime et logistique au Mali : téléphone, e-mail, formulaire.",
+    "Contactez Madina Trans à Bamako pour vos besoins en transport routier, transit, affrètement maritime et logistique au Mali : téléphone, e-mail, formulaire.",
   path: "/contact",
 });
 
@@ -96,7 +96,7 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title="Parlons de votre projet"
-        intro="Une question, un besoin de transport ou de logistique ? Nos équipes vous répondent et vous orientent vers la bonne solution."
+        intro="Une question, un besoin de transport ou de logistique ? Nos équipes vous répondent et vous orientent vers la bonne solution."
         image={images.meeting}
         crumbs={[{ label: "Contact" }]}
         path="/contact"
@@ -159,7 +159,7 @@ export default function ContactPage() {
             >
               <Info className="mt-0.5 size-4 shrink-0 text-gold-700" aria-hidden="true" />
               <span>
-                <strong>Coordonnées de démonstration.</strong> Le téléphone et l&apos;e-mail affichés sont fictifs : ils
+                <strong>Coordonnées de démonstration.</strong> Le téléphone et l&apos;e-mail affichés sont fictifs : ils
                 ne permettent pas de joindre Madina Trans. Les coordonnées officielles seront intégrées après
                 confirmation par l&apos;entreprise.
               </span>
@@ -233,7 +233,7 @@ export default function ContactPage() {
               className="group flex items-center justify-between gap-4 rounded-[1.25rem] bg-gold-400 p-6 text-navy-950 transition-transform hover:-translate-y-0.5"
             >
               <span>
-                <span className="block text-lg font-medium">Besoin d&apos;un devis ?</span>
+                <span className="block text-lg font-medium">Besoin d&apos;un devis ?</span>
                 <span className="text-navy-900/80">Formulaire en 3 étapes, environ 2 minutes.</span>
               </span>
               <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-navy-950 text-gold-300 transition-transform group-hover:translate-x-1">

@@ -33,7 +33,7 @@ export function ServiceScopeNotice({
         aria-hidden="true"
       />
       <span>
-        <strong>Périmètre à confirmer.</strong> Le détail de cette prestation est une proposition de rédaction : il sera
+        <strong>Périmètre à confirmer.</strong> Le détail de cette prestation est une proposition de rédaction : il sera
         validé par Madina Trans avant toute mise en ligne officielle.
       </span>
     </p>
