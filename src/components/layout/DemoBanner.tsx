@@ -11,7 +11,7 @@ export function DemoBanner() {
         <Info className="mt-0.5 size-4 shrink-0 sm:mt-0" aria-hidden="true" />
         <p>
           <strong>Site de démonstration</strong>
-          <span className="hidden sm:inline"> — {agency.proposal}</span>. Les éléments marqués « Fictif » ou « À
+          <span className="hidden sm:inline">. {agency.proposal}</span>. Les éléments marqués « Fictif » ou « À
           confirmer » ne sont pas opérationnels.{" "}
           <Link
             href="/mentions-legales#demonstration"

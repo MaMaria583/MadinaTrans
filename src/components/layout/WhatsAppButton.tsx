@@ -32,7 +32,7 @@ export function WhatsAppButton() {
   }, [open]);
 
   const buttonClass =
-    "inline-flex size-14 items-center justify-center rounded-full bg-[#1FAF54] text-white shadow-[0_12px_28px_-8px_rgb(31_175_84/0.7)] transition-transform hover:scale-105";
+    "inline-flex size-14 items-center justify-center rounded-full bg-whatsapp text-white shadow-[0_12px_28px_-8px_rgb(31_175_84/0.45)] transition-transform hover:scale-105";
 
   if (confirmed) {
     const message = encodeURIComponent("Bonjour Madina Trans, je souhaite obtenir des informations.");
@@ -60,7 +60,7 @@ export function WhatsAppButton() {
           className="w-[min(18rem,calc(100vw-2rem))] animate-fade-up rounded-2xl border border-line bg-white p-4 text-sm text-navy-900 shadow-lift"
         >
           <div className="flex items-start justify-between gap-3">
-            <p className="font-bold">WhatsApp — démonstration</p>
+            <p className="font-bold">WhatsApp (démonstration)</p>
             <button
               type="button"
               onClick={() => setOpen(false)}

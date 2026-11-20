@@ -75,7 +75,7 @@ async function ServiceContent({ params }: { params: PageProps<"/services/[slug]"
       <section aria-labelledby="desc-title" className="section-y">
         <Container className="grid gap-14 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <SectionHeading eyebrow="Le service" title={<span id="desc-title">{service.tagline}</span>} />
+            <SectionHeading title={<span id="desc-title">{service.tagline}</span>} />
             {showServiceDetails(service) ? (
               <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
                 {service.description.map((p) => (
@@ -130,11 +130,7 @@ async function ServiceContent({ params }: { params: PageProps<"/services/[slug]"
       {showServiceDetails(service) && (
         <section aria-labelledby="steps-title" className="bg-mist section-y-sm">
           <Container>
-            <SectionHeading
-              align="center"
-              eyebrow="Notre méthode"
-              title={<span id="steps-title">Comment nous procédons</span>}
-            />
+            <SectionHeading align="center" title={<span id="steps-title">Comment nous procédons</span>} />
             <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {service.steps.map((step, i) => (
                 <Reveal
@@ -167,7 +163,7 @@ async function ServiceContent({ params }: { params: PageProps<"/services/[slug]"
               <li key={s.slug}>
                 <Link
                   href={`/services/${s.slug}`}
-                  className="group flex h-full items-center gap-4 rounded-2xl border border-line p-5 transition-all hover:border-gold-300 hover:shadow-card"
+                  className="group flex h-full items-center gap-4 rounded-2xl border border-line p-5 transition-[transform,background-color,border-color,box-shadow,color] hover:border-gold-300 hover:shadow-card"
                 >
                   <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-xl bg-navy-800 text-gold-300">
                     <ServiceIcon name={s.icon} className="size-6" />

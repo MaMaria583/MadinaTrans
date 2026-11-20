@@ -12,7 +12,7 @@ const steps = [
     text: "Nos équipes analysent la faisabilité, les moyens nécessaires et reviennent vers vous si besoin.",
   },
   {
-    title: "Proposition de solution",
+    title: "Proposition chiffrée",
     text: "Vous recevez une proposition claire et détaillée, construite à partir de votre besoin réel.",
   },
   {
@@ -21,12 +21,11 @@ const steps = [
   },
 ];
 
-export function MethodSteps({ index = 5 }: { index?: number }) {
+export function MethodSteps() {
   return (
     <section aria-labelledby="method-title" className="section-y bg-ivory">
       <Container>
         <SectionHeading
-          index={index}
           eyebrow="Notre méthode"
           id="method-title"
           title={

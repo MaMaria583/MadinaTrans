@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Compass, Gem, HeartHandshake, ShieldCheck, Target, Users } from "lucide-react";
+import { ArrowUpRight, Compass, Gem, HeartHandshake, ShieldCheck, Target, Users } from "lucide-react";
 import { DEMO_MODE, company, institutional, isConfirmed } from "@/config/site";
 import { images } from "@/content/images";
 import { services } from "@/content/services";
@@ -13,7 +13,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { DemoBadge } from "@/components/ui/DemoBadge";
 
 export const metadata = pageMetadata({
-  title: "Notre groupe — À propos de Madina Trans",
+  title: "À propos : transport et logistique à Bamako",
   description:
     "Madina Trans, société de transport et de logistique à Bamako : présentation, vision, mission, valeurs et expertise en transport de marchandises au Mali.",
   path: "/a-propos",
@@ -47,8 +47,6 @@ export default function AboutPage() {
         <Container className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
           <Reveal>
             <SectionHeading
-              index={1}
-              eyebrow="Présentation"
               id="presentation-title"
               title={
                 <>
@@ -138,56 +136,66 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* Valeurs */}
+      {/* Valeurs : typographie sur filets, pas de cartes identiques */}
       <section aria-labelledby="values-title" className="section-y">
-        <Container>
+        <Container className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <SectionHeading
-            align="center"
-            index={2}
-            eyebrow="Nos valeurs"
+            className="lg:col-span-4"
+            size="md"
             id="values-title"
-            title="Des valeurs qui guident chacune de nos actions"
+            title={
+              <>
+                Des valeurs qui guident <Highlight>chacune de nos actions</Highlight>
+              </>
+            }
           />
-          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4 lg:gap-6">
+          <dl className="grid border-t border-navy-900/15 sm:grid-cols-2 lg:col-span-8">
             {institutional.values.map((v, i) => {
               const Icon = valueIcons[i % valueIcons.length];
               return (
-                <Reveal as="li" key={v.title} delay={i * 80} className="card card-hover p-7 text-center">
-                  <span className="mx-auto inline-flex size-16 items-center justify-center rounded-2xl bg-navy-800 text-gold-300">
-                    <Icon className="size-8" aria-hidden="true" />
-                  </span>
-                  <h3 className="mt-5 text-xl font-bold text-navy-900">{v.title}</h3>
-                  <p className="mt-2 leading-relaxed text-muted">{v.text}</p>
+                <Reveal
+                  key={v.title}
+                  delay={i * 60}
+                  className="border-b border-navy-900/15 py-8 sm:odd:border-r sm:odd:pr-8 sm:even:pl-8"
+                >
+                  <dt className="flex items-center gap-3 font-display text-[1.7rem] leading-tight text-navy-900">
+                    <Icon className="size-5 shrink-0 text-gold-600" strokeWidth={1.6} aria-hidden="true" />
+                    {v.title}
+                  </dt>
+                  <dd className="mt-3 max-w-[36ch] leading-relaxed text-muted">{v.text}</dd>
                 </Reveal>
               );
             })}
-          </ul>
+          </dl>
         </Container>
       </section>
 
-      {/* Expertise */}
-      <section aria-labelledby="expertise-title" className="section-y bg-mist">
+      {/* Expertise : rangées éditoriales cliquables */}
+      <section aria-labelledby="expertise-title" className="section-y bg-ivory">
         <Container>
           <SectionHeading
-            index={3}
-            eyebrow="Notre expertise"
             id="expertise-title"
             title="Quatre métiers complémentaires"
             intro="Une offre intégrée pour gérer vos flux de bout en bout avec un interlocuteur unique."
           />
-          <ul className="mt-12 grid gap-5 md:grid-cols-2">
-            {services.map((s, i) => (
-              <Reveal as="li" key={s.slug} delay={i * 60}>
-                <Link href={`/services/${s.slug}`} className="card card-hover flex h-full gap-5 p-6">
-                  <span className="inline-flex size-14 shrink-0 items-center justify-center rounded-xl bg-navy-800 text-gold-300">
-                    <ServiceIcon name={s.icon} className="size-7" />
+          <ul className="mt-12 border-t border-navy-900/15">
+            {services.map((s) => (
+              <li key={s.slug} className="border-b border-navy-900/15">
+                <Link
+                  href={`/services/${s.slug}`}
+                  className="group grid items-baseline gap-2 py-7 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)_auto] sm:gap-10"
+                >
+                  <span className="flex items-center gap-3 font-display text-[1.6rem] leading-tight text-navy-900 transition-colors duration-200 group-hover:text-gold-700 sm:text-[1.9rem]">
+                    <ServiceIcon name={s.icon} className="size-5 shrink-0 text-gold-600" />
+                    {s.title}
                   </span>
-                  <span>
-                    <span className="block text-lg font-bold text-navy-900">{s.title}</span>
-                    <span className="mt-1.5 block leading-relaxed text-muted">{s.excerpt}</span>
-                  </span>
+                  <span className="leading-relaxed text-muted">{s.excerpt}</span>
+                  <ArrowUpRight
+                    className="hidden size-5 text-navy-300 transition-[transform,color] duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-gold-600 sm:block"
+                    aria-hidden="true"
+                  />
                 </Link>
-              </Reveal>
+              </li>
             ))}
           </ul>
         </Container>
@@ -207,8 +215,6 @@ export default function AboutPage() {
           </Reveal>
           <Reveal delay={120}>
             <SectionHeading
-              index={4}
-              eyebrow="Engagement qualité"
               id="quality-title"
               title="La qualité, à chaque étape de la chaîne"
               intro="Notre démarche qualité repose sur des pratiques simples, appliquées avec constance."
@@ -236,7 +242,7 @@ export default function AboutPage() {
       <section aria-labelledby="gallery-title" className="section-y bg-mist">
         <Container>
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-            <SectionHeading index={5} eyebrow="Galerie" id="gallery-title" title="Le transport en images" />
+            <SectionHeading id="gallery-title" title="Le transport en images" />
             <p className="max-w-sm text-sm text-muted">
               Visuels d&apos;illustration. Ils seront remplacés par les photographies officielles de la flotte et des
               équipes Madina Trans.

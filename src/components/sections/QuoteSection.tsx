@@ -18,14 +18,12 @@ export function QuoteSection({
   withParams = false,
   headingLevel = "h2",
   defaultService = "",
-  index,
   tone = "white",
 }: {
   tone?: "white" | "ivory";
   withParams?: boolean;
   defaultService?: string;
   headingLevel?: "h1" | "h2";
-  index?: number;
 }) {
   const Heading = headingLevel;
   return (
@@ -38,18 +36,9 @@ export function QuoteSection({
         <div className="grid overflow-hidden rounded-sm border border-line shadow-lift lg:grid-cols-12">
           <div className="relative isolate overflow-clip bg-navy-900 p-7 text-white sm:p-10 lg:col-span-5 lg:p-12">
             <div aria-hidden="true" className="absolute inset-0 -z-10 bg-routes" />
-            <p className="inline-flex items-center gap-3 label-caps text-gold-300">
-              {index !== undefined && (
-                <span className="font-display text-sm tracking-normal text-white/55 tabular-nums">
-                  {String(index).padStart(2, "0")}
-                </span>
-              )}
-              <span aria-hidden="true" className="h-px w-10 bg-gold-400" />
-              Demande de devis
-            </p>
             <Heading
               id="quote-title"
-              className="mt-6 font-display text-[clamp(2rem,4.2vw,3.1rem)] leading-[1.05] font-normal tracking-[-0.02em]"
+              className="font-display text-[clamp(2rem,4.2vw,3.1rem)] leading-[1.05] font-normal tracking-[-0.02em]"
             >
               Parlez-nous de votre <em className="text-gold-300 italic">projet</em>.
             </Heading>

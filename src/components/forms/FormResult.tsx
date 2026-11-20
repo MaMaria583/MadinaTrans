@@ -81,7 +81,7 @@ export function FormResult({
         <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-gold-400 text-navy-950">
           <Info className="size-6" aria-hidden="true" />
         </span>
-        <h3 className="text-xl font-bold text-navy-900">Formulaire validé — mode démonstration</h3>
+        <h3 className="text-xl font-bold text-navy-900">Formulaire validé, mode démonstration</h3>
       </div>
       <p className="leading-relaxed text-muted">
         Votre saisie est correcte, mais <strong className="text-navy-900">aucune demande n&apos;a été transmise</strong>{" "}

@@ -27,7 +27,7 @@ export function Logo({
   return (
     <Link
       href="/"
-      aria-label="Madina Trans — retour à l'accueil"
+      aria-label="Madina Trans, retour à l'accueil"
       className={cn("group inline-flex items-center gap-2.5", className)}
     >
       <LogoMark className="h-9 w-9 min-[380px]:h-10 min-[380px]:w-10 sm:h-11 sm:w-11" inverted={inverted} />

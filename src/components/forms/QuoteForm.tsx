@@ -373,7 +373,7 @@ export function QuoteForm({
           <button
             type="submit"
             disabled={submitting}
-            className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-[3px] bg-gold-400 px-7 font-semibold text-navy-950 shadow-[0_8px_20px_-8px_rgb(198_166_106/0.45)] transition-all hover:-translate-y-0.5 hover:bg-gold-300 disabled:cursor-wait disabled:opacity-70 sm:w-auto"
+            className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-[3px] bg-gold-400 px-7 font-semibold text-navy-950 shadow-[0_8px_20px_-8px_rgb(198_166_106/0.45)] transition-[transform,background-color,border-color,box-shadow,color] hover:-translate-y-0.5 hover:bg-gold-300 disabled:cursor-wait disabled:opacity-70 sm:w-auto"
           >
             {submitting ? (
               <>

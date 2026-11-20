@@ -28,8 +28,6 @@ export default function HomePage() {
       <section aria-labelledby="expertises-title" className="section-y bg-white">
         <Container>
           <SectionHeading
-            index={2}
-            eyebrow="Nos expertises"
             id="expertises-title"
             title={
               <>
@@ -51,7 +49,7 @@ export default function HomePage() {
       {/* I : méthode */}
       <MethodSteps />
       {/* J : devis — K : pied de page (layout) */}
-      <QuoteSection index={6} />
+      <QuoteSection />
     </>
   );
 }

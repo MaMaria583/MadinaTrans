@@ -30,7 +30,6 @@ export function EditorialIntro() {
 
         <Reveal delay={120} className="pt-10 lg:col-span-5 lg:pt-0">
           <SectionHeading
-            index={1}
             eyebrow="Madina Trans"
             id="intro-title"
             size="md"
@@ -46,7 +45,10 @@ export function EditorialIntro() {
             une organisation rigoureuse et une communication transparente.
           </p>
           <div className="rule-gold mt-9 w-24" />
-          <Link href="/a-propos" className="group mt-6 inline-flex items-center gap-3 font-semibold text-navy-900">
+          <Link
+            href="/a-propos"
+            className="group mt-6 inline-flex min-h-11 items-center gap-3 font-semibold text-navy-900"
+          >
             <span className="link-underline">Découvrir Madina Trans</span>
             <ArrowRight
               className="size-4 text-gold-600 transition-transform duration-300 group-hover:translate-x-1"

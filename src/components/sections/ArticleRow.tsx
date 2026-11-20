@@ -7,7 +7,7 @@ import { DemoBadge } from "@/components/ui/DemoBadge";
 /** Ligne éditoriale d'article (liste « magazine »). */
 export function ArticleRow({ article }: { article: Article }) {
   return (
-    <article className="group relative grid items-center gap-5 border-b border-line py-8 sm:grid-cols-[10rem_1fr_9rem] sm:gap-8">
+    <article className="group relative grid items-center gap-5 border-b border-line py-8 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-8 md:grid-cols-[10rem_minmax(0,1fr)_9rem]">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted sm:flex-col sm:items-start">
         <time dateTime={article.date}>{formatDate(article.date)}</time>
         <span className="label-caps text-gold-700">{article.category}</span>
@@ -30,7 +30,7 @@ export function ArticleRow({ article }: { article: Article }) {
           {article.isSample && <DemoBadge label="Article d'exemple" />}
         </div>
       </div>
-      <div className="relative hidden aspect-[4/3] overflow-hidden rounded-sm sm:block">
+      <div className="relative hidden aspect-[4/3] overflow-hidden rounded-sm md:block">
         <Image
           src={article.cover.src}
           alt=""

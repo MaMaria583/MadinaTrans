@@ -22,7 +22,7 @@ import { WhatsappIcon } from "@/components/ui/Icons";
 import { cn } from "@/lib/cn";
 
 export const metadata = pageMetadata({
-  title: "Contact — Société de transport à Bamako",
+  title: "Contact, société de transport à Bamako",
   description:
     "Contactez Madina Trans à Bamako pour vos besoins en transport routier, transit, affrètement maritime et logistique au Mali : téléphone, e-mail, formulaire.",
   path: "/contact",

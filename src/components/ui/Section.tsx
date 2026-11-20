@@ -5,17 +5,10 @@ export function Container({ className, children }: { className?: string; childre
   return <div className={cn("mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10", className)}>{children}</div>;
 }
 
-/** Sur-titre éditorial : numéro, filet doré et petite capitale espacée. */
-export function Eyebrow({ children, light = false, index }: { children: ReactNode; light?: boolean; index?: number }) {
+/** Sur-titre éditorial : filet doré et petite capitale espacée (au plus un pour trois sections). */
+export function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
   return (
     <p className={cn("mb-5 inline-flex items-center gap-3 label-caps", light ? "text-gold-300" : "text-gold-700")}>
-      {index !== undefined ? (
-        <span
-          className={cn("font-display text-sm tracking-normal tabular-nums", light ? "text-white/55" : "text-navy-400")}
-        >
-          {String(index).padStart(2, "0")}
-        </span>
-      ) : null}
       <span aria-hidden="true" className="h-px w-10 bg-gold-400" />
       {children}
     </p>
@@ -32,7 +25,6 @@ export function Highlight({ children, light = false }: { children: ReactNode; li
 
 export function SectionHeading({
   eyebrow,
-  index,
   title,
   intro,
   align = "left",
@@ -43,7 +35,6 @@ export function SectionHeading({
   className,
 }: {
   eyebrow?: string;
-  index?: number;
   title: ReactNode;
   intro?: ReactNode;
   align?: "left" | "center";
@@ -55,11 +46,7 @@ export function SectionHeading({
 }) {
   return (
     <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
-      {eyebrow && (
-        <Eyebrow light={light} index={index}>
-          {eyebrow}
-        </Eyebrow>
-      )}
+      {eyebrow && <Eyebrow light={light}>{eyebrow}</Eyebrow>}
       <Tag
         id={id}
         className={cn(

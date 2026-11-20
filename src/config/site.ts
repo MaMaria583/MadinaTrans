@@ -83,12 +83,12 @@ export const institutional = {
   vision:
     "Contribuer au développement économique du Mali et de l'Afrique de l'Ouest en rendant les échanges de marchandises plus simples, plus sûrs et plus efficaces.",
   mission:
-    "Offrir à chaque client une solution de transport et de logistique adaptée à ses besoins, avec un accompagnement personnalisé, une communication transparente et le respect des engagements pris.",
+    "Offrir à chaque client une organisation de transport et de logistique adaptée à ses besoins, avec un accompagnement personnalisé, une communication transparente et le respect des engagements pris.",
   values: [
     { title: "Intégrité", text: "Des engagements tenus et une relation fondée sur la confiance." },
     { title: "Rigueur", text: "Une organisation méthodique pour chaque opération, quelle que soit sa taille." },
     { title: "Proximité", text: "Une écoute attentive et un dialogue permanent avec nos clients." },
-    { title: "Excellence", text: "La recherche constante de la qualité dans chacun de nos services." },
+    { title: "Exigence", text: "Le même soin apporté à chaque opération, petite ou grande." },
   ],
   /** Atouts mis en avant à la place de chiffres non confirmés. */
   strengths: [
@@ -163,7 +163,7 @@ export const contact = {
     note: "Ville indiquée dans le brief. Adresse précise à obtenir.",
   } satisfies ConfigValue,
   address: {
-    value: "Adresse postale à confirmer — Bamako, Mali",
+    value: "Adresse postale à confirmer, Bamako, Mali",
     status: "missing",
     note: "La carte de localisation ne s'affiche qu'une fois l'adresse vérifiée.",
   } satisfies ConfigValue,
@@ -261,7 +261,7 @@ export const siteMeta = {
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
       : "http://localhost:3000"),
   locale: "fr_ML",
-  defaultTitle: "Madina Trans — Transport, transit et logistique au Mali",
+  defaultTitle: "Madina Trans | Transport, transit et logistique au Mali",
   defaultDescription:
     "Madina Trans, société de transport à Bamako : transport routier de marchandises, transit au Mali, affrètement maritime et logistique. Demandez votre devis.",
   copyrightYear: 2026,

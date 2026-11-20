@@ -5,6 +5,7 @@ import { formatDate, type Article } from "@/content/articles";
 import { DemoBadge } from "@/components/ui/DemoBadge";
 
 export function ArticleCard({ article, featured = false }: { article: Article; featured?: boolean }) {
+  const Heading = featured ? "h2" : "h3";
   return (
     <article
       className={
@@ -42,7 +43,7 @@ export function ArticleCard({ article, featured = false }: { article: Article; f
           </span>
           {article.isSample && <DemoBadge label="Article d'exemple" />}
         </div>
-        <h3
+        <Heading
           className={
             "mt-3 font-display font-normal text-navy-900 " +
             (featured ? "text-[1.9rem] leading-tight lg:text-[2.6rem]" : "text-[1.5rem] leading-tight")
@@ -51,7 +52,7 @@ export function ArticleCard({ article, featured = false }: { article: Article; f
           <Link href={`/actualites/${article.slug}`} className="after:absolute after:inset-0 group-hover:text-navy-700">
             {article.title}
           </Link>
-        </h3>
+        </Heading>
         <p className="mt-3 flex-1 leading-relaxed text-muted">{article.excerpt}</p>
         <span className="mt-5 inline-flex items-center gap-1.5 font-semibold text-navy-800 group-hover:text-gold-600">
           Lire l&apos;article <ArrowUpRight className="size-4" aria-hidden="true" />

@@ -22,7 +22,7 @@ export function MobileActionBar() {
   return (
     <nav
       aria-label="Actions rapides"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_24px_-12px_rgb(11_26_56/0.25)] backdrop-blur-md md:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_24px_-12px_rgb(16_29_50/0.25)] backdrop-blur-md md:hidden"
     >
       <div className="flex h-16 items-stretch gap-1 px-2">
         {tel ? (
@@ -36,7 +36,7 @@ export function MobileActionBar() {
         )}
         {wa && (
           <a href={wa} target="_blank" rel="noopener noreferrer" className={secondary}>
-            <WhatsappIcon className="size-5 text-[#1FAF54]" /> WhatsApp
+            <WhatsappIcon className="size-5 text-whatsapp" /> WhatsApp
           </a>
         )}
         {!onQuotePage && (

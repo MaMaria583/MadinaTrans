@@ -5,6 +5,7 @@ import { DEMO_MODE, agency, company, contact, isConfirmed, isDisplayable, siteMe
 import { services } from "@/content/services";
 import { imageCreditNote } from "@/content/images";
 import { Container } from "@/components/ui/Section";
+import { FooterInvite } from "./FooterInvite";
 import { Logo } from "@/components/ui/Logo";
 import { DemoBadge } from "@/components/ui/DemoBadge";
 import { ContactValue } from "@/components/ui/ContactValue";
@@ -21,7 +22,7 @@ function FooterTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="mb-6 label-caps text-gold-300">{children}</h2>;
 }
 
-const linkCls = "text-navy-100 transition-colors hover:text-white link-underline";
+const linkCls = "inline-block py-1.5 text-navy-100 transition-colors hover:text-white link-underline";
 
 export function Footer() {
   const configuredSocials = socialLinks.filter((s) => isConfirmed(s.url) && s.url.value);
@@ -31,30 +32,32 @@ export function Footer() {
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-routes opacity-60" />
 
       {/* Bandeau d'invitation */}
-      <Container className="border-b border-white/10 py-16 lg:py-20">
-        <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
-          <div>
-            <p className="label-caps text-gold-300">Madina Trans · Bamako, Mali</p>
-            <p className="mt-5 max-w-3xl font-display text-[clamp(2rem,5vw,3.6rem)] leading-[1.05] font-normal tracking-[-0.02em] text-white">
-              Parlons de votre <em className="text-gold-300 italic">prochaine expédition</em>.
-            </p>
+      <FooterInvite>
+        <Container className="border-b border-white/10 py-16 lg:py-20">
+          <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
+            <div>
+              <p className="label-caps text-gold-300">Madina Trans · Bamako, Mali</p>
+              <p className="mt-5 max-w-3xl font-display text-[clamp(2rem,5vw,3.6rem)] leading-[1.05] font-normal tracking-[-0.02em] text-white">
+                Parlons de votre <em className="text-gold-300 italic">prochaine expédition</em>.
+              </p>
+            </div>
+            <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row [&>a]:whitespace-nowrap">
+              <Link
+                href="/devis"
+                className="inline-flex min-h-13 items-center justify-center gap-2.5 rounded-[3px] bg-gold-400 px-7 font-semibold text-navy-950 transition-colors hover:bg-gold-300"
+              >
+                Demander un devis <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex min-h-13 items-center justify-center gap-2.5 rounded-[3px] border border-white/30 px-7 font-semibold text-white transition-colors hover:border-white hover:bg-white hover:text-navy-950"
+              >
+                Nous contacter
+              </Link>
+            </div>
           </div>
-          <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row [&>a]:whitespace-nowrap">
-            <Link
-              href="/devis"
-              className="inline-flex min-h-13 items-center justify-center gap-2.5 rounded-[3px] bg-gold-400 px-7 font-semibold text-navy-950 transition-colors hover:bg-gold-300"
-            >
-              Demander un devis <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex min-h-13 items-center justify-center gap-2.5 rounded-[3px] border border-white/30 px-7 font-semibold text-white transition-colors hover:border-white hover:bg-white hover:text-navy-950"
-            >
-              Nous contacter
-            </Link>
-          </div>
-        </div>
-      </Container>
+        </Container>
+      </FooterInvite>
 
       <Container className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-4">
@@ -107,7 +110,7 @@ export function Footer() {
 
         <nav aria-label="Navigation du pied de page" className="lg:col-span-2">
           <FooterTitle>Navigation</FooterTitle>
-          <ul className="space-y-3">
+          <ul className="space-y-1">
             {mainNav.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className={linkCls}>
@@ -120,7 +123,7 @@ export function Footer() {
 
         <nav aria-label="Nos expertises" className="lg:col-span-3">
           <FooterTitle>Expertises</FooterTitle>
-          <ul className="space-y-3">
+          <ul className="space-y-1">
             {services.map((s) => (
               <li key={s.slug}>
                 <Link href={`/services/${s.slug}`} className={linkCls}>

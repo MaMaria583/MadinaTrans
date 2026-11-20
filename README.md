@@ -27,28 +27,28 @@ Dépôt : https://github.com/MaMaria583/MadinaTrans
 
 ## Aperçu
 
-| Page | URL | Contenu |
-| --- | --- | --- |
-| Accueil | `/` | Hero, 4 métiers, chiffres clés, à propos, devis, engagements, partenaires, CTA |
-| Notre groupe (À propos) | `/a-propos` | Présentation, vision & mission, valeurs, expertise, qualité, galerie |
-| Nos services | `/services` | Présentation détaillée des 4 services (avantages, applications, visuel, CTA) |
-| Fiche service | `/services/[slug]` | 4 pages dédiées (SEO), méthode, devis pré-rempli |
-| Nos engagements | `/engagements` | Sécurité, délais, qualité, satisfaction, transparence, accompagnement |
-| Actualités | `/actualites` | Liste filtrable par catégorie, articles d'exemple |
-| Article | `/actualites/[slug]` | Page de lecture + articles liés |
-| Contact | `/contact` | Formulaire, coordonnées, WhatsApp, emplacement carte |
-| Devis | `/devis` | Formulaire de devis complet (`?service=` pour pré-sélectionner) |
-| Mentions légales | `/mentions-legales` | Éditeur, données personnelles, crédits, avertissement démo |
+| Page                    | URL                  | Contenu                                                                        |
+| ----------------------- | -------------------- | ------------------------------------------------------------------------------ |
+| Accueil                 | `/`                  | Hero, 4 métiers, chiffres clés, à propos, devis, engagements, partenaires, CTA |
+| Notre groupe (À propos) | `/a-propos`          | Présentation, vision & mission, valeurs, expertise, qualité, galerie           |
+| Nos services            | `/services`          | Présentation détaillée des 4 services (avantages, applications, visuel, CTA)   |
+| Fiche service           | `/services/[slug]`   | 4 pages dédiées (SEO), méthode, devis pré-rempli                               |
+| Nos engagements         | `/engagements`       | Sécurité, délais, qualité, satisfaction, transparence, accompagnement          |
+| Actualités              | `/actualites`        | Liste filtrable par catégorie, articles d'exemple                              |
+| Article                 | `/actualites/[slug]` | Page de lecture + articles liés                                                |
+| Contact                 | `/contact`           | Formulaire, coordonnées, WhatsApp, emplacement carte                           |
+| Devis                   | `/devis`             | Formulaire de devis complet (`?service=` pour pré-sélectionner)                |
+| Mentions légales        | `/mentions-legales`  | Éditeur, données personnelles, crédits, avertissement démo                     |
 
 ## Identité visuelle (phase 4)
 
-| Élément | Choix |
-| --- | --- |
-| Palette | Bleu nuit `#101D32` · Bleu acier `#233B59` · Or champagne `#C6A66A` · Ivoire `#F4F1E9` · Blanc |
-| Typographies | **Fraunces** (titres, serif contemporaine à axe optique) · **Inter** (texte, interface) |
-| Signature | Mots-clés en italique champagne, petites capitales espacées, filets dorés, numérotation éditoriale, quadrillage « plan de route », grain photographique léger |
-| Composants | Boutons à angles nets, header intelligent (se retire au défilement, revient en remontant), menu mobile plein écran |
-| Images | 24 photographies Unsplash hébergées dans `public/images` (visuels d'illustration, jamais présentés comme la flotte ou les équipes de Madina Trans) |
+| Élément      | Choix                                                                                                                                                         |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Palette      | Bleu nuit `#101D32` · Bleu acier `#233B59` · Or champagne `#C6A66A` · Ivoire `#F4F1E9` · Blanc                                                                |
+| Typographies | **Fraunces** (titres, serif contemporaine à axe optique) · **Inter** (texte, interface)                                                                       |
+| Signature    | Mots-clés en italique champagne, petites capitales espacées, filets dorés, numérotation éditoriale, quadrillage « plan de route », grain photographique léger |
+| Composants   | Boutons à angles nets, header intelligent (se retire au défilement, revient en remontant), menu mobile plein écran                                            |
+| Images       | 24 photographies Unsplash hébergées dans `public/images` (visuels d'illustration, jamais présentés comme la flotte ou les équipes de Madina Trans)            |
 
 Les tokens sont définis dans `src/app/globals.css` (`@theme`). Les échelles `navy-*` et `gold-*` portent la nouvelle palette :
 tous les composants l'adoptent sans modification.
@@ -61,14 +61,14 @@ méthode en 4 étapes → demande de devis → pied de page avec invitation.
 
 ## Stack technique
 
-| Outil | Rôle |
-| --- | --- |
-| **Next.js 16** (App Router, Turbopack, Cache Components) | Framework, rendu statique, API |
-| **React 19** + **TypeScript** | Interface typée |
-| **Tailwind CSS 4** | Design system (tokens dans `src/app/globals.css`) |
-| **lucide-react** | Icônes homogènes |
-| `next/font` (Fraunces + Inter) | Typographies auto-hébergées, sans requête externe |
-| `next/image` | Images optimisées (AVIF/WebP, lazy-loading, tailles adaptatives) |
+| Outil                                                    | Rôle                                                             |
+| -------------------------------------------------------- | ---------------------------------------------------------------- |
+| **Next.js 16** (App Router, Turbopack, Cache Components) | Framework, rendu statique, API                                   |
+| **React 19** + **TypeScript**                            | Interface typée                                                  |
+| **Tailwind CSS 4**                                       | Design system (tokens dans `src/app/globals.css`)                |
+| **lucide-react**                                         | Icônes homogènes                                                 |
+| `next/font` (Fraunces + Inter)                           | Typographies auto-hébergées, sans requête externe                |
+| `next/image`                                             | Images optimisées (AVIF/WebP, lazy-loading, tailles adaptatives) |
 
 Trois dépendances d'exécution seulement (`next`, `react`, `react-dom`) + `lucide-react`. Aucun service tiers obligatoire.
 
@@ -125,18 +125,18 @@ src/
 
 Tout se modifie **sans toucher aux composants** :
 
-| Je veux modifier… | Fichier |
-| --- | --- |
-| Téléphone, e-mail, WhatsApp, adresse, carte, horaires, réseaux sociaux | `src/config/site.ts` |
-| Présentation, vision, mission, valeurs, atouts, secteurs | `src/config/site.ts` → `institutional` |
-| Chiffres clés (années, véhicules, pays, clients) | `src/config/site.ts` → `keyFigures` |
-| Partenaires / références (logos dans `public/partners/`) | `src/config/site.ts` → `partners` |
-| Textes des services + points à confirmer (`verification`) | `src/content/services.ts` |
-| Engagements | `src/content/commitments.ts` |
-| Articles | `src/content/articles.ts` |
-| Photos | `public/images/*.jpg` + `src/content/images.ts` (remplacer un fichier en gardant son nom suffit) |
-| Menu | `src/config/navigation.ts` |
-| Couleurs / typographies | `src/app/globals.css` (`@theme`) |
+| Je veux modifier…                                                      | Fichier                                                                                          |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Téléphone, e-mail, WhatsApp, adresse, carte, horaires, réseaux sociaux | `src/config/site.ts`                                                                             |
+| Présentation, vision, mission, valeurs, atouts, secteurs               | `src/config/site.ts` → `institutional`                                                           |
+| Chiffres clés (années, véhicules, pays, clients)                       | `src/config/site.ts` → `keyFigures`                                                              |
+| Partenaires / références (logos dans `public/partners/`)               | `src/config/site.ts` → `partners`                                                                |
+| Textes des services + points à confirmer (`verification`)              | `src/content/services.ts`                                                                        |
+| Engagements                                                            | `src/content/commitments.ts`                                                                     |
+| Articles                                                               | `src/content/articles.ts`                                                                        |
+| Photos                                                                 | `public/images/*.jpg` + `src/content/images.ts` (remplacer un fichier en gardant son nom suffit) |
+| Menu                                                                   | `src/config/navigation.ts`                                                                       |
+| Couleurs / typographies                                                | `src/app/globals.css` (`@theme`)                                                                 |
 
 Chaque donnée de `site.ts` possède un **statut** : `verified`, `provided`, `demo` ou `missing`.
 Une fois une information confirmée par Madina Trans, remplacez la valeur **et** passez le statut à `provided`.
@@ -175,15 +175,15 @@ Formulaire en **3 étapes** (`src/components/forms/QuoteForm.tsx`) :
 
 ### Protection anti-spam (API `/api/requests`)
 
-| Protection | Détail |
-| --- | --- |
-| Champ piège invisible | Un robot qui le remplit est ignoré silencieusement |
-| Délai minimal | Envoi en moins de 3 s après affichage → ignoré |
-| Limitation de débit | 5 envois / 10 min / IP (mémoire de l'instance) |
-| Origine | Requêtes d'un autre site refusées (403) |
-| Taille | Corps limité à 16 Ko (413) |
-| Validation serveur | Champs inconnus supprimés, longueurs bornées, sauts de ligne neutralisés |
-| E-mail | Contenu échappé (aucune injection HTML possible) |
+| Protection            | Détail                                                                   |
+| --------------------- | ------------------------------------------------------------------------ |
+| Champ piège invisible | Un robot qui le remplit est ignoré silencieusement                       |
+| Délai minimal         | Envoi en moins de 3 s après affichage → ignoré                           |
+| Limitation de débit   | 5 envois / 10 min / IP (mémoire de l'instance)                           |
+| Origine               | Requêtes d'un autre site refusées (403)                                  |
+| Taille                | Corps limité à 16 Ko (413)                                               |
+| Validation serveur    | Champs inconnus supprimés, longueurs bornées, sauts de ligne neutralisés |
+| E-mail                | Contenu échappé (aucune injection HTML possible)                         |
 
 ### Acheminement des demandes
 
@@ -225,15 +225,15 @@ Aucune clé n'est dans le code. En cas d'échec d'envoi, l'utilisateur voit un m
 
 Voir `.env.example`. Aucune valeur sensible n'est présente dans le code source.
 
-| Variable | Portée | Rôle |
-| --- | --- | --- |
-| `NEXT_PUBLIC_DEMO_MODE` | Build (public) | `true` (défaut) = démonstration · `false` = production |
-| `NEXT_PUBLIC_SITE_URL` | Build (public) | URL publique (canonique, Open Graph, sitemap) |
-| `RESEND_API_KEY` | Serveur (secret) | Clé API Resend |
-| `RESEND_FROM_EMAIL` | Serveur | Expéditeur sur un domaine vérifié dans Resend |
-| `ADMIN_EMAIL` | Serveur | Destinataire(s) des devis (séparés par des virgules) |
-| `CONTACT_EMAIL` | Serveur | Destinataire des messages de contact (sinon `ADMIN_EMAIL`) |
-| `FORM_WEBHOOK_URL` / `FORM_WEBHOOK_TOKEN` | Serveur (secret) | Alternative webhook si Resend n'est pas utilisé |
+| Variable                                  | Portée           | Rôle                                                       |
+| ----------------------------------------- | ---------------- | ---------------------------------------------------------- |
+| `NEXT_PUBLIC_DEMO_MODE`                   | Build (public)   | `true` (défaut) = démonstration · `false` = production     |
+| `NEXT_PUBLIC_SITE_URL`                    | Build (public)   | URL publique (canonique, Open Graph, sitemap)              |
+| `RESEND_API_KEY`                          | Serveur (secret) | Clé API Resend                                             |
+| `RESEND_FROM_EMAIL`                       | Serveur          | Expéditeur sur un domaine vérifié dans Resend              |
+| `ADMIN_EMAIL`                             | Serveur          | Destinataire(s) des devis (séparés par des virgules)       |
+| `CONTACT_EMAIL`                           | Serveur          | Destinataire des messages de contact (sinon `ADMIN_EMAIL`) |
+| `FORM_WEBHOOK_URL` / `FORM_WEBHOOK_TOKEN` | Serveur (secret) | Alternative webhook si Resend n'est pas utilisé            |
 
 > Les variables `NEXT_PUBLIC_*` sont intégrées au moment du build : redéployez après modification.
 
@@ -255,13 +255,13 @@ Voir `.env.example`. Aucune valeur sensible n'est présente dans le code source.
 
 ## Qualité et commandes
 
-| Commande | Rôle |
-| --- | --- |
-| `npm run dev` | Serveur de développement |
-| `npm run lint` | ESLint (règles Next.js + Core Web Vitals + TypeScript) |
-| `npm run typecheck` | Génération des types de routes + `tsc --noEmit` |
-| `npm run build` | Build de production |
-| `npm run check` | Lint + typecheck + build |
+| Commande              | Rôle                                                               |
+| --------------------- | ------------------------------------------------------------------ |
+| `npm run dev`         | Serveur de développement                                           |
+| `npm run lint`        | ESLint (règles Next.js + Core Web Vitals + TypeScript)             |
+| `npm run typecheck`   | Génération des types de routes + `tsc --noEmit`                    |
+| `npm run build`       | Build de production                                                |
+| `npm run check`       | Lint + typecheck + build                                           |
 | `npm run test:resend` | Envoi d'un e-mail de test réel via Resend (nécessite `.env.local`) |
 
 ## Documentation complémentaire
@@ -270,6 +270,7 @@ Voir `.env.example`. Aucune valeur sensible n'est présente dans le code source.
 - [`docs/DEPLOIEMENT.md`](docs/DEPLOIEMENT.md) — guide GitHub + Vercel pas à pas
 - [`docs/FONCTIONNALITES.md`](docs/FONCTIONNALITES.md) — fonctionnalités opérationnelles / à configurer
 - [`docs/RAPPORT-TESTS.md`](docs/RAPPORT-TESTS.md) — rapport final de tests
+- [`docs/AUDIT-SKILLS.md`](docs/AUDIT-SKILLS.md) — Skills mobilisés et contributions concrètes
 
 ---
 

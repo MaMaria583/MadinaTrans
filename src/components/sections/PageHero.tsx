@@ -42,8 +42,13 @@ export function PageHero({
       {path && <BreadcrumbJsonLd items={crumbs.map((c) => ({ name: c.label, path: c.href ?? path }))} />}
       <div className="grain absolute inset-0 -z-10">
         <Image src={image.src} alt="" fill preload sizes="100vw" className="animate-slow-zoom object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-950/92 via-navy-950/65 to-navy-950/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-transparent to-navy-950/30" />
+        <div aria-hidden="true" className="absolute inset-0 scrim-band md:hidden" />
+        <div aria-hidden="true" className="absolute inset-0 hidden scrim-column md:block" />
+        <div aria-hidden="true" className="absolute inset-0 bg-navy-950/35" />
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-navy-950/50 to-transparent"
+        />
       </div>
       <Container
         className={cn(

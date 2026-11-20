@@ -229,7 +229,7 @@ export function ChoiceCards({
             <label
               key={o.value}
               className={cn(
-                "group relative flex min-h-[4.5rem] cursor-pointer items-center gap-3.5 rounded-2xl border-2 p-4 transition-all duration-200",
+                "group relative flex min-h-[4.5rem] cursor-pointer items-center gap-3.5 rounded-2xl border-2 p-4 transition-[border-color,background-color,box-shadow] duration-200",
                 checked
                   ? "border-navy-800 bg-navy-50/70 shadow-card"
                   : "border-line bg-white hover:border-navy-200 hover:bg-mist",

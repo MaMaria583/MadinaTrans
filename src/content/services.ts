@@ -47,7 +47,7 @@ export const services: Service[] = [
     excerpt:
       "Acheminement de vos marchandises par la route, au Mali et vers les pays de la sous-région, avec un suivi rigoureux à chaque étape.",
     description: [
-      "Le transport routier reste au cœur des échanges commerciaux au Mali. Madina Trans organise l'acheminement de vos marchandises depuis leur point d'enlèvement jusqu'à leur destination finale, en adaptant chaque opération à la nature de la cargaison et aux contraintes du trajet.",
+      "Au Mali, la route porte l'essentiel des échanges commerciaux. Madina Trans organise l'acheminement de vos marchandises depuis leur point d'enlèvement jusqu'à leur destination finale, en adaptant chaque opération à la nature de la cargaison et aux contraintes du trajet.",
       "Chargement, sécurisation, planification de l'itinéraire, communication avec le destinataire : chaque étape est préparée pour limiter les aléas et garantir une livraison dans les délais convenus.",
     ],
     advantages: [
@@ -82,7 +82,7 @@ export const services: Service[] = [
       ],
     },
     seo: {
-      title: "Transport routier de marchandises à Bamako et au Mali",
+      title: "Transport routier à Bamako et au Mali",
       description:
         "Transport routier Bamako : Madina Trans organise le transport de marchandises au Mali et vers la sous-région. Planification, sécurité et suivi. Demandez un devis.",
     },
@@ -97,7 +97,7 @@ export const services: Service[] = [
       "Accompagnement dans les opérations de transit et l'organisation de vos flux import-export, de la préparation des documents à la livraison.",
     description: [
       "Les opérations d'import et d'export impliquent des formalités précises et de nombreux intervenants. Madina Trans vous accompagne dans l'organisation de vos opérations de transit afin de fluidifier le passage de vos marchandises et d'éviter les retards coûteux.",
-      "Nous coordonnons les différentes étapes — documents, formalités, enlèvement, acheminement — et affrétons les moyens de transport adaptés à vos volumes et à vos contraintes.",
+      "Nous coordonnons les différentes étapes (documents, formalités, enlèvement, acheminement) et affrétons les moyens de transport adaptés à vos volumes et à vos contraintes.",
     ],
     advantages: [
       "Accompagnement dans la préparation des documents",
@@ -149,7 +149,7 @@ export const services: Service[] = [
     ],
     advantages: [
       "Coordination entre transport maritime et terrestre",
-      "Solutions en conteneur complet ou en groupage",
+      "Conteneur complet ou groupage, selon vos volumes",
       "Suivi de l'expédition du port à la destination",
       "Conseil sur l'emballage et la documentation",
     ],
@@ -189,8 +189,7 @@ export const services: Service[] = [
     title: "Logistique et distribution",
     shortTitle: "Logistique & distribution",
     tagline: "Une chaîne logistique maîtrisée de bout en bout",
-    excerpt:
-      "Solutions de stockage, de préparation et de distribution pour fluidifier votre chaîne d'approvisionnement.",
+    excerpt: "Stockage, préparation et distribution pour que vos produits arrivent au bon endroit, au bon moment.",
     description: [
       "Une chaîne logistique performante est un avantage concurrentiel. Madina Trans vous aide à organiser la réception, le stockage, la préparation et la distribution de vos marchandises pour que vos produits soient disponibles au bon endroit, au bon moment.",
       "Nous construisons avec vous une organisation adaptée à vos volumes et à vos points de livraison, afin de réduire les ruptures et de maîtriser vos coûts.",
@@ -219,7 +218,7 @@ export const services: Service[] = [
       domain: "provided",
       details: "demo",
       toConfirm: [
-        "Entrepôts disponibles ? (propres ou partenaires, localisation, surface) — à ne pas annoncer sans confirmation",
+        "Entrepôts disponibles ? (propres ou partenaires, localisation, surface) : à ne pas annoncer sans confirmation",
         "Préparation de commandes et gestion de stocks réellement proposées ?",
         "Zones de distribution couvertes",
         "Outils de suivi des stocks proposés au client",

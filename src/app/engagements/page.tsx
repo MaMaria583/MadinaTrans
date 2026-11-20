@@ -9,7 +9,7 @@ import { CommitmentIconView } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata = pageMetadata({
-  title: "Nos engagements : sécurité, délais, qualité",
+  title: "Engagements transport : sécurité, délais, qualité",
   description:
     "Sécurité, respect des délais, qualité de service, transparence : découvrez les engagements de Madina Trans pour le transport de vos marchandises au Mali.",
   path: "/engagements",
@@ -41,7 +41,6 @@ export default function CommitmentsPage() {
           <div className="grid gap-10 lg:grid-cols-12">
             <SectionHeading
               className="lg:col-span-5"
-              eyebrow="Six principes"
               id="engagements-list"
               size="md"
               title={
@@ -104,7 +103,6 @@ export default function CommitmentsPage() {
           </Reveal>
           <div className="lg:col-span-6">
             <SectionHeading
-              eyebrow="Notre promesse"
               id="promise-title"
               title={
                 <>

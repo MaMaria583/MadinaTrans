@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowRight, MapPin } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { images } from "@/content/images";
 import { services } from "@/content/services";
 import { Container } from "@/components/ui/Section";
@@ -15,7 +15,7 @@ export function Hero() {
   return (
     <section aria-labelledby="hero-title" className="relative">
       <div className="relative isolate flex min-h-[min(88svh,860px)] flex-col overflow-clip bg-navy-950 text-white">
-        <div className="grain absolute inset-0 -z-10">
+        <div className="grain absolute inset-0 -z-10 lg:left-[40%] lg:[mask-image:linear-gradient(to_right,transparent_0%,black_30%)]">
           <Image
             src={images.truckSunset.src}
             alt={images.truckSunset.alt}
@@ -23,20 +23,30 @@ export function Hero() {
             preload
             quality={85}
             sizes="100vw"
-            className="animate-slow-zoom object-cover object-[58%_70%]"
+            className="animate-slow-zoom object-cover object-[58%_70%] lg:object-[50%_65%]"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy-950/90 via-navy-950/55 to-navy-950/10" />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/10 via-35% to-navy-950/40" />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[linear-gradient(to_top,rgb(10_19_34/0.96)_0%,rgb(10_19_34/0.88)_45%,rgb(10_19_34/0.3)_72%,rgb(10_19_34/0.05)_100%)] lg:hidden"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 hidden bg-gradient-to-t from-navy-950/85 via-transparent via-45% to-transparent lg:block"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-navy-950/45 to-transparent"
+          />
         </div>
 
         <Container className="relative flex flex-1 flex-col justify-end pt-24 pb-14 sm:pt-28 sm:pb-16 lg:pb-20">
           <p className="mb-7 inline-flex items-center gap-3 label-caps text-gold-300">
             <span aria-hidden="true" className="h-px w-10 bg-gold-400" />
-            Transport · Transit · Logistique — Bamako
+            Transport, transit et logistique à Bamako
           </p>
           <h1
             id="hero-title"
-            className="max-w-[17ch] animate-fade-up text-[clamp(2.6rem,7.2vw,5.9rem)] leading-[0.98] font-normal tracking-[-0.03em]"
+            className="max-w-[22ch] animate-fade-up text-[clamp(2.4rem,6vw,5rem)] lg:max-w-[14ch] lg:text-[clamp(3.4rem,5vw,4.8rem)] leading-[1] font-normal tracking-[-0.03em]"
           >
             Nous connectons les routes, les marchés et les <em className="text-gold-300 italic">opportunités</em>.
           </h1>
@@ -63,15 +73,6 @@ export function Hero() {
               </Link>
             </div>
           </div>
-          <div className="mt-12 hidden items-center justify-between border-t border-white/15 pt-5 text-sm text-navy-200 sm:flex">
-            <span className="inline-flex items-center gap-2">
-              <MapPin className="size-4 text-gold-400" aria-hidden="true" /> Bamako, Mali — vers la sous-région et
-              l&apos;international
-            </span>
-            <a href="#positionnement" className="inline-flex items-center gap-2 hover:text-white">
-              Défiler <ArrowDown className="size-4 animate-bounce" aria-hidden="true" />
-            </a>
-          </div>
         </Container>
       </div>
 
@@ -88,9 +89,6 @@ export function Hero() {
                   href={`/services/${s.slug}`}
                   className="group flex h-full flex-col gap-2 px-5 py-6 transition-colors hover:bg-white/[0.04] sm:px-7 sm:py-8"
                 >
-                  <span className="font-display text-sm text-gold-400 tabular-nums">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
                   <span className="font-display text-[1.25rem] leading-tight sm:text-[1.6rem]">{shortNames[i]}</span>
                   <span
                     aria-hidden="true"

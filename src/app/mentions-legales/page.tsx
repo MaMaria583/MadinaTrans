@@ -52,7 +52,7 @@ export default function LegalPage() {
 
           <h2>Éditeur du site</h2>
           <p>
-            {company.name} — {company.legalName.value}
+            {company.name} ({company.legalName.value})
             <br />
             Siège : {contact.address.value}
             <br />
@@ -64,7 +64,7 @@ export default function LegalPage() {
 
           <h2>Hébergement</h2>
           <p>
-            Vercel Inc. — 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com (à confirmer selon
+            Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis (vercel.com) (à confirmer selon
             l&apos;hébergement retenu).
           </p>
 

@@ -52,7 +52,7 @@ function buildEmail(kind: FormKind, fields: Record<string, string>, reference: s
   const isQuote = kind === "quote";
   const title = isQuote ? "Nouvelle demande de devis" : "Nouveau message de contact";
   const subjectDetail = isQuote ? serviceLabel(fields.service) : fields.subject;
-  const subject = `${title} — ${subjectDetail} — ${fields.fullName} [${reference}]`
+  const subject = `${title} : ${subjectDetail}, ${fields.fullName} [${reference}]`
     .replace(/[\r\n]+/g, " ")
     .slice(0, 200);
 

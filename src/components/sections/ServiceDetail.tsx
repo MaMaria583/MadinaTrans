@@ -30,10 +30,10 @@ export function ServiceDetail({ service, reverse = false }: { service: Service; 
       </Reveal>
 
       <Reveal delay={100}>
-        <p className="text-sm font-bold tracking-[0.12em] text-gold-600 uppercase">{service.tagline}</p>
         <h2 id={`${service.slug}-title`} className="mt-2 text-3xl font-medium text-navy-900 sm:text-4xl">
           {service.title}
         </h2>
+        <p className="mt-2 font-display text-lg text-gold-700 italic">{service.tagline}</p>
         {showServiceDetails(service) ? (
           <div className="mt-5 space-y-4 leading-relaxed text-muted">
             {service.description.map((p) => (

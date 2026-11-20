@@ -20,7 +20,7 @@ export default function ServicesPage() {
     <>
       <PageHero
         eyebrow="Nos services"
-        title="Des solutions de transport adaptées à chaque besoin"
+        title="Le transport de vos marchandises, organisé de bout en bout"
         intro="De la route au port, de l'entrepôt au client final : Madina Trans vous accompagne sur l'ensemble de votre chaîne logistique."
         image={images.portContainers}
         crumbs={[{ label: "Nos services" }]}
@@ -59,7 +59,7 @@ export default function ServicesPage() {
 
       <ImmersiveBand
         image={images.warehouseAerial}
-        eyebrow="Une solution sur mesure"
+        eyebrow="Sur mesure"
         title={
           <>
             Chaque projet est unique. <em className="text-gold-300 italic">Parlons du vôtre.</em>

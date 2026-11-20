@@ -30,19 +30,11 @@ export function ExpertiseExplorer({ services }: { services: Service[] }) {
                   onMouseEnter={() => setActive(i)}
                   onFocus={() => setActive(i)}
                   aria-describedby={selected ? "expertise-desc" : undefined}
-                  className="group grid grid-cols-[3rem_1fr_auto] items-baseline gap-4 py-7"
+                  className="group grid grid-cols-[1fr_auto] items-baseline gap-4 py-7"
                 >
                   <span
                     className={cn(
-                      "font-display text-sm tabular-nums transition-colors",
-                      selected ? "text-gold-600" : "text-navy-300",
-                    )}
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span
-                    className={cn(
-                      "font-display text-[2.1rem] leading-tight transition-all duration-500 ease-[var(--ease-premium)]",
+                      "font-display text-[2.1rem] leading-tight transition-[transform,opacity,color] duration-500 ease-[var(--ease-premium)]",
                       selected ? "translate-x-2 text-navy-900 italic" : "text-navy-400",
                     )}
                   >
@@ -50,7 +42,7 @@ export function ExpertiseExplorer({ services }: { services: Service[] }) {
                   </span>
                   <ArrowUpRight
                     className={cn(
-                      "size-5 transition-all duration-500",
+                      "size-5 transition-[transform,opacity,color] duration-500",
                       selected ? "text-gold-600 opacity-100" : "opacity-0",
                     )}
                     aria-hidden="true"
@@ -97,7 +89,7 @@ export function ExpertiseExplorer({ services }: { services: Service[] }) {
 
       {/* Mobile et tablette */}
       <ol className="grid gap-10 sm:grid-cols-2 lg:hidden" aria-label="Nos expertises">
-        {services.map((s, i) => (
+        {services.map((s) => (
           <li key={s.slug}>
             <Link href={`/services/${s.slug}`} className="group block">
               <div className="grain relative aspect-[4/3] overflow-hidden rounded-sm bg-navy-900">
@@ -109,8 +101,7 @@ export function ExpertiseExplorer({ services }: { services: Service[] }) {
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
-              <p className="mt-5 font-display text-sm text-gold-600 tabular-nums">{String(i + 1).padStart(2, "0")}</p>
-              <h3 className="mt-1 font-display text-[1.65rem] leading-tight font-normal text-navy-900">{s.title}</h3>
+              <h3 className="mt-5 font-display text-[1.65rem] leading-tight font-normal text-navy-900">{s.title}</h3>
               <p className="mt-2 leading-relaxed text-muted">{s.excerpt}</p>
               <span className="mt-3 inline-flex items-center gap-1.5 font-semibold text-navy-900">
                 Découvrir <ArrowUpRight className="size-4 text-gold-600" aria-hidden="true" />

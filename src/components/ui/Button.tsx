@@ -10,7 +10,7 @@ type Size = "md" | "lg";
  * flèche qui glisse au survol. L'or champagne est réservé à l'action principale.
  */
 const base =
-  "group/btn inline-flex items-center justify-center gap-2.5 rounded-[3px] font-semibold tracking-[0.01em] transition-[background-color,border-color,color,box-shadow] duration-300 select-none disabled:cursor-not-allowed disabled:opacity-60 [&_svg]:size-[1.05em] [&_svg]:shrink-0 [&_svg]:transition-transform [&_svg]:duration-300 hover:[&_svg:last-child]:translate-x-0.5";
+  "group/btn inline-flex items-center justify-center gap-2.5 rounded-[3px] font-semibold tracking-[0.01em] transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] select-none active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 [&_svg]:size-[1.05em] [&_svg]:shrink-0 [&_svg]:transition-transform [&_svg]:duration-300 hover:[&_svg:last-child]:translate-x-0.5";
 
 const variants: Record<Variant, string> = {
   gold: "bg-gold-400 text-navy-950 hover:bg-gold-300",

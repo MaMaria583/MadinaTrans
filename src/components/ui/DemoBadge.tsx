@@ -17,7 +17,7 @@ export function DemoBadge({
   if (!DEMO_MODE) return null;
   return (
     <span
-      title="Information de démonstration — à confirmer auprès de Madina Trans"
+      title="Information de démonstration, à confirmer auprès de Madina Trans"
       className={cn(
         "inline-flex items-center gap-1 rounded-full border border-dashed px-2 py-0.5 align-middle text-[0.68rem] font-semibold tracking-wide whitespace-nowrap uppercase",
         tone === "light"

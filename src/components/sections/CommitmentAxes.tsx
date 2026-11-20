@@ -14,8 +14,6 @@ export function CommitmentAxes() {
       <Container className="grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-4">
           <SectionHeading
-            index={4}
-            eyebrow="Nos engagements"
             id="axes-title"
             size="md"
             title={
@@ -23,9 +21,12 @@ export function CommitmentAxes() {
                 Quatre axes qui guident <Highlight>chaque opération</Highlight>
               </>
             }
-            intro="Une manière de travailler, plus qu'une promesse : voici ce sur quoi nous nous engageons au quotidien."
+            intro="Quatre repères concrets pour chaque opération, de la demande à la livraison."
           />
-          <Link href="/engagements" className="group mt-8 inline-flex items-center gap-3 font-semibold text-navy-900">
+          <Link
+            href="/engagements"
+            className="group mt-8 inline-flex min-h-11 items-center gap-3 font-semibold text-navy-900"
+          >
             <span className="link-underline">Nos engagements en détail</span>
             <ArrowRight
               className="size-4 text-gold-600 transition-transform group-hover:translate-x-1"
@@ -46,9 +47,6 @@ export function CommitmentAxes() {
                 <h3 className="font-display text-[1.6rem] leading-tight font-normal text-navy-900 sm:text-[1.9rem]">
                   {c.title}
                 </h3>
-                <span className="font-display text-sm text-gold-600 tabular-nums">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
               </div>
               <p className="mt-2 label-caps text-navy-400">{c.subtitle}</p>
               <p className="mt-4 max-w-sm leading-relaxed text-muted">{c.text}</p>

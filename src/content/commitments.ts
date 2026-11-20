@@ -60,7 +60,7 @@ export const commitments: Commitment[] = [
     icon: "clock",
     title: "Le respect des délais",
     subtitle: "Votre calendrier est notre priorité",
-    text: "Nous planifions chaque opération en tenant compte des contraintes réelles du terrain afin de vous annoncer des délais réalistes — et de les tenir.",
+    text: "Nous planifions chaque opération en tenant compte des contraintes réelles du terrain afin de vous annoncer des délais réalistes, et de les tenir.",
     points: [
       "Planification en amont des enlèvements",
       "Anticipation des formalités et des points de passage",
@@ -84,7 +84,7 @@ export const commitments: Commitment[] = [
     icon: "smile",
     title: "La satisfaction client",
     subtitle: "Votre réussite, notre mesure",
-    text: "Nous construisons des relations durables, fondées sur l'écoute, la disponibilité et la recherche de solutions concrètes à vos besoins.",
+    text: "Nous construisons des relations durables, fondées sur l'écoute, la disponibilité et des réponses concrètes à vos besoins.",
     points: ["Écoute et compréhension de vos enjeux", "Disponibilité de nos équipes", "Suivi après chaque opération"],
   },
   {
@@ -103,11 +103,11 @@ export const commitments: Commitment[] = [
     id: "accompagnement",
     icon: "users",
     title: "L'accompagnement personnalisé",
-    subtitle: "Une solution pour chaque besoin",
+    subtitle: "Une organisation pour chaque besoin",
     text: "Chaque client est unique. Nous prenons le temps de comprendre votre activité pour concevoir une organisation sur mesure.",
     points: [
       "Un interlocuteur identifié",
-      "Des solutions adaptées à vos volumes",
+      "Des moyens adaptés à vos volumes",
       "Des conseils sur l'optimisation de vos flux",
     ],
   },
